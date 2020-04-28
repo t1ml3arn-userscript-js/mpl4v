@@ -9,3 +9,7 @@ This is a minimal react+webpack+babel project to avoid heavy modules installatio
 - `npm install`
 - `npm start`
 - go to [localhost:3000](http://localhost:3000)
+
+## License
+
+[WTFPL](http://www.wtfpl.net/txt/copying/)
