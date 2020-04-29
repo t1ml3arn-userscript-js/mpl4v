@@ -12,4 +12,4 @@ This is a minimal react+webpack+babel project to avoid heavy modules installatio
 
 ## License
 
-[WTFPL](http://www.wtfpl.net/txt/copying/)
+[GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt)
