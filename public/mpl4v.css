@@ -1,0 +1,50 @@
+.mpl4v {
+    all: initial;
+    font-family: sans-serif;
+    font-size: 10px;
+    z-index: 999;
+}
+
+.mpl4v * {
+    all: unset;
+    box-sizing: border-box;
+}
+
+.mpl4v-controls {
+    display: inline-block;
+    width: auto;
+}
+
+.mpl4v .zmdi {
+    font-size: 1em;
+}
+
+.mpl4v-control-btns {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+
+    width: 256px;
+    border: 1px solid gray;
+}
+
+.mpl4v-control-btns > .zmdi {
+    margin: 0 2px;
+}
+
+.mpl4v-control-btns > .zmdi-skip-previous,
+.mpl4v-control-btns > .zmdi-skip-next {
+    font-size: 2.2em;
+}
+
+.mpl4v-control-btns > .zmdi-play {
+    font-size: 4em;
+}
+
+.mpl4v-progress-bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: darkred;
+}
