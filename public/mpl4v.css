@@ -20,6 +20,7 @@
 .mpl4v .zmdi {
     font-size: 1em;
     width: 1em;
+    text-align: center;
 }
 
 .mpl4v-control-btns {
@@ -28,12 +29,9 @@
     align-items: center;
     justify-content: center;
 
-    width: 280px;
+    width: auto;
+    width: 300px;
     border: 1px solid gray;
-}
-
-.mpl4v-control-btns > .zmdi {
-    margin: 0 5px;
 }
 
 .mpl4v-control-btns > .zmdi-skip-previous,
@@ -44,6 +42,7 @@
 .mpl4v-control-btns > .zmdi-play,
 .mpl4v-control-btns > .zmdi-pause {
     font-size: 4em;
+    margin: 0;
 }
 
 .mpl4v-control-btns > .mpl4v-time-lbl {
@@ -72,6 +71,13 @@
     background-color: darkred;
 }
 
-.zmdi-hc-fw {
-    
+.mpl4v-btn-wrap {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.mpl4v-btn-wrap > .zmdi {
+    font-size: 2em;
 }
