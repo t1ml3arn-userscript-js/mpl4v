@@ -46,18 +46,10 @@ export default class Progress extends Component {
 
     render() {
         const { progress } = this.props;
-        const styles = {
-            display: 'block',
-            width: '300px',
-            backgroundColor: '#654141',
-            height: '20px',
-            padding: '0',
-            margin: '0',
-            borderRadius: '5px'
-        }
+        
         return (
             <div 
-                style={ styles }
+                className={ "mpl4v-progress-bar" }
                 ref={ this.barEltRef }
                 onMouseDown={ this.startSeek }
             >
