@@ -3,7 +3,7 @@
     font-family: Arial, sans-serif;
     font-size: 10px;
     z-index: 999;
-
+    
     background-color: white;
 }
 
@@ -12,9 +12,44 @@
     box-sizing: border-box;
 }
 
+.mpl4v-fl-row {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
 .mpl4v-controls {
     display: inline-block;
-    width: auto;
+    width: 340px;
+}
+
+.mpl4v-control-btns {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid gray;
+}
+
+.mpl4-controls--left {
+    margin-left: 2em;
+    margin-left: 0.5em;
+}
+
+.mpl4-controls--right {
+    margin-right: 0.75em;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.mpl4v-control-btns .mpl4v-duration {
+    align-self: center;
+}
+
+.mpl4v-time-label {
+    font-size: 1.2em;
 }
 
 .mpl4v .zmdi {
@@ -23,45 +58,44 @@
     text-align: center;
 }
 
-.mpl4v-control-btns {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: center;
-
-    width: auto;
-    width: 300px;
-    border: 1px solid gray;
-}
-
-.mpl4v-control-btns > .zmdi-skip-previous,
-.mpl4v-control-btns > .zmdi-skip-next {
+.mpl4v-control-btns .zmdi-skip-previous,
+.mpl4v-control-btns .zmdi-skip-next {
     font-size: 2.25em;
 }
 
-.mpl4v-control-btns > .zmdi-play,
-.mpl4v-control-btns > .zmdi-pause {
+.mpl4v-control-btns .zmdi-play,
+.mpl4v-control-btns .zmdi-pause {
     font-size: 4em;
     margin: 0;
+
+    width: 0.75em;
 }
 
-.mpl4v-control-btns > .mpl4v-time-lbl {
-    --side-margin: 0.5em;
-
-    font-size: 0.8em;
-    width: 6.5em;
-    align-self: flex-start;
+.mpl4v-control-btns .zmdi-repeat,
+.mpl4v-control-btns .zmdi-shuffle {
+    font-size: 1.2em;
 }
 
-.mpl4v-control-btns > .mpl4v-time-lbl:first-child {
-    margin-right: auto;
-    margin-left: var(--side-margin);
-    text-align: left;
+.mpl4v-control-btns .zmdi-repeat {
+    margin-right: 2px;
 }
-.mpl4v-control-btns > .mpl4v-time-lbl:last-child {
-    margin-left: auto;
-    margin-right: var(--side-margin);
-    text-align: right;
+
+.mpl4v-control-btns .zmdi-shuffle {
+    margin-left: 2px;
+}
+
+.mpl4-controls--right .zmdi {
+    font-size: 2.0em;
+    width: 1em;
+}
+
+.mpl4v-control-btns .mpl4v-vol-ctrl {
+    font-size: 2.4em;
+}
+
+.mpl4v-control-btns .mpl4v-fullscreen,
+.mpl4v-control-btns .zmdi-download {
+    font-size: 2.4em;
 }
 
 .mpl4v-progress-bar {
@@ -69,15 +103,4 @@
     width: 100%;
     height: 3px;
     background-color: darkred;
-}
-
-.mpl4v-btn-wrap {
-    display: inline-flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.mpl4v-btn-wrap > .zmdi {
-    font-size: 2em;
 }
