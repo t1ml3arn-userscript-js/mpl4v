@@ -22,25 +22,30 @@ class App extends React.Component {
 
     render() {
         return (
-        <div>
-            <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
-            <div>
-                <TimeLabel time={ 0 }/> / <TimeLabel time={ 31 }/>
+        <div className={ "mpl4v" }>
+            <div class="mpl4v-screen">
+                {/* <!-- here will be the screen --> */}
             </div>
-            <div>
-                <TimeLabel time={ 21 }/> / <TimeLabel time={ 0 }/>
-            </div>
-            <div>
-                <TimeLabel time={ 45 }/> / <TimeLabel time={ NaN }/>
-            </div>
-            <div>
-                <TimeLabel time={ 709.123 }/> / <TimeLabel time={ 829 }/>
-            </div>
-            <div>
-                <TimeLabel time={ 3721.123 }/> / <TimeLabel time={ 8456 }/>
-            </div>
-            <div>
-                <TimeLabel time={ 3721.123 }/> / <TimeLabel time={ 7271 }/>
+            <div class="mpl4v-controls">
+                <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
+                    <div class="mpl4v-control-btns">
+                        <div class="mpl4v-fl-row mpl4-controls--left ">
+                            <i class="zmdi zmdi-repeat"></i>
+                            <i class="zmdi zmdi-skip-previous"></i>
+                            <i class="zmdi zmdi-play"></i>
+                            <i class="zmdi zmdi-skip-next"></i>
+                            <i class="zmdi zmdi-shuffle"></i>
+                        </div>
+                        <div className="mpl4v-duration">
+                            <TimeLabel time={12345}/> / <TimeLabel time={44444}/>
+                        </div>
+                        <div class="mpl4v-fl-row mpl4-controls--right">
+                            <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
+                            <i class="zmdi zmdi-fullscreen mpl4v-fullscreen"></i>
+                            <i class="zmdi zmdi-settings"></i>
+                            <i class="zmdi zmdi-download"></i>
+                        </div>
+                    </div>
             </div>
         </div>
         )
