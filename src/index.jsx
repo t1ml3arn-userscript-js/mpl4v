@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import Progress from "./components/Progress";
 import TimeLabel from "./components/TimeLabel";
+import Dragger from "./utils/Dragger";
 
 class App extends React.Component {
     constructor(props){
@@ -10,6 +11,12 @@ class App extends React.Component {
         this.state = {
             progress: 33,
         }
+        this.appRef = React.createRef()
+    }
+
+    componentDidMount() {
+        this.dragger = new Dragger(this.appRef.current, ['.mpl4v-control-btns']);
+        this.dragger.enable()
     }
 
     /**
@@ -22,7 +29,7 @@ class App extends React.Component {
 
     render() {
         return (
-        <div className={ "mpl4v" }>
+        <div className={ "mpl4v" } ref={ this.appRef }>
             <div class="mpl4v-screen">
                 {/* <!-- here will be the screen --> */}
             </div>
