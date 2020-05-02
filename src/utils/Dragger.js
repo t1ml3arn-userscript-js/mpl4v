@@ -43,6 +43,7 @@ export default class Dragger {
      */
     startDrag(e) {
         console.log('drag started')
+        this.inDrag = true;
         // calc offset
         // set styles
         // add listeners to move and up events
