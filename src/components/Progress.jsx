@@ -9,8 +9,6 @@ export default class Progress extends Component {
     }
 
     startSeek = event => {
-        // console.log(event);
-        // return;
         // I dont want this event to be heared
         // outside this component
         event.stopPropagation(); 
