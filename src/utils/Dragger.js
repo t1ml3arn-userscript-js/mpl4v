@@ -36,7 +36,7 @@ export default class Dragger {
                 // this should disable text selection
                 e.preventDefault()
                 // no one will recieve this event
-                e.stopImmediatePropagationn()
+                e.stopImmediatePropagation()
                 this.startDrag(e)
             }
         }
