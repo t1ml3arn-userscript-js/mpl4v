@@ -29,7 +29,9 @@ class App extends React.Component {
 
     render() {
         return (
-        <div className={ "mpl4v" } ref={ this.appRef }>
+        <div className={ "mpl4v" } ref={ this.appRef }
+            style={{ position: "fixed", right: "50px", bottom: "50px" }}
+        >
             <div class="mpl4v-screen">
                 {/* <!-- here will be the screen --> */}
             </div>
