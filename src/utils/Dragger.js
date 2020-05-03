@@ -25,6 +25,7 @@ export default class Dragger {
      * @param {MouseEvent} e 
      */
     onDocumentMouseDown(e) {
+        // NOTE event.button = 0 means main button (usually the left button)
         if (e.button == 0 && !this.inDrag){
             const match = this.initiators.find(selector => e.target.matches(selector));
             if (match) {
