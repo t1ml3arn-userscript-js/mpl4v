@@ -42,7 +42,7 @@ class App extends React.Component {
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
         >
-            <div class={`mpl4v-screen ${showScreen ? '' : 'mpl4v--hidden'}`}>
+            <div class={`mpl4v-screen mpl4v-drag-initiator ${showScreen ? '' : 'mpl4v--hidden'}`}>
                 {/* <!-- here will be the screen --> */}
             </div>
             <div class="mpl4v-controls">
