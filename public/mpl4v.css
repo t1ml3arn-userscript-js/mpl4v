@@ -17,6 +17,10 @@
     /* user-select: none; */
 }
 
+.mpl4v--hidden {
+    display: none;
+}
+
 .mpl4v-fl-row {
     display: inline-flex;
     flex-flow: row nowrap;
