@@ -9,6 +9,8 @@ export default class Progress extends Component {
     }
 
     startSeek = event => {
+        // this should deisable text selection
+        event.preventDefault()
         // I dont want this event to be heared
         // outside this component
         event.stopPropagation(); 
