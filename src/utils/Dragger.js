@@ -34,7 +34,9 @@ export default class Dragger {
             const match = this.initiators.find(selector => e.target.matches(selector));
             if (match) {
                 // this should disable text selection
-                e.preventDefault()
+                // sadly, this also disables ability to change cursor icon
+                // TODO find a way to disable text selection only
+                // e.preventDefault()
                 // no one will recieve this event
                 e.stopImmediatePropagation()
                 this.startDrag(e)
