@@ -45,9 +45,7 @@ class App extends React.Component {
                             <i class="zmdi zmdi-skip-next"></i>
                             <i class="zmdi zmdi-shuffle"></i>
                         </div>
-                        <div className="mpl4v-duration">
-                            <TimeLabel time={12345}/> / <TimeLabel time={44444}/>
-                        </div>
+                        <TimeLabel time={12345} duration={44444}/>
                         <div class="mpl4v-fl-row mpl4-controls--right">
                             <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
                             <i class="zmdi zmdi-fullscreen mpl4v-fullscreen"></i>
