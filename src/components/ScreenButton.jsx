@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function ScreenButton(props) {
     const {showScreen, toogleScreen} = props;
@@ -9,4 +10,9 @@ export default function ScreenButton(props) {
         onClick={toogleScreen}
     ></i>
     )    
+}
+
+ScreenButton.propTypes = {
+    showScreen: PropTypes.bool.isRequired,
+    toogleScreen: PropTypes.func.isRequired,
 }
