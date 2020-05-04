@@ -4,6 +4,7 @@ import Progress from "./components/Progress";
 import TimeLabel from "./components/TimeLabel";
 import Dragger from "./utils/Dragger";
 import ScreenButton from "./components/ScreenButton";
+import Screen from "./components/Screen"
 
 class App extends React.Component {
     constructor(props){
@@ -11,7 +12,8 @@ class App extends React.Component {
 
         this.state = {
             progress: 33,
-            showScreen: false,
+            showScreen: true,
+            fullscreen: false,
         }
         this.appRef = React.createRef()
     }
@@ -42,7 +44,7 @@ class App extends React.Component {
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
         >
-            <div class={`mpl4v-screen mpl4v-drag-initiator ${showScreen ? '' : 'mpl4v--hidden'}`}></div>
+            <Screen showScreen={ showScreen } enterFullscreen={()=>console.log('entered')}/>
             <div class="mpl4v-controls">
                 <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
                     <div class="mpl4v-control-btns mpl4v-drag-initiator">
