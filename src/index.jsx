@@ -15,7 +15,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.dragger = new Dragger(this.appRef.current, ['.mpl4v-control-btns']);
+        this.dragger = new Dragger(this.appRef.current, ['.mpl4v-drag-initiator']);
         this.dragger.enable()
     }
 
@@ -37,7 +37,7 @@ class App extends React.Component {
             </div>
             <div class="mpl4v-controls">
                 <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
-                    <div class="mpl4v-control-btns">
+                    <div class="mpl4v-control-btns mpl4v-drag-initiator">
                         <div class="mpl4v-fl-row mpl4-controls--left ">
                             <i class="zmdi zmdi-repeat"></i>
                             <i class="zmdi zmdi-skip-previous"></i>
