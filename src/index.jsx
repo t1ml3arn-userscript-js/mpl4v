@@ -60,7 +60,7 @@ class App extends React.Component {
                             <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
                             <ScreenButton 
                                 showScreen={this.state.showScreen}
-                                togloeScreen={this.toogleScreen}
+                                toogleScreen={this.toogleScreen}
                             />
                             <i class="zmdi zmdi-download"></i>
                         </div>
