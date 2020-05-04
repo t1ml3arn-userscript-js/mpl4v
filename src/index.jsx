@@ -29,7 +29,7 @@ class App extends React.Component {
         this.setState({ progress: value });
     }
 
-    showScreen = (e) => {
+    toogleScreen = (e) => {
         this.setState((state) => {
             return { showScreen: !state.showScreen }
         })
@@ -60,7 +60,7 @@ class App extends React.Component {
                             <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
                             <ScreenButton 
                                 showScreen={this.state.showScreen}
-                                toogleScreen={this.showScreen}
+                                togloeScreen={this.toogleScreen}
                             />
                             <i class="zmdi zmdi-download"></i>
                         </div>
