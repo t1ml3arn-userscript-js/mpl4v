@@ -12,6 +12,11 @@
     box-sizing: border-box;
 }
 
+/* class to be a marker of object that can start drag */
+.mpl4v-drag-initiator {
+    /* user-select: none; */
+}
+
 .mpl4v-fl-row {
     display: inline-flex;
     flex-flow: row nowrap;
