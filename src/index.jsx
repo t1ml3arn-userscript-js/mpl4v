@@ -30,8 +30,8 @@ class App extends React.Component {
     }
 
     showScreen = (e) => {
-        this.setState((prevState) => {
-            return { showScreen: !prevState.showScreen }
+        this.setState((state) => {
+            return { showScreen: !state.showScreen }
         })
     }
 
