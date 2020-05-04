@@ -46,10 +46,8 @@
 
 .mpl4v-control-btns .mpl4v-duration {
     align-self: center;
-}
-
-.mpl4v-time-label {
     font-size: 1.2em;
+    user-select: none;
 }
 
 .mpl4v .zmdi {
