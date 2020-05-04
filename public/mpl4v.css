@@ -1,4 +1,12 @@
 .mpl4v {
+    /* sizes */
+    --controls-width: 340px;
+    --screen-height-default: var(--controls-width);
+
+    /* colors */
+    --screen-bg: rgb(43, 2, 19);
+
+    /* everything else */
     all: initial;
     font-family: Arial, sans-serif;
     font-size: 10px;
@@ -23,6 +31,16 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
+}
+
+.mpl4v-screen {
+    display: inline-block;
+    width: var(--controls-width);
+    height: var(--screen-height-default);
+    margin-bottom: 1em;
+    position: absolute;
+    bottom: 100%;
+    background-color: var(--screen-bg);
 }
 
 .mpl4v-controls {
