@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
 
 export default class Progress extends Component {
     constructor(props) {
@@ -57,6 +58,12 @@ export default class Progress extends Component {
             </div>
         )
     }
+}
+
+Progress.propTypes = {
+    progress: PropTypes.number.isRequired,
+    onProgressChange: PropTypes.func.isRequired,
+    isHorizontal: PropTypes.bool.isRequired
 }
 
 const Bar = props => {
