@@ -73,8 +73,8 @@ class App extends React.Component {
         >
             <Screen 
                 showScreen={ showScreen } 
-                requestFullscreen={ this.requestFullscreen }
                 fullscreen={ fullscreen }
+                toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
             />
             <MediaControls 
                 progress={ progress }
