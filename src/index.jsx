@@ -6,6 +6,10 @@ import Dragger from "./utils/Dragger";
 import ScreenButton from "./components/ScreenButton";
 import Screen from "./components/Screen"
 
+const toogleKey = key => state => {
+    return {[key]: !state[key]}
+}
+
 class App extends React.Component {
     constructor(props){
         super(props)
@@ -32,9 +36,9 @@ class App extends React.Component {
     }
 
     toogleScreen = (e) => {
-        this.setState((state) => {
-            return { showScreen: !state.showScreen }
-        })
+        this.setState(toogleKey('showScreen'))
+    }
+
     }
 
     render() {
