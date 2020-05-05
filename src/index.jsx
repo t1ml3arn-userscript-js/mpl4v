@@ -92,8 +92,6 @@ class App extends React.Component {
                     <div class="mpl4v-fl-row mpl4-controls--right">
                         <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
                         <ScreenButton 
-                            <ScreenButton 
-                        <ScreenButton 
                             showScreen={this.state.showScreen}
                             toogleScreen={this.toogleScreen}
                         />
