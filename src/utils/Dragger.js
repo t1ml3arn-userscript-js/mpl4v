@@ -23,6 +23,15 @@ export default class Dragger {
         
         this.enabled = true;
     }
+    
+    disable() {
+        if (!this.enabled) return
+        
+        this.stopDrag()
+        this.enabled = false
+
+        document.removeEventListener('mousedown', this.onDocumentMouseDown);
+    }
 
     /**
      * 
@@ -82,7 +91,7 @@ export default class Dragger {
     }
 
     stopDrag(e) {
-        if (!this.inDrag || e.button != 0) return;
+        if (e && e.button != 0) return
 
         document.removeEventListener('mousemove', this.onDrag)
         document.removeEventListener('mouseup', this.stopDrag)
