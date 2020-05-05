@@ -54,7 +54,7 @@ export default class Progress extends Component {
                 ref={ this.barEltRef }
                 onMouseDown={ this.startSeek }
             >
-                <Bar progress={ progress }/>
+                <Bar classes={ "mpl4v-bar-progress-color" } progress={ progress }/>
             </div>
         )
     }
@@ -67,7 +67,7 @@ Progress.propTypes = {
 }
 
 function Bar(props) {
-    const { progress } = props;
+    const { progress, classes } = props;
 
     const styles = {
         width: `${progress}%`,
@@ -82,12 +82,16 @@ function Bar(props) {
     .indicator--vert    { width: value; height: calc() }
     */
 
-    return <div className={ "mpl4v-progress__bar--hor" } style={ styles }></div>
+    return <div className={ `mpl4v-progress__bar--hor ${classes}` } style={ styles }></div>
+}
+
+Bar.defaultProps = {
+    classes: ""
 }
 
 Bar.propTypes = {
     progress: PropTypes.number.isRequired,
-    // className: PropTypes.string.isRequired,
+    classes: PropTypes.string
 }
 
 class ProgressCalculator {
