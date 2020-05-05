@@ -5,6 +5,7 @@ import TimeLabel from "./components/TimeLabel";
 import Dragger from "./utils/Dragger";
 import ScreenButton from "./components/ScreenButton";
 import Screen from "./components/Screen"
+import fscreen from 'fscreen'
 
 const toogleKey = key => state => {
     return {[key]: !state[key]}
@@ -25,6 +26,28 @@ class App extends React.Component {
     componentDidMount() {
         this.dragger = new Dragger(this.appRef.current, ['.mpl4v-drag-initiator']);
         this.dragger.enable()
+
+        fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
+    }
+
+    handleFullscreenChange = event => {
+        // if it is fullscreen and it is OUR fulslcreen
+        if (fscreen.fullscreenElement) {
+            if (fscreen.fullscreenElement == this.appRef.current) {
+                // dragger must be disabled in fullscreen mode
+                this.dragger.disable()
+                this.setState({ fullscreen: true })
+            }
+        } else {
+            this.setState(state => {
+                // we update our fullscreen state only if 
+                // it was requested from us
+                if (state.fullscreen) {
+                    this.dragger.enable()
+                    return { fullscreen: false }
+                }
+            })
+        }
     }
 
     /**
@@ -39,6 +62,8 @@ class App extends React.Component {
         this.setState(toogleKey('showScreen'))
     }
 
+    requestFullscreen = () => {
+        fscreen.requestFullscreen(this.appRef.current)
     }
 
     render() {
@@ -48,7 +73,10 @@ class App extends React.Component {
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
         >
-            <Screen showScreen={ showScreen } enterFullscreen={()=>console.log('entered')}/>
+            <Screen 
+                showScreen={ showScreen } 
+                requestFullscreen={ this.requestFullscreen }
+            />
             <div class="mpl4v-controls">
                 <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
                     <div class="mpl4v-control-btns mpl4v-drag-initiator">
