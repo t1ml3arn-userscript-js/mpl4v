@@ -1,11 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import Progress from "./components/Progress";
-import TimeLabel from "./components/TimeLabel";
 import Dragger from "./utils/Dragger";
-import ScreenButton from "./components/ScreenButton";
 import Screen from "./components/Screen"
 import fscreen from 'fscreen'
+import MediaControls from './components/MediaControls'
 
 const toogleKey = key => state => {
     return {[key]: !state[key]}
@@ -67,7 +65,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { showScreen, fullscreen } = this.state;
+        const { showScreen, fullscreen, progress } = this.state;
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
@@ -78,27 +76,13 @@ class App extends React.Component {
                 requestFullscreen={ this.requestFullscreen }
                 fullscreen={ fullscreen }
             />
-            <div class="mpl4v-controls" data-fullscreen={ fullscreen }>
-                <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
-                <div class="mpl4v-control-btns mpl4v-drag-initiator">
-                    <div class="mpl4v-fl-row mpl4-controls--left ">
-                        <i class="zmdi zmdi-repeat"></i>
-                        <i class="zmdi zmdi-skip-previous"></i>
-                        <i class="zmdi zmdi-play"></i>
-                        <i class="zmdi zmdi-skip-next"></i>
-                        <i class="zmdi zmdi-shuffle"></i>
-                    </div>
-                    <TimeLabel time={12345} duration={44444}/>
-                    <div class="mpl4v-fl-row mpl4-controls--right">
-                        <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
-                        <ScreenButton 
-                            showScreen={this.state.showScreen}
-                            toogleScreen={this.toogleScreen}
-                        />
-                        <i class="zmdi zmdi-download"></i>
-                    </div>
-                </div>
-            </div>
+            <MediaControls 
+                progress={ progress }
+                fullscreen={ fullscreen }
+                onProgressChange={ this.updateProgress }
+                showScreen={ showScreen }
+                toogleScreen={ fullscreen ? fscreen.exitFullscreen : this.toogleScreen }
+            />
         </div>
         )
     }
