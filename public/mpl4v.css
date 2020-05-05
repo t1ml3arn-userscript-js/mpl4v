@@ -150,4 +150,11 @@
     background-color: #654141;
 }
 
+.mpl4v-progress__bar--hor {
+    display: block;
+    height: 100%;
+    background-color: #f5187f;
+    border-radius: inherit;
+}
+
 .mpl4v--hidden { display: none; }

@@ -66,19 +66,28 @@ Progress.propTypes = {
     isHorizontal: PropTypes.bool.isRequired
 }
 
-const Bar = props => {
+function Bar(props) {
     const { progress } = props;
+
     const styles = {
         width: `${progress}%`,
-        display: 'block',
-        backgroundColor: '#f5187f',
-        height: '100%',
-        margin: '0',
-        padding: '0',
-        borderRadius: 'inherit'
     };
 
-    return <div style={ styles }></div>
+    // what is common for hor and vert bars ?
+    /* 
+    .bar--hor           { width: value; height: value }
+    .indicator--hor     { width: calc(); height: value }
+
+    .bar--vert          { width: value; height: value }
+    .indicator--vert    { width: value; height: calc() }
+    */
+
+    return <div className={ "mpl4v-progress__bar--hor" } style={ styles }></div>
+}
+
+Bar.propTypes = {
+    progress: PropTypes.number.isRequired,
+    // className: PropTypes.string.isRequired,
 }
 
 class ProgressCalculator {
