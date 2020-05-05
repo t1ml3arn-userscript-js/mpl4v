@@ -1,5 +1,5 @@
 import React from 'react'
-import PropType from 'prop-types'
+import PropTypes from 'prop-types'
 
 export default function Screen(props) {
     const {showScreen, toogleFullscreen, fullscreen} = props
@@ -16,7 +16,7 @@ export default function Screen(props) {
 }
 
 Screen.propTypes = {
-    showScreen: PropType.bool.isRequired,
-    fullscreen: PropType.bool.isRequired,
-    toogleFullscreen: PropType.func.isRequired,
+    showScreen: PropTypes.bool.isRequired,
+    fullscreen: PropTypes.bool.isRequired,
+    toogleFullscreen: PropTypes.func.isRequired,
 }
