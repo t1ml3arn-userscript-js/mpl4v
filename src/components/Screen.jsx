@@ -1,5 +1,6 @@
 import React from 'react'
 import fscreen from 'fscreen'
+import PropType from 'prop-types'
 
 export default class Screen extends React.Component {
     constructor(props) {
@@ -42,4 +43,9 @@ export default class Screen extends React.Component {
         </div>
         )
     }
+}
+
+Screen.propTypes = {
+    showScreen: PropType.bool.isRequired,
+    requestFullscreen: PropType.func.isRequired,
 }
