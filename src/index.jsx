@@ -67,7 +67,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { showScreen } = this.state;
+        const { showScreen, fullscreen } = this.state;
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
@@ -76,8 +76,9 @@ class App extends React.Component {
             <Screen 
                 showScreen={ showScreen } 
                 requestFullscreen={ this.requestFullscreen }
+                fullscreen={ fullscreen }
             />
-            <div class="mpl4v-controls">
+            <div class="mpl4v-controls" data-fullscreen={ fullscreen }>
                 <Progress progress={ this.state.progress } onProgressChange={ this.updateProgress }/>
                     <div class="mpl4v-control-btns mpl4v-drag-initiator">
                         <div class="mpl4v-fl-row mpl4-controls--left ">
