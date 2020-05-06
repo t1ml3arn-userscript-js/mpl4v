@@ -29,4 +29,5 @@ export default class Volume extends ProgressBar {
 
 Volume.propTypes = {
     volume: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired
 }
