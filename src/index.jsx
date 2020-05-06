@@ -17,6 +17,7 @@ class App extends React.Component {
             progress: 33,
             showScreen: true,
             fullscreen: false,
+            volume: 0.5,
         }
         this.appRef = React.createRef()
     }
@@ -56,6 +57,12 @@ class App extends React.Component {
         this.setState({ progress: value });
     }
 
+    updateVolume = newVolume => {
+        // newVolume is in range [0, 100]
+        // we need it to be in range [0, 1]
+        this.setState({ volume: newVolume*0.01 })
+    }
+
     toogleScreen = (e) => {
         this.setState(toogleKey('showScreen'))
     }
@@ -66,6 +73,7 @@ class App extends React.Component {
 
     render() {
         const { showScreen, fullscreen, progress } = this.state;
+        const { volume } = this.state
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
@@ -82,6 +90,8 @@ class App extends React.Component {
                 onProgressChange={ this.updateProgress }
                 showScreen={ showScreen }
                 toogleScreen={ fullscreen ? fscreen.exitFullscreen : this.toogleScreen }
+                volume={ volume }
+                onVolumeChange={ this.updateVolume }
             />
         </div>
         )

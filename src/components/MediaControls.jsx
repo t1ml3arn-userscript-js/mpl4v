@@ -8,6 +8,7 @@ export default function MediaControls(props) {
     const { fullscreen } = props
     const dragInitier = fullscreen ? '' : "mpl4v-drag-initiator"
     const { progress, onProgressChange } = props
+    const { volume, onVolumeChange } = props
     
     return (
     <div class="mpl4v-controls" data-fullscreen={ fullscreen }>
@@ -28,7 +29,7 @@ export default function MediaControls(props) {
                 <i class="zmdi zmdi-download"></i>
             </div>
         </div>
-        <Volume volume={ 0.5 } onChange={ () => 0 }/>
+        <Volume volume={ volume } onChange={ onVolumeChange }/>
     </div>
     )
 }
