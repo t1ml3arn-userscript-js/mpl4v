@@ -174,7 +174,7 @@
 
 .mpl4v-playback-progressbar__underlay {
     width: 100%;
-    height: calc(var(--bar-size) * 4);
+    height: 1.6em;
     position: absolute;
     left: 0;
     bottom: -2px;
