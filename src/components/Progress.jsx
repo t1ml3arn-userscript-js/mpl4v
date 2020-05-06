@@ -6,7 +6,7 @@ import ProgressBar from './ProgressBar'
 export default class PlaybackProgress extends ProgressBar {
     static propTypes = {
         progress: PropTypes.number.isRequired,
-        onProgressChange: PropTypes.func.isRequired,
+        onChange: PropTypes.func.isRequired,
     }
 
     constructor(props) {
