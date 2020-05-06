@@ -10,7 +10,7 @@ import Bar from './Bar';
  * 
  * Properties:
  *  progress:number is required - indicates current progress
- *  onProgressChange:func is required - callback to dispatch progress changing
+ *  onChange:func is required - callback to dispatch progress changing
  *  isHorizontal:bool - direction(horizontal or vertical), default is true
  * 
  * State:
@@ -23,7 +23,7 @@ import Bar from './Bar';
 class ProgressBar extends React.Component {
     static propTypes = {
         progress: PropTypes.number.isRequired,
-        onProgressChange: PropTypes.func.isRequired,
+        onChange: PropTypes.func.isRequired,
         isHorizontal: PropTypes.bool
     }
 
@@ -53,7 +53,7 @@ class ProgressBar extends React.Component {
         const progress = this.calculator.getProgress();
 
         // lift progress value up
-        this.props.onProgressChange(Math.round(progress));
+        this.props.onChange(Math.round(progress));
 
         // enable control
         document.addEventListener('mouseup', this.stopSeek);
@@ -78,7 +78,7 @@ class ProgressBar extends React.Component {
         progress = Math.min(progress, 100)
         progress = Math.max(progress, 0)
         
-        this.props.onProgressChange(Math.round(progress));
+        this.props.onChange(Math.round(progress));
     }
 }
 
