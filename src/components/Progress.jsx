@@ -4,6 +4,12 @@ import Bar from "./Bar";
 import ProgressCalculator from "../utils/ProgressCalculator";
 
 export default class PlaybackProgress extends Component {
+    static propTypes = {
+        progress: PropTypes.number.isRequired,
+        onProgressChange: PropTypes.func.isRequired,
+        isHorizontal: PropTypes.bool.isRequired
+    }
+    
     constructor(props) {
         super(props)
 
@@ -78,10 +84,4 @@ export default class PlaybackProgress extends Component {
         </div>
         )
     }
-}
-
-PlaybackProgress.propTypes = {
-    progress: PropTypes.number.isRequired,
-    onProgressChange: PropTypes.func.isRequired,
-    isHorizontal: PropTypes.bool.isRequired
 }
