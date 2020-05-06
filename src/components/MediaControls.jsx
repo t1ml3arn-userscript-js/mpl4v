@@ -7,10 +7,11 @@ import Volume from "./VolumeBar";
 export default function MediaControls(props) {
     const { fullscreen } = props
     const dragInitier = fullscreen ? '' : "mpl4v-drag-initiator"
-
+    const { progress, onProgressChange } = props
+    
     return (
     <div class="mpl4v-controls" data-fullscreen={ fullscreen }>
-        <PlaybackProgress {...props} isHorizontal={ true } />
+        <PlaybackProgress progress={ progress } onChange={ onProgressChange } />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div class="mpl4v-fl-row mpl4-controls--left ">
                 <i class="zmdi zmdi-repeat"></i>
