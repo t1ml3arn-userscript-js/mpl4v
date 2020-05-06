@@ -2,6 +2,7 @@ import React from 'react'
 import PlaybackProgress from './Progress'
 import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
+import Volume from "./VolumeBar";
 
 export default function MediaControls(props) {
     const { fullscreen } = props
