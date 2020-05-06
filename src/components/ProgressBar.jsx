@@ -2,6 +2,20 @@ import React from 'react'
 import ProgressCalculator from '../utils/ProgressCalculator';
 import PropTypes from 'prop-types'
 
+/**
+ * Basic code to control progress bar.
+ * Component does not have render(), you should implement
+ * it in a subclass.
+ * 
+ * Properties:
+ *  progress:number is required - indicates current progress
+ *  onProgressChange:func is required - callback to dispatch progress changing
+ *  isHorizontal:bool - direction(horizontal or vertical), default is true
+ * 
+ * State:
+ *  seek:bool - shows wether the component in seek mode (controlled by user)
+ *  
+ */
 class ProgressBar extends React.Component {
     static propTypes = {
         progress: PropTypes.number.isRequired,
