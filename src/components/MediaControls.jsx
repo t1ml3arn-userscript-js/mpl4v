@@ -1,5 +1,5 @@
 import React from 'react'
-import PlaybackProgress from './Progress'
+import PlaybackProgress from './PlaybackProgress'
 import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
 import Volume from "./VolumeBar";
