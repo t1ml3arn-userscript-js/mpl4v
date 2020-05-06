@@ -5,9 +5,9 @@
 
     /* colors */
     --screen-bg: rgb(43, 2, 19);
-    --playback-bar-empty-color: rgb(124,  0, 90);
-    --playback-bar-load-color: rgb(162, 0, 117);
-    --playback-bar-seek-color: rgb(203, 0, 147);
+    --playback-bar-empty-color: rgb(82, 0, 60);
+    --playback-bar-buff-color: rgb(162, 0, 117);
+    --playback-bar-seek-color: rgba(255, 218, 245, 0.5);
     --playback-bar-progress-color: rgb(254, 0, 184);
 
     --mpl4v-z: 999;
@@ -161,7 +161,7 @@
 }
 
 .mpl4v-bar-empty-color { background-color: var(--playback-bar-empty-color); }
-.mpl4v-bar-load-color { background-color: var(--playback-bar-load-color); }
+.mpl4v-bar-buff-color { background-color: var(--playback-bar-buff-color); }
 .mpl4v-bar-seek-color { background-color: var(--playback-bar-seek-color); }
 .mpl4v-bar-progress-color { background-color: var(--playback-bar-progress-color); }
 
