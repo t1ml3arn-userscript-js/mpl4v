@@ -1,7 +1,7 @@
 .mpl4v {
     /* sizes */
     --controls-width: 340px;
-    --screen-height-default: var(--controls-width);
+    --screen-height-default: calc(340px*0.5);
 
     /* colors */
     --screen-bg: rgb(43, 2, 19);
