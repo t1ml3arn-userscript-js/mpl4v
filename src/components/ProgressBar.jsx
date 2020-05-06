@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 class ProgressBar extends React.Component {
     static propTypes = {
         progress: PropTypes.number.isRequired,
-        onchange: PropTypes.func.isRequired,
+        onProgressChange: PropTypes.func.isRequired,
         isHorizontal: PropTypes.bool
     }
 
@@ -35,7 +35,7 @@ class ProgressBar extends React.Component {
         const progress = this.calculator.getProgress();
 
         // lift progress value up
-        this.props.onchange(Math.round(progress));
+        this.props.onProgressChange(Math.round(progress));
 
         // enable control
         document.addEventListener('mouseup', this.stopSeek);
@@ -60,7 +60,7 @@ class ProgressBar extends React.Component {
         progress = Math.min(progress, 100)
         progress = Math.max(progress, 0)
         
-        this.props.onchange(Math.round(progress));
+        this.props.onProgressChange(Math.round(progress));
     }
 }
 
