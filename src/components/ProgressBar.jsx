@@ -1,6 +1,7 @@
 import React from 'react'
 import ProgressCalculator from '../utils/ProgressCalculator';
 import PropTypes from 'prop-types'
+import Bar from './Bar';
 
 /**
  * Basic code to control progress bar.
@@ -80,7 +81,7 @@ class ProgressBar extends React.Component {
 
 export default ProgressBar;
 
-class Test extends ProgressBar {
+export class Test extends ProgressBar {
     constructor(props) {
         super(props)
     }
@@ -92,7 +93,11 @@ class Test extends ProgressBar {
         return (
         <div className={ 'mpl4v-volume-panel' }>
             <i class="zmdi zmdi-minus mpl4v-volume-down"></i>
-            <div className={ `mpl4v-volume-bar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }>
+            <div 
+                className={ `mpl4v-volume-bar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
+                onMouseDown={ this.startSeek }
+                ref={ this.barEltRef }
+            >
                 <Bar classes={ 'mpl4v-bar-progress-color' } progress={ progress }/>
             </div>
             <i class="zmdi zmdi-plus mpl4v-volume-up"></i>
