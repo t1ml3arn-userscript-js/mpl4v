@@ -16,6 +16,9 @@ import Bar from './Bar';
  * State:
  *  seek:bool - shows wether the component in seek mode (controlled by user)
  *  
+ * Refs:
+ *  barEltRef - refers to an element that is progressbar, 
+ *              the element's width(or height) is used to calculate progress
  */
 class ProgressBar extends React.Component {
     static propTypes = {
