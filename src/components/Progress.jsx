@@ -137,8 +137,8 @@ class ProgressCalculator {
      */
     update(event) {
         // set current mouse coord in page scope
-        this.currentX = event.x;
-        this.currentY = event.y;
+        this.currentX = event.pageX;
+        this.currentY = event.pageY;
     }
 
     /**
