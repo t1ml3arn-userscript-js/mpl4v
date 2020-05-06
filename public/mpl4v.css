@@ -148,9 +148,11 @@
 }
 
 .mpl4v-playback-progressbar {
+    --bar-size: 3px;
+
     display: block;
     width: 100%;
-    height: 3px;
+    height: var(--bar-size);
     position: absolute;
     bottom: 100%;
     background-color: var(--playback-bar-empty-color);
@@ -158,7 +160,7 @@
 
 .mpl4v-playback-progressbar:hover {
     position: absolute;
-    height: 8px;
+    height: calc(var(--bar-size)*2);
     transition: 'height';
 }
 
@@ -168,6 +170,31 @@
     position: absolute;
     left: 0px;
     right: 0px;
+}
+
+.mpl4v-playback-progressbar__underlay {
+    width: 100%;
+    height: calc(var(--bar-size) * 4);
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    background: transparent;
+}
+
+.mpl4v-playback-progressbar__head {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    margin-top: calc(var(--bar-size) * 4.5 * -0.5);
+    transform: translateX(-50%);
+    background-color: var(--playback-bar-progress-color);
+    border-radius: 50%;
+}
+
+.mpl4v-playback-progressbar:hover .mpl4v-playback-progressbar__head {
+    width: calc(var(--bar-size) * 4.5);
+    height: calc(var(--bar-size) * 4.5);
 }
 
 .mpl4v-bar--hor {
