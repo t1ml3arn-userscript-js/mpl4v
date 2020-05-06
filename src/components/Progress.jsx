@@ -123,11 +123,11 @@ class ProgressCalculator {
     init(event, elt, isHorizontal = true) {
         this.elt = elt;
         this.isHorizontal = isHorizontal;
-        const e = event;
         // calculate and set origin coordinate 
         // of clicked element in page scope
-        this.originX = e.pageX - e.offsetX;
-        this.originY = e.pageY - e.offsetY;
+        const rect = elt.getBoundingClientRect()
+        this.originX = rect.left;
+        this.originY = rect.top;
         this.update(event);
     }
 
