@@ -1,15 +1,15 @@
 import React from 'react'
-import Progress from './Progress'
+import PlaybackProgress from './Progress'
 import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
 
 export default function MediaControls(props) {
     const { fullscreen } = props
     const dragInitier = fullscreen ? '' : "mpl4v-drag-initiator"
-    
+
     return (
     <div class="mpl4v-controls" data-fullscreen={ fullscreen }>
-        <Progress {...props} isHorizontal={ true } />
+        <PlaybackProgress {...props} isHorizontal={ true } />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div class="mpl4v-fl-row mpl4-controls--left ">
                 <i class="zmdi zmdi-repeat"></i>

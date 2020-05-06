@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types'
 
-export default class Progress extends Component {
+export default class PlaybackProgress extends Component {
     constructor(props) {
         super(props)
 
@@ -49,18 +49,20 @@ export default class Progress extends Component {
         const { progress } = this.props;
         
         return (
-            <div 
-                className={ "mpl4v-progress-bar" }
-                ref={ this.barEltRef }
-                onMouseDown={ this.startSeek }
-            >
-                <Bar classes={ "mpl4v-bar-progress-color" } progress={ progress }/>
-            </div>
+        <div 
+            className={ "mpl4v-playback-progressbar" }
+            ref={ this.barEltRef }
+            onMouseDown={ this.startSeek }
+        >
+            <Bar classes={ "mpl4v-bar-buff-color"} progress={ 90 }/>
+            <Bar classes={ "mpl4v-bar-seek-color"} progress={ 60 }/>
+            <Bar classes={ "mpl4v-bar-progress-color"} progress={ progress }/>
+        </div>
         )
     }
 }
 
-Progress.propTypes = {
+PlaybackProgress.propTypes = {
     progress: PropTypes.number.isRequired,
     onProgressChange: PropTypes.func.isRequired,
     isHorizontal: PropTypes.bool.isRequired
@@ -82,7 +84,7 @@ function Bar(props) {
     .indicator--vert    { width: value; height: calc() }
     */
 
-    return <div className={ `mpl4v-progress__bar--hor ${classes}` } style={ styles }></div>
+    return <div className={ `mpl4v-playback-progressbar__bar mpl4v-bar--hor ${classes}` } style={ styles }></div>
 }
 
 Bar.defaultProps = {

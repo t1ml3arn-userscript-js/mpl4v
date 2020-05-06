@@ -154,8 +154,30 @@
     background-color: var(--playback-bar-empty-color);
 }
 
-.mpl4v-progress__bar--hor {
+.mpl4v-playback-progressbar {
     display: block;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 100%;
+    background-color: var(--playback-bar-empty-color);
+}
+
+.mpl4v-playback-progressbar:hover {
+    position: absolute;
+    height: 8px;
+    transition: 'height';
+}
+
+.mpl4v-playback-progressbar__bar {
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+}
+
+.mpl4v-bar--hor {
     height: 100%;
     border-radius: inherit;
 }
