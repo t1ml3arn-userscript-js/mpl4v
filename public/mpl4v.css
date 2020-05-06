@@ -29,10 +29,10 @@
 }
 
 /* class to be a marker of object that can start drag */
+.mpl4v-drag-initiator:hover * { cursor: initial; }
 .mpl4v-drag-initiator:link { cursor: grabbing; }
 .mpl4v-drag-initiator:hover { cursor: grab; }
 .mpl4v-drag-initiator:active { cursor: grabbing; }
-.mpl4v-drag-initiator:hover * { cursor: initial; }
 
 .mpl4v-fl-row {
     display: inline-flex;
