@@ -158,8 +158,8 @@
     background-color: var(--playback-bar-empty-color);
 }
 
-.mpl4v-playback-progressbar:hover {
-    position: absolute;
+.mpl4v-playback-progressbar:hover,
+.mpl4v-playback-progressbar--seek {
     height: calc(var(--bar-size)*2);
     transition: 'height';
 }
@@ -192,7 +192,8 @@
     border-radius: 50%;
 }
 
-.mpl4v-playback-progressbar:hover .mpl4v-playback-progressbar__head {
+.mpl4v-playback-progressbar:hover .mpl4v-playback-progressbar__head,
+.mpl4v-playback-progressbar--seek .mpl4v-playback-progressbar__head {
     width: calc(var(--bar-size) * 4.5);
     height: calc(var(--bar-size) * 4.5);
 }

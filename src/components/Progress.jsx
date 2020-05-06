@@ -7,6 +7,9 @@ export default class PlaybackProgress extends Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            seek: false,
+        }
         this.calculator = new ProgressCalculator()
         this.barEltRef = React.createRef()
     }
@@ -28,11 +31,15 @@ export default class PlaybackProgress extends Component {
         // enable control
         document.addEventListener('mouseup', this.stopSeek);
         document.addEventListener('mousemove', this.seek);
+
+        this.setState({ seek: true })
     }
     
     stopSeek = event => {
         document.removeEventListener('mouseup', this.stopSeek);
         document.removeEventListener('mousemove', this.seek);
+
+        this.setState({ seek: false })
     }
 
     seek = event => {
@@ -49,6 +56,7 @@ export default class PlaybackProgress extends Component {
 
     render() {
         const { progress } = this.props;
+        const { seek } = this.state
         const headStyle = {
             left: `${progress}%`,
             // Below is a way to contain the head only
@@ -58,7 +66,7 @@ export default class PlaybackProgress extends Component {
         
         return (
         <div 
-            className={ "mpl4v-playback-progressbar" }
+            className={ `mpl4v-playback-progressbar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
             ref={ this.barEltRef }
             onMouseDown={ this.startSeek }
         >
