@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types'
 
-export function Bar(props) {
+export default function Bar(props) {
     const { progress, classes } = props;
     const styles = {
         width: `${progress}%`,
