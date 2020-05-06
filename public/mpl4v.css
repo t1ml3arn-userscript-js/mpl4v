@@ -208,4 +208,28 @@
 .mpl4v-bar-seek-color { background-color: var(--playback-bar-seek-color); }
 .mpl4v-bar-progress-color { background-color: var(--playback-bar-progress-color); }
 
+.mpl4v-volume-panel {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 70%;
+    height: 3em;
+    border: 1px solid black;
+}
+
+.mpl4v-volume-panel .mpl4v-volume-up,
+.mpl4v-volume-panel .mpl4v-volume-down {
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.mpl4v-volume-bar {
+    width: 75%;
+    height: 1em;
+    height: 6px;
+    position: relative;
+    background-color: #333;
+}
+
 .mpl4v--hidden { display: none; }
