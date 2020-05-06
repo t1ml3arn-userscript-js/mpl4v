@@ -26,6 +26,7 @@ export default function MediaControls(props) {
                 <i class="zmdi zmdi-download"></i>
             </div>
         </div>
+        <Volume volume={ 0.5 } onChange={ () => 0 }/>
     </div>
     )
 }
