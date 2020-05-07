@@ -11,22 +11,22 @@ export default function MediaControls(props) {
     const { volume, onVolumeChange } = props
     
     return (
-    <div class="mpl4v-controls" data-fullscreen={ fullscreen }>
+    <div className="mpl4v-controls" data-fullscreen={ fullscreen }>
         <PlaybackProgress progress={ progress } onChange={ onProgressChange } />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
-            <div class="mpl4v-fl-row mpl4-controls--left ">
-                <i class="zmdi zmdi-repeat"></i>
-                <i class="zmdi zmdi-skip-previous"></i>
-                <i class="zmdi zmdi-play"></i>
-                <i class="zmdi zmdi-skip-next"></i>
-                {/* <i class="zmdi zmdi-shuffle"></i> */}
+            <div className="mpl4v-fl-row mpl4-controls--left ">
+                <i className="zmdi zmdi-repeat"></i>
+                <i className="zmdi zmdi-skip-previous"></i>
+                <i className="zmdi zmdi-play"></i>
+                <i className="zmdi zmdi-skip-next"></i>
+                {/* <i className="zmdi zmdi-shuffle"></i> */}
             </div>
             <TimeLabel time={12345} duration={44444}/>
-            <div class="mpl4v-fl-row mpl4-controls--right">
-                <i class="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
+            <div className="mpl4v-fl-row mpl4-controls--right">
+                <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
                 <ScreenButton {...props} />
-                {/* <i class="zmdi zmdi-settings"></i> */}
-                <i class="zmdi zmdi-download"></i>
+                {/* <i className="zmdi zmdi-settings"></i> */}
+                <i className="zmdi zmdi-download"></i>
             </div>
         </div>
         <Volume volume={ volume } onChange={ onVolumeChange }/>
