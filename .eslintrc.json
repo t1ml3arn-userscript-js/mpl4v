@@ -23,6 +23,7 @@
         "react"
     ],
     "rules": {
+        "no-unused-vars": "warn",
         "react/prop-types": [2, { "skipUndeclared": true }]
     },
     "settings": {
