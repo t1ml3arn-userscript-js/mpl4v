@@ -42,6 +42,9 @@ class ProgressBar extends React.Component {
     }
 
     startSeek = event => {
+        // dont start seeking if 
+        // it is not main (left) mouse button pressed
+        if (event.button != 0)  return
         // this should deisable text selection
         event.preventDefault()
         // I dont want this event to be heared
