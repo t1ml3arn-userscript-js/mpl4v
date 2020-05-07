@@ -95,7 +95,7 @@ export class Test extends ProgressBar {
 
         return (
         <div className={ 'mpl4v-volume-panel' }>
-            <i class="zmdi zmdi-minus mpl4v-volume-down"></i>
+            <i className={ "zmdi zmdi-minus mpl4v-volume-down" }></i>
             <div 
                 className={ `mpl4v-volume-bar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
                 onMouseDown={ this.startSeek }
@@ -103,7 +103,7 @@ export class Test extends ProgressBar {
             >
                 <Bar classes={ 'mpl4v-bar-progress-color' } progress={ progress }/>
             </div>
-            <i class="zmdi zmdi-plus mpl4v-volume-up"></i>
+            <i className={ "zmdi zmdi-plus mpl4v-volume-up" }></i>
         </div>
         )
     }

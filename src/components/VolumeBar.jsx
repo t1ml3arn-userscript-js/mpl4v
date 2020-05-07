@@ -13,7 +13,7 @@ export default class Volume extends ProgressBar {
     
         return (
         <div className={ 'mpl4v-volume-panel' }>
-            <i class="zmdi zmdi-minus mpl4v-volume-down"></i>
+            <i className={"zmdi zmdi-minus mpl4v-volume-down"}></i>
             <div 
                 className={ 'mpl4v-volume-bar' }
                 ref={ this.barEltRef }
@@ -21,7 +21,7 @@ export default class Volume extends ProgressBar {
             >
                 <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume * 100 }/>
             </div>
-            <i class="zmdi zmdi-plus mpl4v-volume-up"></i>
+            <i className={"zmdi zmdi-plus mpl4v-volume-up"}></i>
         </div>
         )
     }
