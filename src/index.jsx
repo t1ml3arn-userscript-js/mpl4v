@@ -57,7 +57,7 @@ class App extends React.Component {
         this.setState({ progress: value });
     }
 
-    updateVolume = newVolume => {
+    setVolume = newVolume => {
         // newVolume is in range [0, 100]
         // we need it to be in range [0, 1]
         this.setState({ volume: newVolume*0.01 })
@@ -91,7 +91,7 @@ class App extends React.Component {
                 showScreen={ showScreen }
                 toogleScreen={ fullscreen ? fscreen.exitFullscreen : this.toogleScreen }
                 volume={ volume }
-                onVolumeChange={ this.updateVolume }
+                onVolumeChange={ this.setVolume }
             />
         </div>
         )
