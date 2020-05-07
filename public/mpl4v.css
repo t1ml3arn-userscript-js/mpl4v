@@ -234,7 +234,7 @@
 }
 
 .mpl4v-volume-bar__underlay {
-    --size: calc(var(--bar-size) * 3.5);
+    --size: calc(var(--bar-size) * 4);
     width: 100%;
     height: var(--size);
     position: absolute;
