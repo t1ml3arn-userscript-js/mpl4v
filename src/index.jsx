@@ -17,6 +17,8 @@ class App extends React.Component {
             progress: 33,
             showScreen: true,
             fullscreen: false,
+            // TODO you can store in range [0, 100] (it will be easy),
+            // and convert into [0, 1] range in the actual media component
             volume: 0.5,
         }
         this.appRef = React.createRef()
