@@ -225,11 +225,36 @@
 }
 
 .mpl4v-volume-bar {
+    --bar-size: 0.4em;
+
     width: 75%;
-    height: 1em;
-    height: 6px;
+    height: var(--bar-size);
     position: relative;
-    background-color: #333;
+    background-color: var(--playback-bar-empty-color);
+}
+
+.mpl4v-volume-bar__underlay {
+    --size: calc(var(--bar-size) * 3.5);
+    width: 100%;
+    height: var(--size);
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    margin-top: calc(var(--size) * -0.5);
+    background-color: transparent;
+}
+
+.mpl4v-volume-bar__head {
+    --size: calc(var(--bar-size) * 3);
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    top: 50%;
+    margin-top: calc(var(--size) * -0.5);
+    margin-left: calc(var(--size) * -0.5);
+    border-radius: 50%;
+    background-color: var(--playback-bar-progress-color);
 }
 
 .mpl4v--hidden { display: none; }
