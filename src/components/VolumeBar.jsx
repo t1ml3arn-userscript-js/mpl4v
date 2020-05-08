@@ -24,7 +24,7 @@ export default class Volume extends ProgressBar {
     }
 
     render() {
-        const { volume } = this.props
+        const { volume, toogleMute, muted } = this.props
         const { showPanel, seek } = this.state
         const headStyle = {
             left: `${ volume * 100 }%`
@@ -47,8 +47,16 @@ export default class Volume extends ProgressBar {
                     <div style={ headStyle } className={ "mpl4v-volume-bar__head " }></div>
                 </div>
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
+                <MuteButton 
+                    toogleMute={ toogleMute } 
+                    muted={ muted }
+                />
             </div>
-            <MuteButton onMouseOver={ this.tooglePanel }/>
+            <MuteButton 
+                onMouseOver={ this.tooglePanel } 
+                toogleMute={ toogleMute } 
+                muted={ muted }
+            />
         </div>
         )
     }
@@ -76,7 +84,19 @@ VolumeMod.propTypes = {
 }
 
 const MuteButton = props => {
+    const { onMouseOver, toogleMute, muted } = props
+    const iconClass = muted ? 'zmdi-volume-mute' : 'zmdi-volume-up'
     return (
-    <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl" {...props} ></i>
+    <i 
+        className={ `zmdi ${iconClass} mpl4v-vol-ctrl` }
+        onMouseOver={ onMouseOver }
+        onClick={ toogleMute }     
+    ></i>
     )
+}
+
+MuteButton.propTypes = {
+    onMouseOver: PropTypes.func,
+    toogleMute: PropTypes.func.isRequired,
+    muted: PropTypes.bool.isRequired
 }
