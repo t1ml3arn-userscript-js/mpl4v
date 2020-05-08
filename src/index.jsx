@@ -17,6 +17,7 @@ class App extends React.Component {
             // TODO you can store in range [0, 100] (it will be easy),
             // and convert into [0, 1] range in the actual media component
             volume: 0.5,
+            muted: false,
         }
         this.appRef = React.createRef()
     }
@@ -62,6 +63,10 @@ class App extends React.Component {
         this.setState({ volume: newVolume*0.01 })
     }
 
+    toogleMute = () => {
+        this.setState(toogleKey('muted'))
+    }
+
     toogleScreen = (e) => {
         this.setState(toogleKey('showScreen'))
     }
@@ -72,7 +77,7 @@ class App extends React.Component {
 
     render() {
         const { showScreen, fullscreen, progress } = this.state;
-        const { volume } = this.state
+        const { volume, muted } = this.state
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
@@ -91,6 +96,8 @@ class App extends React.Component {
                 toogleScreen={ fullscreen ? fscreen.exitFullscreen : this.toogleScreen }
                 volume={ volume }
                 onVolumeChange={ this.setVolume }
+                muted={ muted }
+                toogleMute={ this.toogleMute }
             />
         </div>
         )
