@@ -2,6 +2,7 @@ import React from 'react'
 import Bar from './Bar'
 import PropTypes from 'prop-types'
 import ProgressBar from './ProgressBar'
+import { toogleKey } from '../utils/utils'
 
 export default class Volume extends ProgressBar {
     constructor(props) {
@@ -16,15 +17,23 @@ export default class Volume extends ProgressBar {
         onChange(volume)
     }
 
+    tooglePanel = e => {
+        this.setState(toogleKey('showPanel'))
+    }
+
     render() {
         const { volume } = this.props
+        const { showPanel } = this.state
         const headStyle = {
             left: `${ volume * 100 }%`
         }
 
         return (
         <div className="mpl4v-volume-panel-wrap">
-            <div className={ 'mpl4v-volume-panel' }>
+            <div 
+                className={ `mpl4v-volume-panel ${ showPanel ? "" : "mpl4v--hidden"}` }
+                onMouseLeave={ this.tooglePanel }
+            >
                 <VolumeMod isPlus={ false } onChange={ this.incrementVolume.bind(this) }/>
                 <div 
                     className={ 'mpl4v-volume-bar' }
@@ -38,7 +47,7 @@ export default class Volume extends ProgressBar {
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume.bind(this) }/>
                 <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
             </div>
-            <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
+            <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl" onMouseOver={ this.tooglePanel }></i>
         </div>
         )
     }
