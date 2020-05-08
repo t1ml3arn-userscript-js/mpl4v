@@ -23,18 +23,22 @@ export default class Volume extends ProgressBar {
         }
 
         return (
-        <div className={ 'mpl4v-volume-panel' }>
-            <VolumeMod isPlus={ false } onChange={ this.incrementVolume.bind(this) }/>
-            <div 
-                className={ 'mpl4v-volume-bar' }
-                ref={ this.barEltRef }
-                onMouseDown={ this.startSeek }
-            >
-                <div className="mpl4v-volume-bar__underlay"></div>
-                <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume * 100 }/>
-                <div style={ headStyle } className={ "mpl4v-volume-bar__head " }></div>
+        <div className="mpl4v-volume-panel-wrap">
+            <div className={ 'mpl4v-volume-panel' }>
+                <VolumeMod isPlus={ false } onChange={ this.incrementVolume.bind(this) }/>
+                <div 
+                    className={ 'mpl4v-volume-bar' }
+                    ref={ this.barEltRef }
+                    onMouseDown={ this.startSeek }
+                >
+                    <div className="mpl4v-volume-bar__underlay"></div>
+                    <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume * 100 }/>
+                    <div style={ headStyle } className={ "mpl4v-volume-bar__head " }></div>
+                </div>
+                <VolumeMod isPlus={ true } onChange={ this.incrementVolume.bind(this) }/>
+                <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
             </div>
-            <VolumeMod isPlus={ true } onChange={ this.incrementVolume.bind(this) }/>
+            <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
         </div>
         )
     }
