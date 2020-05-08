@@ -23,13 +23,13 @@ export default function MediaControls(props) {
             </div>
             <TimeLabel time={12345} duration={44444}/>
             <div className="mpl4v-fl-row mpl4-controls--right">
-                <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
+                {/* <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i> */}
+                <Volume volume={ volume } onChange={ onVolumeChange }/>
                 <ScreenButton {...props} />
                 {/* <i className="zmdi zmdi-settings"></i> */}
                 <i className="zmdi zmdi-download"></i>
             </div>
         </div>
-        <Volume volume={ volume } onChange={ onVolumeChange }/>
     </div>
     )
 }
