@@ -26,3 +26,7 @@ export function formatTime(time) {
         return `${hh}${mm}:${ss}`
     }
 }
+
+export const toogleKey = key => state => {
+    return {[key]: !state[key]}
+}

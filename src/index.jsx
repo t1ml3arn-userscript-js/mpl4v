@@ -4,10 +4,7 @@ import Dragger from "./utils/Dragger";
 import Screen from "./components/Screen"
 import fscreen from 'fscreen'
 import MediaControls from './components/MediaControls'
-
-const toogleKey = key => state => {
-    return {[key]: !state[key]}
-}
+import { toogleKey } from "./utils/utils";
 
 class App extends React.Component {
     constructor(props){
