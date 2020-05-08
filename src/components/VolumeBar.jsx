@@ -45,9 +45,9 @@ export default class Volume extends ProgressBar {
                     <div style={ headStyle } className={ "mpl4v-volume-bar__head " }></div>
                 </div>
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume.bind(this) }/>
-                <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl"></i>
+                <MuteButton />
             </div>
-            <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl" onMouseOver={ this.tooglePanel }></i>
+            <MuteButton onMouseOver={ this.tooglePanel }/>
         </div>
         )
     }
@@ -72,4 +72,10 @@ function VolumeMod(props) {
 VolumeMod.propTypes = {
     isPlus: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
+}
+
+const MuteButton = props => {
+    return (
+    <i className="zmdi zmdi-volume-up mpl4v-vol-ctrl" {...props} ></i>
+    )
 }
