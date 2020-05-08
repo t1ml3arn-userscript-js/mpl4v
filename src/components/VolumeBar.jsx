@@ -7,6 +7,8 @@ import { toogleKey } from '../utils/utils'
 export default class Volume extends ProgressBar {
     constructor(props) {
         super(props)
+
+        this.incrementVolume = this.incrementVolume.bind(this)
     }
 
     incrementVolume(mod) {
@@ -34,7 +36,7 @@ export default class Volume extends ProgressBar {
                 className={ `mpl4v-volume-panel ${ (showPanel || seek) ? "" : "mpl4v--hidden"}` }
                 onMouseLeave={ this.tooglePanel }
             >
-                <VolumeMod isPlus={ false } onChange={ this.incrementVolume.bind(this) }/>
+                <VolumeMod isPlus={ false } onChange={ this.incrementVolume }/>
                 <div 
                     className={ 'mpl4v-volume-bar' }
                     ref={ this.barEltRef }
@@ -44,8 +46,7 @@ export default class Volume extends ProgressBar {
                     <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume * 100 }/>
                     <div style={ headStyle } className={ "mpl4v-volume-bar__head " }></div>
                 </div>
-                <VolumeMod isPlus={ true } onChange={ this.incrementVolume.bind(this) }/>
-                <MuteButton />
+                <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
             </div>
             <MuteButton onMouseOver={ this.tooglePanel }/>
         </div>
