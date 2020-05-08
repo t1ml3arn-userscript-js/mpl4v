@@ -209,14 +209,25 @@
 .mpl4v-bar-seek-color { background-color: var(--playback-bar-seek-color); }
 .mpl4v-bar-progress-color { background-color: var(--playback-bar-progress-color); }
 
+.mpl4v-volume-panel-wrap {
+    position: relative;
+}
+
 .mpl4v-volume-panel {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-evenly;
-    width: 70%;
-    height: 3em;
-    border: 1px solid black;
+    width: calc(var(--controls-width)*0.65);
+    height: 100%;
+    position: absolute;
+    right: 0;
+    box-shadow: 6px 5px 20px rgba(0,0,0,0.5);
+    background-color: var(--controls-bg);
+}
+
+.mpl4v-volume-panel .mpl4v-vol-ctrl {
+    margin-left: auto;
 }
 
 .mpl4v-volume-panel .mpl4v-volume-up,
@@ -228,8 +239,9 @@
 .mpl4v-volume-bar {
     --bar-size: 0.4em;
 
-    width: 75%;
+    width: 65%;
     height: var(--bar-size);
+    margin: 0 0.5em;
     position: relative;
     background-color: var(--playback-bar-empty-color);
 }
