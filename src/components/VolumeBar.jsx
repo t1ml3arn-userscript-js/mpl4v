@@ -23,7 +23,7 @@ export default class Volume extends ProgressBar {
 
     render() {
         const { volume } = this.props
-        const { showPanel } = this.state
+        const { showPanel, seek } = this.state
         const headStyle = {
             left: `${ volume * 100 }%`
         }
@@ -31,7 +31,7 @@ export default class Volume extends ProgressBar {
         return (
         <div className="mpl4v-volume-panel-wrap">
             <div 
-                className={ `mpl4v-volume-panel ${ showPanel ? "" : "mpl4v--hidden"}` }
+                className={ `mpl4v-volume-panel ${ (showPanel || seek) ? "" : "mpl4v--hidden"}` }
                 onMouseLeave={ this.tooglePanel }
             >
                 <VolumeMod isPlus={ false } onChange={ this.incrementVolume.bind(this) }/>
