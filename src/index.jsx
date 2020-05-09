@@ -18,6 +18,7 @@ class App extends React.Component {
             // and convert into [0, 1] range in the actual media component
             volume: 0.5,
             muted: false,
+            currentMediaSrc: '',
         }
         this.appRef = React.createRef()
     }
@@ -77,7 +78,7 @@ class App extends React.Component {
 
     render() {
         const { showScreen, fullscreen, progress } = this.state;
-        const { volume, muted } = this.state
+        const { volume, muted, currentMediaSrc } = this.state
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
@@ -89,7 +90,7 @@ class App extends React.Component {
                 toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
                 volume={ volume }
                 muted={ muted }
-                mediaSrc={ "./rabbit320.mp4" }
+                mediaSrc={ currentMediaSrc }
             />
             <MediaControls 
                 progress={ progress }
