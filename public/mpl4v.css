@@ -51,6 +51,7 @@
     bottom: 100%;
     background-color: var(--screen-bg);
     z-index: var(--screen-z);
+    object-fit: contain;
 }
 
 .mpl4v-screen[data-fullscreen=true] {
