@@ -87,6 +87,9 @@ class App extends React.Component {
                 showScreen={ showScreen } 
                 fullscreen={ fullscreen }
                 toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
+                volume={ volume }
+                muted={ muted }
+                mediaSrc={ "./rabbit320.mp4" }
             />
             <MediaControls 
                 progress={ progress }
