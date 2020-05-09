@@ -8,25 +8,7 @@ export default class Screen extends React.Component {
         this.mediaRef = React.createRef()
     }
 
-    onDrop = e => {
-        e.preventDefault()
-        console.log('dropped')
-        const data = e.dataTransfer.types.map(x => e.dataTransfer.getData(x))
-        console.log(e.dataTransfer.types)
-        console.log(data)
-    }
-
-    onDragOver = e => {
-        e.preventDefault()
-        console.log('drag over')
-    }
-
-    onDragEnter = e => {
-        e.preventDefault()
-        console.log('drag enter');
-    }
-
-    componentDidUpdate = (prevProps, prevState) => {
+    componentDidUpdate = (prevProps) => {
         const video = this.mediaRef.current
 
         if (this.props.muted != prevProps.muted)
@@ -50,10 +32,6 @@ export default class Screen extends React.Component {
             src={ mediaSrc }
             muted={ muted }
             volume={ volume }
-            controls
-            onDrop={ this.onDrop }
-            onDragOver={ this.onDragOver }
-            onDragEnter={ this.onDragEnter }
         ></video>
         )
     }
