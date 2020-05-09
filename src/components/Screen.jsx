@@ -8,11 +8,14 @@ export default function Screen(props) {
     const hidden = showScreen ? '' : 'mpl4v--hidden'
 
     return (
-    <div 
+    <video 
         className={`mpl4v-screen ${dragIniter} ${hidden}`}
         data-fullscreen={ fullscreen }
         onDoubleClick={ toogleFullscreen }
-    ></div>
+        src={ mediaSrc }
+        muted={ muted }
+        volume={ volume }
+    ></video>
     )
 }
 
