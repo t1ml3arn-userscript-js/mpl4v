@@ -4,11 +4,12 @@
     --screen-height-default: calc(340px*0.5);
 
     /* colors */
+    --main-color: #ed0566;
     --screen-bg: hsl(335, 91%, 8%);
     --playback-bar-empty-color: #222;
     --playback-bar-buff-color: #b74877;
     --playback-bar-seek-color: #ffdaf580;
-    --playback-bar-progress-color: #ed0566;
+    --playback-bar-progress-color: var(--main-color);
     --controls-bg: #52101a;
     --button-color: #f2f2f2;
     --text-color: #f2f2f2;
@@ -110,6 +111,7 @@
     width: 1em;
     text-align: center;
     color: var(--button-color);
+    cursor: pointer;
 }
 
 .mpl4v-control-btns .zmdi-skip-previous,
@@ -275,4 +277,4 @@
     background-color: var(--playback-bar-progress-color);
 }
 
-.mpl4v--hidden { display: none; }
+.mpl4v .mpl4v--hidden { display: none; }
