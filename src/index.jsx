@@ -18,8 +18,8 @@ class App extends React.Component {
             // and convert into [0, 1] range in the actual media component
             volume: 0.5,
             muted: false,
-            isMediaDrag: false,     // true if a user started dragging media url 
             currentMediaSrc: '',
+            isMediaDrag: false,     // true if a user started dragging media url 
         }
         this.appRef = React.createRef()
     }
