@@ -24,8 +24,11 @@ export default class Volume extends ProgressBar {
     }
 
     render() {
-        const { volume, toogleMute, muted } = this.props
+        const { toogleMute, muted } = this.props
         const { showPanel, seek } = this.state
+        // volume slider sets to zero if media is muted
+        const volume = muted ? 0 : this.props.volume
+        
         const headStyle = {
             left: `${ volume * 100 }%`
         }
