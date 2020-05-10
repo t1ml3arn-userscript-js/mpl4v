@@ -10,6 +10,8 @@
     --playback-bar-seek-color: #ffdaf580;
     --playback-bar-progress-color: #ed0566;
     --controls-bg: #52101a;
+    --button-color: #f2f2f2;
+    --text-color: #f2f2f2;
 
     --mpl4v-z: 999;
     --screen-z: calc(var(--mpl4v-z) + 1);
@@ -65,7 +67,7 @@
 .mpl4v-controls {
     display: inline-block;
     width: var(--controls-width);
-    background-color: #fff;
+    background-color: var(--controls-bg);
 }
 
 .mpl4v-controls[data-fullscreen=true] {
@@ -82,8 +84,6 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-
-    border: 1px solid gray;
 }
 
 .mpl4-controls--left {
@@ -100,13 +100,16 @@
 .mpl4v-control-btns .mpl4v-duration {
     align-self: center;
     font-size: 1.2em;
+    color: var(--text-color);
     user-select: none;
+    background: transparent;
 }
 
 .mpl4v .zmdi {
     font-size: 1em;
     width: 1em;
     text-align: center;
+    color: var(--button-color);
 }
 
 .mpl4v-control-btns .zmdi-skip-previous,
