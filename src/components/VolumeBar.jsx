@@ -46,10 +46,7 @@ export default class Volume extends ProgressBar {
                     <ProgressBar.Head classes={ "mpl4v-volume-bar__head" } progress={ volume }/>
                 </div>
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
-                <MuteButton 
-                    toogleMute={ toogleMute } 
-                    muted={ muted }
-                />
+                <MuteButton toogleMute={ toogleMute } muted={ muted }/>
             </div>
             <MuteButton 
                 onMouseOver={ this.tooglePanel } 
