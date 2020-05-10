@@ -109,7 +109,8 @@ class App extends React.Component {
 
     render() {
         const { showScreen, fullscreen, progress } = this.state;
-        const { volume, muted, looped, currentMediaSrc } = this.state
+        const { volume, muted,  currentMediaSrc } = this.state
+        const { looped } = this.state
         const { isMediaDrag } = this.state
 
         return (
@@ -126,6 +127,7 @@ class App extends React.Component {
                 volume={ volume }
                 muted={ muted }
                 mediaSrc={ currentMediaSrc }
+                looped={ looped }
             />
             <MediaControls 
                 progress={ progress }

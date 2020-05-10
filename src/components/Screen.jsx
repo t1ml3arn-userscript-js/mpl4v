@@ -20,6 +20,7 @@ export default class Screen extends React.Component {
     render() {
         const {showScreen, toogleFullscreen, fullscreen} = this.props
         const { mediaSrc , muted, volume} = this.props
+        const { looped } = this.props
         const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
         const hidden = showScreen ? '' : 'mpl4v--hidden'
 
@@ -32,6 +33,7 @@ export default class Screen extends React.Component {
             src={ mediaSrc }
             muted={ muted }
             volume={ volume }
+            loop={ looped }
         ></video>
         )
     }
@@ -43,5 +45,6 @@ Screen.propTypes = {
     toogleFullscreen: PropTypes.func.isRequired,
     mediaSrc: PropTypes.string,
     volume: PropTypes.number.isRequired,
-    muted: PropTypes.bool.isRequired
+    muted: PropTypes.bool.isRequired,
+    looped: PropTypes.bool.isRequired,
 }
