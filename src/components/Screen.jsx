@@ -10,9 +10,7 @@ export default class Screen extends React.Component {
 
     componentDidUpdate = (prevProps) => {
         const video = this.mediaRef.current
-
-        if (this.props.muted != prevProps.muted)
-            video.muted = this.props.muted
+        
         if (this.props.volume != prevProps.volume)
             video.volume = this.props.volume
     }
