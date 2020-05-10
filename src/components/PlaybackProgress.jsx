@@ -16,12 +16,6 @@ export default class PlaybackProgress extends ProgressBar {
     render() {
         const { progress } = this.props;
         const { seek } = this.state
-        const headStyle = {
-            left: `${progress}%`,
-            // Below is a way to contain the head only
-            // inside the bar, but I must know head's size.
-            // marginLeft: `-${Math.round(progress*0.1)}px`
-        }
         
         return (
         <div 
@@ -33,7 +27,7 @@ export default class PlaybackProgress extends ProgressBar {
             <Bar classes={ "mpl4v-bar-buff-color"} progress={ 90 }/>
             <Bar classes={ "mpl4v-bar-seek-color"} progress={ 60 }/>
             <Bar classes={ "mpl4v-bar-progress-color"} progress={ progress }/>
-            <div style={ headStyle } className={ "mpl4v-playback-progressbar__head" }></div>
+            <ProgressBar.Head classes={ "mpl4v-playback-progressbar__head" } progress={ progress }/>
         </div>
         )
     }

@@ -19,7 +19,7 @@ import PropTypes from 'prop-types'
  *  barEltRef - refers to an element that is progressbar, 
  *              the element's width(or height) is used to calculate progress
  */
-class ProgressBar extends React.Component {
+export default class ProgressBar extends React.Component {
     static propTypes = {
         progress: PropTypes.number.isRequired,
         onChange: PropTypes.func.isRequired,
@@ -84,4 +84,20 @@ class ProgressBar extends React.Component {
     }
 }
 
-export default ProgressBar;
+ProgressBar.Head = function Head(props) {
+    const { progress, classes } = props
+    const headStyle = {
+        left: `${ progress * 100 }%`
+        // Below is a way to contain the head only
+        // inside the bar, but I must know head's size.
+        // marginLeft: `-${Math.round(progress*0.1)}px`
+    }
+    return (
+        <div style={ headStyle } className={ `${classes}` }></div>
+    )
+}
+
+ProgressBar.Head.propTypes = {
+    progress: PropTypes.number.isRequired,
+    classes: PropTypes.string.isRequired,
+}

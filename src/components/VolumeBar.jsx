@@ -28,10 +28,6 @@ export default class Volume extends ProgressBar {
         const { showPanel, seek } = this.state
         // volume slider sets to zero if media is muted
         const volume = muted ? 0 : this.props.volume
-        
-        const headStyle = {
-            left: `${ volume * 100 }%`
-        }
 
         return (
         <div className="mpl4v-volume-panel-wrap">
@@ -47,7 +43,7 @@ export default class Volume extends ProgressBar {
                 >
                     <div className="mpl4v-volume-bar__underlay"></div>
                     <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume * 100 }/>
-                    <div style={ headStyle } className={ "mpl4v-volume-bar__head " }></div>
+                    <ProgressBar.Head classes={ "mpl4v-volume-bar__head" } progress={ volume }/>
                 </div>
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
                 <MuteButton 
