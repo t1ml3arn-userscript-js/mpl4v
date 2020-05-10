@@ -67,13 +67,8 @@ class App extends React.Component {
         this.setState({ volume: newVolume*0.01 })
     }
 
-    toogleMute = () => {
-        this.setState(toogleKey('muted'))
-    }
-
-    toogleScreen = (e) => {
-        this.setState(toogleKey('showScreen'))
-    }
+    toogleMute = () => this.setState(toogleKey('muted'))
+    toogleScreen = () => this.setState(toogleKey('showScreen'))
 
     requestFullscreen = () => {
         fscreen.requestFullscreen(this.appRef.current)
