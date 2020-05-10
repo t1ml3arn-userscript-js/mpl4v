@@ -18,6 +18,7 @@ class App extends React.Component {
             // and convert into [0, 1] range in the actual media component
             volume: 0.5,
             muted: false,
+            looped: false,
             currentMediaSrc: '',
             isMediaDrag: false,     // true if a user started dragging media url 
         }
@@ -70,6 +71,8 @@ class App extends React.Component {
     toogleMute = () => this.setState(toogleKey('muted'))
     toogleScreen = () => this.setState(toogleKey('showScreen'))
 
+    toogle = (key) => () => this.setState(toogleKey(key))
+
     requestFullscreen = () => {
         fscreen.requestFullscreen(this.appRef.current)
     }
@@ -106,7 +109,7 @@ class App extends React.Component {
 
     render() {
         const { showScreen, fullscreen, progress } = this.state;
-        const { volume, muted, currentMediaSrc } = this.state
+        const { volume, muted, looped, currentMediaSrc } = this.state
         const { isMediaDrag } = this.state
 
         return (
@@ -134,6 +137,8 @@ class App extends React.Component {
                 onVolumeChange={ this.setVolume }
                 muted={ muted }
                 toogleMute={ this.toogleMute }
+                looped={ looped }
+                toogleLoop={ this.toogle('looped') }
             />
         </div>
         )
