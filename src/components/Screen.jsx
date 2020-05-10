@@ -30,7 +30,6 @@ export default class Screen extends React.Component {
             onDoubleClick={ toogleFullscreen }
             src={ mediaSrc }
             muted={ muted }
-            volume={ volume }
             loop={ looped }
         ></video>
         )
