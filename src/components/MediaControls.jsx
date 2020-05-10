@@ -3,6 +3,7 @@ import PlaybackProgress from './PlaybackProgress'
 import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
 import Volume from "./VolumeBar";
+import Button from './Button'
 
 export default function MediaControls(props) {
     const { fullscreen } = props
@@ -15,7 +16,7 @@ export default function MediaControls(props) {
         <PlaybackProgress progress={ progress } onChange={ onProgressChange } />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div className="mpl4v-fl-row mpl4-controls--left ">
-                <i className="zmdi zmdi-repeat"></i>
+                <Button.Loop looped={ props.looped } toogleLoop={ props.toogleLoop }/>
                 <i className="zmdi zmdi-skip-previous"></i>
                 <i className="zmdi zmdi-play"></i>
                 <i className="zmdi zmdi-skip-next"></i>
