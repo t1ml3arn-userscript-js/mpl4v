@@ -62,8 +62,7 @@ class App extends React.Component {
 
     toogleMute = () => this.setState(toogleKey('muted'))
     toogleScreen = () => this.setState(toogleKey('showScreen'))
-
-    toogle = (key) => () => this.setState(toogleKey(key))
+    toogleLoop = () => this.setState(toogleKey('looped'))
 
     requestFullscreen = () => {
         fscreen.requestFullscreen(this.appRef.current)
@@ -104,7 +103,7 @@ class App extends React.Component {
                 muted={ muted }
                 toogleMute={ this.toogleMute }
                 looped={ looped }
-                toogleLoop={ this.toogle('looped') }
+                toogleLoop={ this.toogleLoop }
             />
         </div>
         )
