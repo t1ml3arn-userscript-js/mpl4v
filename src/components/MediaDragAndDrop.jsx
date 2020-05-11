@@ -63,7 +63,7 @@ return class MediaDragAndDrop extends React.Component {
     
     onDragEnter = e => {        
         e.preventDefault()
-
+        e.dataTransfer.dropEffect = 'move'
         this.setState({ isMediaOverDrop: true })
     }
     
