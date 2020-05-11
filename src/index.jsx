@@ -18,8 +18,6 @@ class App extends React.Component {
             volume: 50,
             muted: false,
             looped: false,
-            currentMediaSrc: '',
-            isMediaDrag: false,     // true if a user started dragging media url 
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -72,12 +70,15 @@ class App extends React.Component {
     }
 
     render() {
+
+        */
         const { showScreen, fullscreen, progress } = this.state;
-        const { volume, muted, currentMediaSrc } = this.state
+        const { volume, muted } = this.state
         const { looped } = this.state
 
         // drag and drop HOC props
-        const { isMediaDrag, isMediaOverDrop, droppedMediaURL} = this.props
+        const { isMediaDrag, isMediaOverDrop } = this.props
+        const currentMediaSrc = this.props.droppedMediaURL
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
