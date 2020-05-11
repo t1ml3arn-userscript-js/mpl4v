@@ -49,15 +49,8 @@ class App extends React.Component {
             })
         }
     }
-
-    /**
-     * 
-     * @param {Number} value 
-     */
-    updateProgress = (value) => {
-        this.setState({ progress: value });
-    }
-
+    
+    setProgress = value => this.setState({ progress: value });
     setVolume = value => this.setState({ volume: value })
 
     toogleMute = () => this.setState(toogleKey('muted'))
@@ -95,7 +88,7 @@ class App extends React.Component {
             <MediaControls 
                 progress={ progress }
                 fullscreen={ fullscreen }
-                onProgressChange={ this.updateProgress }
+                onProgressChange={ this.setProgress }
                 showScreen={ showScreen }
                 toogleScreen={ fullscreen ? fscreen.exitFullscreen : this.toogleScreen }
                 volume={ volume }
