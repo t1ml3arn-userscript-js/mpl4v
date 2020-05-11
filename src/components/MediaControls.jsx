@@ -18,7 +18,7 @@ export default function MediaControls(props) {
             <div className="mpl4v-fl-row mpl4-controls--left ">
                 <Button.Loop looped={ props.looped } toogleLoop={ props.toogleLoop }/>
                 <i className="zmdi zmdi-skip-previous"></i>
-                <i className="zmdi zmdi-play"></i>
+                <Button.Play tooglePlayPause={ props.tooglePlayPause } isPlaying={ props.isPlaying }/>
                 <i className="zmdi zmdi-skip-next"></i>
                 {/* <i className="zmdi zmdi-shuffle"></i> */}
             </div>

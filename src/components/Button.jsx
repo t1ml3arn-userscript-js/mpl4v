@@ -22,3 +22,17 @@ Loop.propTypes = {
     looped: PropTypes.bool.isRequired,
     toogleLoop: PropTypes.func.isRequired
 }
+
+Button.Play = function Play(props) {
+    const { isPlaying, tooglePlayPause } = props
+    const iconClass = isPlaying ? 'zmdi-pause' : 'zmdi-play'
+
+    return (
+        <i className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }></i>
+    )
+}
+
+Button.Play.propTypes = {
+    isPlaying: PropTypes.bool.isRequired,
+    tooglePlayPause: PropTypes.func.isRequired,
+}
