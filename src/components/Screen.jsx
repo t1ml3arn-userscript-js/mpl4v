@@ -12,12 +12,14 @@ export default class Screen extends React.Component {
         const video = this.mediaRef.current
         
         if (this.props.volume != prevProps.volume)
-            video.volume = this.props.volume
+            // volume value from props is in range [0, 100]
+            // so I have to make it range [0, 1]
+            video.volume = this.props.volume * 0.01
     }
 
     render() {
         const {showScreen, toogleFullscreen, fullscreen} = this.props
-        const { mediaSrc , muted, volume} = this.props
+        const { mediaSrc , muted} = this.props
         const { looped } = this.props
         const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
         const hidden = showScreen ? '' : 'mpl4v--hidden'

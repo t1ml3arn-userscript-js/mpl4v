@@ -15,9 +15,7 @@ class App extends React.Component {
             progress: 33,
             showScreen: true,
             fullscreen: false,
-            // TODO you can store in range [0, 100] (it will be easy),
-            // and convert into [0, 1] range in the actual media component
-            volume: 0.5,
+            volume: 50,
             muted: false,
             looped: false,
             currentMediaSrc: '',
@@ -62,11 +60,7 @@ class App extends React.Component {
         this.setState({ progress: value });
     }
 
-    setVolume = newVolume => {
-        // newVolume is in range [0, 100]
-        // we need it to be in range [0, 1]
-        this.setState({ volume: newVolume*0.01 })
-    }
+    setVolume = value => this.setState({ volume: value })
 
     toogleMute = () => this.setState(toogleKey('muted'))
     toogleScreen = () => this.setState(toogleKey('showScreen'))

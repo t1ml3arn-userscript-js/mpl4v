@@ -13,7 +13,7 @@ export default class Volume extends ProgressBar {
 
     incrementVolume(mod) {
         let { volume, onChange } = this.props
-        volume = (volume + 0.1 * mod) * 100
+        volume = volume + 10 * mod
         volume = Math.min(100, volume)
         volume = Math.max(0, volume)
         onChange(volume)
@@ -42,7 +42,7 @@ export default class Volume extends ProgressBar {
                     onMouseDown={ this.startSeek }
                 >
                     <div className="mpl4v-volume-bar__underlay"></div>
-                    <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume * 100 }/>
+                    <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume }/>
                     <ProgressBar.Head classes={ "mpl4v-volume-bar__head" } progress={ volume }/>
                 </div>
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
