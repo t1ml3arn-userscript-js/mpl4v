@@ -17,6 +17,7 @@ return class MediaDragAndDrop extends React.Component {
     }
 
     componentDidMount() {
+        // NOTE child's didmount() will be called BEFORE parent's
         document.addEventListener('dragstart', this.onDragStart)
     }
     
