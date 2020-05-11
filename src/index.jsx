@@ -5,6 +5,7 @@ import Screen from "./components/Screen"
 import fscreen from 'fscreen'
 import MediaControls from './components/MediaControls'
 import { toogleKey } from "./utils/utils";
+import drangAndDropMedia from "./components/MediaDragAndDrop";
 
 class App extends React.Component {
     constructor(props){
@@ -22,7 +23,8 @@ class App extends React.Component {
             currentMediaSrc: '',
             isMediaDrag: false,     // true if a user started dragging media url 
         }
-        this.appRef = React.createRef()
+        // since I wrapped this, I have to use given ref instead the new one
+        this.appRef = props.dropTargetRef || React.createRef()
     }
 
     componentDidMount() {
@@ -30,8 +32,6 @@ class App extends React.Component {
         this.dragger.enable()
 
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
-        document.addEventListener('dragstart', this.onDragStart)
-        document.addEventListener('dragend', this.onDragEnd)
     }
 
     handleFullscreenChange = event => {
@@ -77,48 +77,17 @@ class App extends React.Component {
         fscreen.requestFullscreen(this.appRef.current)
     }
 
-    onDragStart = e => {        
-        // URL is a special type to get the first valid url
-        const url = e.dataTransfer.getData('URL')
-        if (!url)   return
-
-        const reg = /\.(3gp|flac|mp3|mp4|webm|ogg|mov)$/i
-        if (!url.match(reg)) return
-        
-        this.setState({ isMediaDrag: true })
-    }
-
-    onDragEnter = e => {
-        e.preventDefault()
-        e.dataTransfer.dropEffect = 'move'
-    }
-    
-    onDragOver = e => {
-        e.preventDefault()
-    }
-    
-    onDrop = e => {
-        // prevent openening media url
-        e.preventDefault()
-
-        const url = e.dataTransfer.getData('URL')
-        this.setState({ currentMediaSrc: url })
-    }
-
-    onDragEnd = e => this.setState({ isMediaDrag: false })
-
     render() {
         const { showScreen, fullscreen, progress } = this.state;
-        const { volume, muted,  currentMediaSrc } = this.state
+        const { volume, muted, currentMediaSrc } = this.state
         const { looped } = this.state
-        const { isMediaDrag } = this.state
+
+        // drag and drop HOC props
+        const { isMediaDrag, isMediaOverDrop, droppedMediaURL} = this.props
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
-            onDragEnter={ (isMediaDrag || null) && this.onDragEnter }
-            onDragOver={ (isMediaDrag || null) && this.onDragOver }
-            onDrop={ (isMediaDrag || null) && this.onDrop }
         >
             <Screen 
                 showScreen={ showScreen } 
@@ -147,4 +116,6 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"))
+const MediaDropTarget = drangAndDropMedia(App)
+
+ReactDOM.render(<MediaDropTarget />, document.getElementById("root"))
