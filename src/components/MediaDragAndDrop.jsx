@@ -50,9 +50,9 @@ return class MediaDragAndDrop extends React.Component {
         
         document.addEventListener('dragend', this.onDragEnd)
         // NOTE drop and dragenter event listeners adds directly to a DOM element
-        this.dropTargetRef.current.addEventListener('dragleave', this.onDragLeave)
-        this.dropTargetRef.current.addEventListener('dragover', this.onDragOver)
         this.dropTargetRef.current.addEventListener('dragenter', this.onDragEnter)
+        this.dropTargetRef.current.addEventListener('dragover', this.onDragOver)
+        this.dropTargetRef.current.addEventListener('dragleave', this.onDragLeave)
         this.dropTargetRef.current.addEventListener('drop', this.onDrop)
     }
     
@@ -61,31 +61,18 @@ return class MediaDragAndDrop extends React.Component {
         this.setState({ isMediaDrag: false, isMediaOverDrop:false })
     }
     
-    onDragEnter = e => {
-        if (!this.state.isMediaDrag) return
-        if (e.target != this.dropTargetRef.current) return
-        
+    onDragEnter = e => {        
         e.preventDefault()
 
         this.setState({ isMediaOverDrop: true })
     }
     
     onDragOver = e => e.preventDefault()
-
-    onDragLeave = e => {
-        if (!this.state.isMediaDrag) return
-        if (e.target != this.dropTargetRef.current) return
-        
-        this.setState({ isMediaOverDrop: false })
-    }
+    onDragLeave = e => this.setState({ isMediaOverDrop: false })
 
     onDrop = e => {
-        console.log(e.type);
-        if (!this.state.isMediaDrag) return
-        if (e.target != this.dropTargetRef.current) return
-        
         e.preventDefault()
-
+        
         const url = e.dataTransfer.getData('URL')
         this.setState({ droppedMediaURL: url })
     }
