@@ -57,7 +57,7 @@ return class MediaDragAndDrop extends React.Component {
         this.dropTargetRef.current.addEventListener('drop', this.onDrop)
     }
     
-    onDragEnd = e => {
+    onDragEnd = () => {
         this.removeDraggingListeners()
         this.setState({ isMediaDrag: false, isMediaOverDrop:false })
     }
@@ -69,7 +69,7 @@ return class MediaDragAndDrop extends React.Component {
     }
     
     onDragOver = e => e.preventDefault()
-    onDragLeave = e => this.setState({ isMediaOverDrop: false })
+    onDragLeave = () => this.setState({ isMediaOverDrop: false })
 
     onDrop = e => {
         e.preventDefault()

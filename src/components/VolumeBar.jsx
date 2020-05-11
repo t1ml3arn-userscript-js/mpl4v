@@ -19,7 +19,7 @@ export default class Volume extends ProgressBar {
         onChange(volume)
     }
 
-    tooglePanel = e => {
+    tooglePanel = () => {
         this.setState(toogleKey('showPanel'))
     }
 
@@ -65,7 +65,7 @@ Volume.propTypes = {
 
 function VolumeMod(props) {
     const { isPlus, onChange } = props
-    const clickHandler = isPlus ? e => onChange(1) : e => onChange(-1)
+    const clickHandler = isPlus ? () => onChange(1) : () => onChange(-1)
     return (
     <i 
         className={`zmdi ${ isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-up`} 

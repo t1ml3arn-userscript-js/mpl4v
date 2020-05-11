@@ -30,7 +30,7 @@ class App extends React.Component {
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
     }
 
-    handleFullscreenChange = event => {
+    handleFullscreenChange = () => {
         // if it is fullscreen and it is OUR fulslcreen
         if (fscreen.fullscreenElement) {
             if (fscreen.fullscreenElement == this.appRef.current) {

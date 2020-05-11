@@ -64,7 +64,7 @@ export default class ProgressBar extends React.Component {
         this.setState({ seek: true })
     }
     
-    stopSeek = event => {
+    stopSeek = () => {
         document.removeEventListener('mouseup', this.stopSeek);
         document.removeEventListener('mousemove', this.seek);
 
