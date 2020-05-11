@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 
 export default class Button {}
 
-Button.Loop = Loop
-
-function Loop(props) {
+Button.Loop = function Loop(props) {
     const { looped, toogleLoop } = props
     const toogledClass = looped ? 'mpl4v--toogled' : '';
 
@@ -18,7 +16,7 @@ function Loop(props) {
     )
 }
 
-Loop.propTypes = {
+Button.Loop.propTypes = {
     looped: PropTypes.bool.isRequired,
     toogleLoop: PropTypes.func.isRequired
 }
