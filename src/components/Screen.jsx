@@ -26,7 +26,7 @@ export default class Screen extends React.Component {
 
         return (
         <video 
-            ref={ this.mediaRef }
+            ref={ this.props.mediaRef }
             className={`mpl4v-screen ${dragIniter} ${hidden}`}
             data-fullscreen={ fullscreen }
             onDoubleClick={ toogleFullscreen }
@@ -46,4 +46,5 @@ Screen.propTypes = {
     volume: PropTypes.number.isRequired,
     muted: PropTypes.bool.isRequired,
     looped: PropTypes.bool.isRequired,
+    mediaRef: PropTypes.object
 }

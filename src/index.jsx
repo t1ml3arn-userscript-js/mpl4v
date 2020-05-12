@@ -18,9 +18,11 @@ class App extends React.Component {
             volume: 50,
             muted: false,
             looped: false,
+            isPlaying: false,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
+        this.mediaRef = React.createRef()
     }
 
     componentDidMount() {
@@ -61,6 +63,17 @@ class App extends React.Component {
         fscreen.requestFullscreen(this.appRef.current)
     }
 
+    requestPlay = () => {
+        this.mediaRef.current.play()
+            .catch(this.onPlayError)
+    }
+
+    onPlayError = e => {
+        console.log('error when tried to play', e)
+    }
+
+    pause = () => this.mediaRef.current.pause()
+
     render() {
 
         */
@@ -84,6 +97,7 @@ class App extends React.Component {
                 muted={ muted }
                 mediaSrc={ currentMediaSrc }
                 looped={ looped }
+                mediaRef={ this.mediaRef }
             />
             <MediaControls 
                 progress={ progress }
@@ -97,6 +111,8 @@ class App extends React.Component {
                 toogleMute={ this.toogleMute }
                 looped={ looped }
                 toogleLoop={ this.toogleLoop }
+                tooglePlayPause={ isPlaying ? this.pause : this.requestPlay }
+                isPlaying={ isPlaying }
             />
         </div>
         )
