@@ -84,7 +84,7 @@ class App extends React.Component {
         */
         const { showScreen, fullscreen, progress } = this.state;
         const { volume, muted } = this.state
-        const { looped } = this.state
+        const { looped, isPlaying } = this.state
 
         // drag and drop HOC props
         const { isMediaDrag, isMediaOverDrop } = this.props
