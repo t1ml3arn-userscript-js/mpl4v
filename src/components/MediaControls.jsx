@@ -9,6 +9,7 @@ export default function MediaControls(props) {
     const { fullscreen } = props
     const dragInitier = fullscreen ? '' : "mpl4v-drag-initiator"
     const { progress, bufferedProgress, onProgressChange } = props
+    const { currentTime, duration } = props
     const { volume, onVolumeChange } = props
     
     return (
@@ -26,7 +27,7 @@ export default function MediaControls(props) {
                 <i className="zmdi zmdi-skip-next"></i>
                 {/* <i className="zmdi zmdi-shuffle"></i> */}
             </div>
-            <TimeLabel time={12345} duration={44444}/>
+            <TimeLabel time={ currentTime } duration={ duration }/>
             <div className="mpl4v-fl-row mpl4-controls--right">
                 <Volume 
                     volume={ volume } onChange={ onVolumeChange }

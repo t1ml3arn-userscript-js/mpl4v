@@ -19,6 +19,8 @@ class App extends React.Component {
             volume: 50,
             muted: false,
             looped: false,
+            duration: 0,
+            currentTime: 0,
             isPlaying: false,
         }
         // since I wrapped this, I have to use given ref instead the new one
@@ -37,6 +39,7 @@ class App extends React.Component {
         video.onpause = () => this.setState({ isPlaying: false })
         video.onplay = () => this.setState({ isPlaying: true })
         video.onprogress = this.onLoadingProgress;
+        video.addEventListener('loadedmetadata', this.onLoadedMeta)
     }
 
     handleFullscreenChange = () => {
@@ -94,11 +97,22 @@ class App extends React.Component {
         }
     }
 
+    onLoadedMeta = e => {
+        const video = e.target
+
+        // in some mobile browsers, when loadedmetadata is raised 
+        // if it even is raised — video.duration 
+        // may not have the correct value, or even any value at all
+        // from here https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/cross_browser_video_player#Progress
+        this.setState({ duration: video.duration || 0})
+    }
+
     render() {
 
         */
         const { showScreen, fullscreen } = this.state
         const { progress, bufferedProgress } = this.state
+        const { currentTime, duration } = this.state
         const { volume, muted } = this.state
         const { looped, isPlaying } = this.state
 
@@ -123,6 +137,8 @@ class App extends React.Component {
             <MediaControls 
                 progress={ progress }
                 bufferedProgress={ bufferedProgress }
+                duration={ duration }
+                currentTime={ currentTime }
                 fullscreen={ fullscreen }
                 onProgressChange={ this.setProgress }
                 showScreen={ showScreen }
