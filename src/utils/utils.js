@@ -30,3 +30,15 @@ export function formatTime(time) {
 export const toogleKey = key => state => {
     return {[key]: !state[key]}
 }
+
+/**
+ * Bound given value into a given range.
+ * If the value is not in the range,
+ * it will return the minimum or the maximum.
+ * @param {number} value value to bound
+ * @param {number} min minimal value
+ * @param {number} max maximal value
+ */
+export function bound(value, min, max) {
+    return Math.min(Math.max(value, min), max)
+}
