@@ -7,6 +7,7 @@ export default class PlaybackProgress extends ProgressBar {
     static propTypes = {
         progress: PropTypes.number.isRequired,
         onChange: PropTypes.func.isRequired,
+        bufferedProgress: PropTypes.number.isRequired,
     }
 
     constructor(props) {
@@ -14,7 +15,7 @@ export default class PlaybackProgress extends ProgressBar {
     }
 
     render() {
-        const { progress } = this.props;
+        const { progress, bufferedProgress } = this.props;
         const { seek } = this.state
         
         return (
@@ -24,7 +25,7 @@ export default class PlaybackProgress extends ProgressBar {
             onMouseDown={ this.startSeek }
         >
             <div className={ "mpl4v-playback-progressbar__underlay" }/>
-            <Bar classes={ "mpl4v-bar-buff-color"} progress={ 90 }/>
+            <Bar classes={ "mpl4v-bar-buff-color"} progress={ bufferedProgress }/>
             <Bar classes={ "mpl4v-bar-seek-color"} progress={ 60 }/>
             <Bar classes={ "mpl4v-bar-progress-color"} progress={ progress }/>
             <ProgressBar.Head classes={ "mpl4v-playback-progressbar__head" } progress={ progress }/>

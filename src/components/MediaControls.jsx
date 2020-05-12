@@ -8,12 +8,16 @@ import Button from './Button'
 export default function MediaControls(props) {
     const { fullscreen } = props
     const dragInitier = fullscreen ? '' : "mpl4v-drag-initiator"
-    const { progress, onProgressChange } = props
+    const { progress, bufferedProgress, onProgressChange } = props
     const { volume, onVolumeChange } = props
     
     return (
     <div className="mpl4v-controls" data-fullscreen={ fullscreen }>
-        <PlaybackProgress progress={ progress } onChange={ onProgressChange } />
+        <PlaybackProgress 
+            progress={ progress } 
+            onChange={ onProgressChange } 
+            bufferedProgress={ bufferedProgress }
+        />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div className="mpl4v-fl-row mpl4-controls--left ">
                 <Button.Loop looped={ props.looped } toogleLoop={ props.toogleLoop }/>

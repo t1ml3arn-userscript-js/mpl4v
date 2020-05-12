@@ -13,6 +13,7 @@ class App extends React.Component {
 
         this.state = {
             progress: 33,
+            bufferedProgress: 0,
             showScreen: true,
             fullscreen: false,
             volume: 50,
@@ -35,6 +36,7 @@ class App extends React.Component {
         video.onended = () => this.setState({ isPlaying: false })
         video.onpause = () => this.setState({ isPlaying: false })
         video.onplay = () => this.setState({ isPlaying: true })
+        video.onprogress = this.onLoadingProgress;
     }
 
     handleFullscreenChange = () => {
@@ -79,10 +81,24 @@ class App extends React.Component {
 
     pause = () => this.mediaRef.current.pause()
 
+    onLoadingProgress = e => {
+        const video = e.target
+
+        if (!video.duration) {
+            this.setState({ buffered: 0 })
+        } else {
+            const buff = video.seekable
+            const seekableEnd = buff.end(buff.length - 1)
+            const buffered = (seekableEnd / video.duration) * 100
+            this.setState({ bufferedProgress: buffered})
+        }
+    }
+
     render() {
 
         */
-        const { showScreen, fullscreen, progress } = this.state;
+        const { showScreen, fullscreen } = this.state
+        const { progress, bufferedProgress } = this.state
         const { volume, muted } = this.state
         const { looped, isPlaying } = this.state
 
@@ -106,6 +122,7 @@ class App extends React.Component {
             />
             <MediaControls 
                 progress={ progress }
+                bufferedProgress={ bufferedProgress }
                 fullscreen={ fullscreen }
                 onProgressChange={ this.setProgress }
                 showScreen={ showScreen }
