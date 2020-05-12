@@ -40,11 +40,12 @@ Button.Play.propTypes = {
 
 export function addSpinner(EclipseTarget) {
 return function Spinner(props) {
-    const isActive = true;
+    const { isSeeking, ...passedProps } = props
+    const isActive = isSeeking
     let classes = isActive ? 'mpl4v-eclipse--spining' : ''
     
     return (
-        <EclipseTarget {...props}>
+        <EclipseTarget {...passedProps}>
             <div className={`mpl4v-eclipse ${classes}`}></div>
         </EclipseTarget>
     )
