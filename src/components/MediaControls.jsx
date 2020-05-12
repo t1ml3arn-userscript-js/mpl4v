@@ -28,7 +28,11 @@ export default function MediaControls(props) {
                     volume={ volume } onChange={ onVolumeChange }
                     muted={ props.muted } toogleMute={ props.toogleMute }
                 />
-                <ScreenButton {...props} />
+                <ScreenButton
+                    showScreen={ props.showScreen }
+                    toogleScreen={ props.toogleScreen }
+                    fullscreen={ props.fullscreen }
+                />
                 {/* <i className="zmdi zmdi-settings"></i> */}
                 <i className="zmdi zmdi-download"></i>
             </div>
