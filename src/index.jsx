@@ -74,6 +74,14 @@ class App extends React.Component {
         fscreen.requestFullscreen(this.appRef.current)
     }
 
+    playpause = () => {
+        const video = this.mediaRef.current
+        if (video.paused || video.ended)
+            this.requestPlay()
+        else
+            video.pause()
+    }
+
     requestPlay = () => {
         this.mediaRef.current.play()
             .catch(this.onPlayError)
@@ -82,8 +90,6 @@ class App extends React.Component {
     onPlayError = e => {
         console.log('error when tried to play', e)
     }
-
-    pause = () => this.mediaRef.current.pause()
 
     onLoadingProgress = e => {
         const video = e.target
@@ -152,7 +158,7 @@ class App extends React.Component {
                 toogleMute={ this.toogleMute }
                 looped={ looped }
                 toogleLoop={ this.toogleLoop }
-                tooglePlayPause={ isPlaying ? this.pause : this.requestPlay }
+                tooglePlayPause={ this.playpause }
                 isPlaying={ isPlaying }
             />
         </div>
