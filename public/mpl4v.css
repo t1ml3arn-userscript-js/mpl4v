@@ -139,9 +139,12 @@
     border-left: 0.065em solid var(--eclipse-color);
     background-color: transparent;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s linear;
 }
 
 .mpl4v-eclipse--spining {
+    opacity: 1;
     animation-name: eclipse-spining;
     animation-timing-function: cubic-bezier(.54,.32,.47,.81);
     animation-duration: 2.2s;
