@@ -4,7 +4,7 @@ import Dragger from "./utils/Dragger";
 import Screen from "./components/Screen"
 import fscreen from 'fscreen'
 import MediaControls from './components/MediaControls'
-import { toogleKey } from "./utils/utils";
+import { toogleKey, bound } from "./utils/utils";
 import drangAndDropMedia from "./components/MediaDragAndDrop";
 import VideoEventListener from "./utils/VideoEventListener";
 
@@ -42,6 +42,7 @@ class App extends React.Component {
         video.onprogress = this.onLoadingProgress;
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
         video.addEventListener('timeupdate', this.onTimeUpdate)
+        video.addEventListener('volumechange', this.onVolumeChange)
 
         this.listener = new VideoEventListener(video)
     }
@@ -67,9 +68,13 @@ class App extends React.Component {
     }
     
     setProgress = value => this.setState({ progress: value });
-    setVolume = value => this.setState({ volume: value })
+    setVolume = value => this.mediaRef.current.volume = value * 0.01
 
-    toogleMute = () => this.setState(toogleKey('muted'))
+    toogleMute = () => {
+        const video = this.mediaRef.current
+        video.muted = !video.muted 
+    }
+
     toogleScreen = () => this.setState(toogleKey('showScreen'))
     toogleLoop = () => this.setState(toogleKey('looped'))
 
@@ -119,6 +124,13 @@ class App extends React.Component {
 
     onTimeUpdate = e => this.setState({ currentTime: e.target.currentTime })
 
+    onVolumeChange = e => {
+        this.setState({ 
+            volume: bound(e.target.volume * 100, 0, 100),
+            muted: e.target.muted
+        })
+    }
+
     render() {
 
         */
@@ -140,8 +152,6 @@ class App extends React.Component {
                 showScreen={ showScreen } 
                 fullscreen={ fullscreen }
                 toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
-                volume={ volume }
-                muted={ muted }
                 mediaSrc={ currentMediaSrc }
                 looped={ looped }
                 mediaRef={ this.mediaRef }
