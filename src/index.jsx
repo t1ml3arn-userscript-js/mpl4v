@@ -6,6 +6,7 @@ import fscreen from 'fscreen'
 import MediaControls from './components/MediaControls'
 import { toogleKey } from "./utils/utils";
 import drangAndDropMedia from "./components/MediaDragAndDrop";
+import VideoEventListener from "./utils/VideoEventListener";
 
 class App extends React.Component {
     constructor(props){
@@ -41,6 +42,8 @@ class App extends React.Component {
         video.onprogress = this.onLoadingProgress;
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
         video.addEventListener('timeupdate', this.onTimeUpdate)
+
+        this.listener = new VideoEventListener(video)
     }
 
     handleFullscreenChange = () => {
