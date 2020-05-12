@@ -40,6 +40,7 @@ class App extends React.Component {
         video.onplay = () => this.setState({ isPlaying: true })
         video.onprogress = this.onLoadingProgress;
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
+        video.addEventListener('timeupdate', this.onTimeUpdate)
     }
 
     handleFullscreenChange = () => {
@@ -106,6 +107,8 @@ class App extends React.Component {
         // from here https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/cross_browser_video_player#Progress
         this.setState({ duration: video.duration || 0})
     }
+
+    onTimeUpdate = e => this.setState({ currentTime: e.target.currentTime })
 
     render() {
 
