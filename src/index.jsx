@@ -30,6 +30,11 @@ class App extends React.Component {
         this.dragger.enable()
 
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
+        
+        const video = this.mediaRef.current
+        video.onended = () => this.setState({ isPlaying: false })
+        video.onpause = () => this.setState({ isPlaying: false })
+        video.onplay = () => this.setState({ isPlaying: true })
     }
 
     handleFullscreenChange = () => {
