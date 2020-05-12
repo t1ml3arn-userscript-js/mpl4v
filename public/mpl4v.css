@@ -13,6 +13,7 @@
     --controls-bg: #52101a;
     --button-color: #f2f2f2;
     --text-color: #f2f2f2;
+    --eclipse-color: var(--button-color);
 
     --mpl4v-z: 999;
     --screen-z: calc(var(--mpl4v-z) + 1);
@@ -123,8 +124,38 @@
 .mpl4v-control-btns .zmdi-pause {
     font-size: 4em;
     margin: 0;
-
     width: 0.75em;
+    position: relative;
+}
+
+.mpl4v-eclipse {
+    position: absolute;
+    width: 1.10em;
+    height: 1.10em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border-left: 0.065em solid var(--eclipse-color);
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.mpl4v-eclipse--spining {
+    animation-name: eclipse-spining;
+    animation-timing-function: cubic-bezier(.54,.32,.47,.81);
+    animation-duration: 2.2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes eclipse-spining {
+    from {
+        transform: translate(-50%, -50%) rotate(0);
+    }
+    to {
+        /* 9 full rounds */
+        transform: translate(-50%, -50%) rotate(3240deg);
+    }
 }
 
 .mpl4v-control-btns .zmdi-repeat,

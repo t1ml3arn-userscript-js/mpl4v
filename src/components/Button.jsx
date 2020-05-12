@@ -26,11 +26,29 @@ Button.Play = function Play(props) {
     const iconClass = isPlaying ? 'zmdi-pause' : 'zmdi-play'
 
     return (
-        <i className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }></i>
+        <i className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }>
+            {props.children}
+        </i>
     )
 }
 
 Button.Play.propTypes = {
     isPlaying: PropTypes.bool.isRequired,
     tooglePlayPause: PropTypes.func.isRequired,
+    children: PropTypes.node,
 }
+
+export function addSpinner(EclipseTarget) {
+return function Spinner(props) {
+    const isActive = true;
+    let classes = isActive ? 'mpl4v-eclipse--spining' : ''
+    
+    return (
+        <EclipseTarget {...props}>
+            <div className={`mpl4v-eclipse ${classes}`}></div>
+        </EclipseTarget>
+    )
+}
+}
+
+Button.Play = addSpinner(Button.Play);
