@@ -19,7 +19,7 @@ export default class VideoEventListener {
         video.addEventListener('playing', this.printData)
         video.addEventListener('progress', this.printData)
         video.addEventListener('ratechange', this.printData)
-        video.addEventListener('seekend', this.printData)
+        video.addEventListener('seeked', this.printData)
         video.addEventListener('seeking', this.printData)
         video.addEventListener('stalled', this.printData)
         video.addEventListener('suspend', this.printData)
