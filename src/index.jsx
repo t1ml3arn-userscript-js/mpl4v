@@ -22,6 +22,8 @@ class App extends React.Component {
             duration: 0,
             currentTime: 0,
             isPlaying: false,
+            videowidth: 0,
+            videoHeight: 0,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -43,6 +45,10 @@ class App extends React.Component {
         video.addEventListener('timeupdate', this.onTimeUpdate)
         video.addEventListener('volumechange', this.onVolumeChange)
         video.addEventListener('progress', this.onLoadingProgress)
+        // abort and emptied events are good candidates 
+        // for setting buffered, progress, duration etc to zero values
+        video.addEventListener('abort', this.onAbort)
+        video.addEventListener('emptied', this.onAbort)
 
         this.listener = new VideoEventListener(video)
     }
@@ -141,6 +147,18 @@ class App extends React.Component {
         this.setState({ 
             volume: bound(e.target.volume * 100, 0, 100),
             muted: e.target.muted
+        })
+    }
+
+    onAbort = e => {
+        const video = e.target
+
+        this.setState({
+            duration: 0,
+            currentTime: 0,
+            bufferedProgress: 0,
+            videowidth: 0,
+            videoHeight: 0,
         })
     }
 
