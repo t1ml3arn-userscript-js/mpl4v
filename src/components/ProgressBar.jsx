@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
  * it in a subclass.
  * 
  * Properties:
- *  progress:number is required - indicates current progress
  *  onChange:func is required - callback to dispatch progress changing
  *  isHorizontal:bool - direction(horizontal or vertical), default is true
  * 
@@ -21,7 +20,6 @@ import PropTypes from 'prop-types'
  */
 export default class ProgressBar extends React.Component {
     static propTypes = {
-        progress: PropTypes.number.isRequired,
         onChange: PropTypes.func.isRequired,
         isHorizontal: PropTypes.bool
     }
