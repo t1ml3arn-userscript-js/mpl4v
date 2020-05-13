@@ -1,22 +1,24 @@
 import React from 'react'
 import Bar from './Bar'
 import PropTypes from 'prop-types'
-import ProgressBar from './ProgressBar'
-import { toogleKey } from '../utils/utils'
+import ProgressBar, { barController } from './ProgressBar'
+import { toogleKey, RefType } from '../utils/utils'
 
-export default class VolumePanel extends ProgressBar {
+export default class VolumePanel extends React.Component {
     constructor(props) {
         super(props)
-
-        this.incrementVolume = this.incrementVolume.bind(this)
     }
 
-    incrementVolume(mod) {
-        let { volume, onChange } = this.props
+    incrementVolume = e => {
+        // mod values is stored in data-volume-mod attribute
+        const mod = parseInt(e.target.dataVolumeMod)
+
+        let { volume, onVolumeChange } = this.props
         volume = volume + 10 * mod
         volume = Math.min(100, volume)
         volume = Math.max(0, volume)
-        onChange(volume)
+
+        onVolumeChange(volume)
     }
 
     tooglePanel = () => {
@@ -24,8 +26,10 @@ export default class VolumePanel extends ProgressBar {
     }
 
     render() {
+        // props from HOC
+        const { barEltRef, startSeek, seek } = this.props
         const { toogleMute, muted } = this.props
-        const { showPanel, seek } = this.state
+        const { showPanel } = this.state
         // volume slider sets to zero if media is muted
         const volume = muted ? 0 : this.props.volume
 
@@ -38,8 +42,8 @@ export default class VolumePanel extends ProgressBar {
                 <VolumeMod isPlus={ false } onChange={ this.incrementVolume }/>
                 <div 
                     className={ 'mpl4v-volume-bar' }
-                    ref={ this.barEltRef }
-                    onMouseDown={ this.startSeek }
+                    ref={ barEltRef }
+                    onMouseDown={ startSeek }
                 >
                     <div className="mpl4v-volume-bar__underlay"></div>
                     <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume }/>
@@ -60,17 +64,22 @@ export default class VolumePanel extends ProgressBar {
 
 VolumePanel.propTypes = {
     volume: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired
+    onVolumeChange: PropTypes.func.isRequired,
+    toogleMute: PropTypes.func.isRequired,
+    muted: PropTypes.bool.isRequired,
+    startSeek: PropTypes.func.isRequired,
+    seek: PropTypes.bool,
+    barEltRef: RefType.isRequired,
 }
 
 function VolumeMod(props) {
     const { isPlus, onChange } = props
-    const clickHandler = isPlus ? () => onChange(1) : () => onChange(-1)
+    
     return (
     <i 
         className={`zmdi ${ isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-mod`} 
-        onClick={ clickHandler }
-        data-volume-mod={ isPlus ? '1' : ''}
+        onClick={ onChange }
+        data-volume-mod={ isPlus ? '1' : '-1'}
     ></i>
     )
 }
@@ -97,3 +106,5 @@ MuteButton.propTypes = {
     toogleMute: PropTypes.func.isRequired,
     muted: PropTypes.bool.isRequired
 }
+
+export const VolumePanelControlled = barController(VolumePanel)
