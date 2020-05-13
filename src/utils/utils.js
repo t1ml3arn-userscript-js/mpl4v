@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 /**
  * Returns time in format "h:mm:ss" 
  * based on given `time` argument.
@@ -42,3 +44,8 @@ export const toogleKey = key => state => {
 export function bound(value, min, max) {
     return Math.min(Math.max(value, min), max)
 }
+
+export const RefType = PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any })
+])
