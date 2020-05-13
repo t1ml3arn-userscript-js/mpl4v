@@ -62,6 +62,12 @@ class App extends React.Component {
         this.listener = new VideoEventListener(video)
     }
 
+    componentDidUpdate(prevProps) {
+        // TODO for playing check also autoplay attribute
+        if (this.props.droppedMediaURL != prevProps.droppedMediaURL)
+            this.requestPlay()
+    }
+
     calcPlaybackProgress = () => {
         const { duration, currentTime } = this.state
         if (!duration) return 0
