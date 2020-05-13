@@ -13,7 +13,7 @@ export default class VolumePanel extends React.Component {
 
     incrementVolume = e => {
         // mod values is stored in data-volume-mod attribute
-        const mod = parseInt(e.target.dataVolumeMod)
+        const mod = parseInt(e.target.dataset.volumeMod)
 
         let { volume, onVolumeChange } = this.props
         volume = volume + 10 * mod
