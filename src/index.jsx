@@ -163,8 +163,7 @@ class App extends React.Component {
     }
 
     render() {
-
-        */
+        
         const { showScreen, fullscreen } = this.state
         const { bufferedProgress } = this.state
         const { currentTime, duration } = this.state
