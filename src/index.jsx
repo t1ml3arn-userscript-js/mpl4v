@@ -13,7 +13,6 @@ class App extends React.Component {
         super(props)
 
         this.state = {
-            progress: 33,
             bufferedProgress: 0,
             showScreen: true,
             fullscreen: false,
@@ -47,6 +46,13 @@ class App extends React.Component {
         this.listener = new VideoEventListener(video)
     }
 
+    calcPlaybackProgress = () => {
+        const { duration, currentTime } = this.state
+        if (!duration) return 0
+        
+        return bound(currentTime*100/duration, 0, 100)
+    }
+
     handleFullscreenChange = () => {
         // if it is fullscreen and it is OUR fulslcreen
         if (fscreen.fullscreenElement) {
@@ -67,7 +73,11 @@ class App extends React.Component {
         }
     }
     
-    setProgress = value => this.setState({ progress: value });
+    setProgress = value => {
+        const video = this.mediaRef.current
+        // || 0 for case if duration is NaN
+        video.currentTime = value * 0.01 * (video.duration || 0)
+    }
     setVolume = value => this.mediaRef.current.volume = value * 0.01
 
     toogleMute = () => {
@@ -157,7 +167,7 @@ class App extends React.Component {
                 mediaRef={ this.mediaRef }
             />
             <MediaControls 
-                progress={ progress }
+                progress={ this.calcPlaybackProgress() }
                 bufferedProgress={ bufferedProgress }
                 duration={ duration }
                 currentTime={ currentTime }
