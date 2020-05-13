@@ -1,5 +1,5 @@
 import React from 'react'
-import PlaybackProgress from './PlaybackProgress'
+import PlaybackProgressBar from './PlaybackProgress'
 import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
 import Volume from "./VolumeBar";
@@ -14,7 +14,7 @@ export default function MediaControls(props) {
     
     return (
     <div className="mpl4v-controls" data-fullscreen={ fullscreen }>
-        <PlaybackProgress 
+        <PlaybackProgressBar 
             progress={ progress } 
             onChange={ onProgressChange } 
             bufferedProgress={ bufferedProgress }

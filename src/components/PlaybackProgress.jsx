@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Bar from "./Bar";
 import ProgressBar from './ProgressBar'
 
-export default class PlaybackProgress extends ProgressBar {
+export default class PlaybackProgressBar extends ProgressBar {
     static propTypes = {
         progress: PropTypes.number.isRequired,
         onChange: PropTypes.func.isRequired,
