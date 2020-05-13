@@ -1,35 +1,36 @@
 import React from "react";
 import PropTypes from 'prop-types'
 import Bar from "./Bar";
-import ProgressBar from './ProgressBar'
+import ProgressBar, { barController } from './ProgressBar'
+import { RefType } from "../utils/utils";
 
-export default class PlaybackProgressBar extends ProgressBar {
-    static propTypes = {
-        progress: PropTypes.number.isRequired,
-        onChange: PropTypes.func.isRequired,
-        bufferedProgress: PropTypes.number.isRequired,
-    }
+function PlaybackProgressView(props) {
 
-    constructor(props) {
-        super(props)
-    }
+    const { progress, bufferedProgress } = props;
+    const { barEltRef, startSeek, seek } = props
 
-    render() {
-        const { progress, bufferedProgress } = this.props;
-        const { seek } = this.state
-        
-        return (
-        <div 
-            className={ `mpl4v-playback-progressbar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
-            ref={ this.barEltRef }
-            onMouseDown={ this.startSeek }
-        >
-            <div className={ "mpl4v-playback-progressbar__underlay" }/>
-            <Bar classes={ "mpl4v-bar-buff-color"} progress={ bufferedProgress }/>
-            <Bar classes={ "mpl4v-bar-seek-color"} progress={ 60 }/>
-            <Bar classes={ "mpl4v-bar-progress-color"} progress={ progress }/>
-            <ProgressBar.Head classes={ "mpl4v-playback-progressbar__head" } progress={ progress }/>
-        </div>
-        )
-    }
+    return (
+    <div 
+        className={ `mpl4v-playback-progressbar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
+        ref={ barEltRef }
+        onMouseDown={ startSeek }
+    >
+        <div className={ "mpl4v-playback-progressbar__underlay" }/>
+        <Bar classes={ "mpl4v-bar-buff-color"} progress={ bufferedProgress }/>
+        <Bar classes={ "mpl4v-bar-seek-color"} progress={ 60 }/>
+        <Bar classes={ "mpl4v-bar-progress-color"} progress={ progress }/>
+        <ProgressBar.Head classes={ "mpl4v-playback-progressbar__head" } progress={ progress }/>
+    </div>
+    )
 }
+
+PlaybackProgressView.propTypes = {
+    progress: PropTypes.number.isRequired,
+    bufferedProgress: PropTypes.number.isRequired,
+    startSeek: PropTypes.func.isRequired,
+    seek: PropTypes.bool.isRequired,
+    barEltRef: RefType.isRequired,
+}
+
+const PlaybackProgressBar = barController(PlaybackProgressView)
+export default PlaybackProgressBar
