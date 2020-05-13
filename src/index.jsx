@@ -178,7 +178,8 @@ class App extends React.Component {
 
     updateReadyState = e => {
         const elt = e.target
-        this.setState({ isBuffering: elt.readyState != 4 && (!elt.ended && !elt.error) })
+        const net = elt.networkState
+        this.setState({ isBuffering: (net == 2 || net == 0) && elt.readyState != 4 })
     }
 
     render() {
