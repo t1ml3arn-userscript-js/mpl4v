@@ -271,8 +271,7 @@
     margin-left: auto;
 }
 
-.mpl4v-volume-panel .mpl4v-volume-up,
-.mpl4v-volume-panel .mpl4v-volume-down {
+.mpl4v-volume-panel .mpl4v-volume-mod {
     font-size: 2em;
     cursor: pointer;
 }
