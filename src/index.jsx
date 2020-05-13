@@ -39,6 +39,7 @@ class App extends React.Component {
         video.onpause = () => this.setState({ isPlaying: false })
         video.onplay = () => this.setState({ isPlaying: true })
         video.onprogress = this.onLoadingProgress;
+        video.addEventListener('durationchange', this.onDurationChange)
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
         video.addEventListener('timeupdate', this.onTimeUpdate)
         video.addEventListener('volumechange', this.onVolumeChange)
@@ -108,6 +109,8 @@ class App extends React.Component {
     onPlayError = e => {
         console.log('error when tried to play', e)
     }
+
+    onDurationChange = e => this.setState({duration: e.target.duration})
 
     onLoadingProgress = e => {
         const video = e.target
