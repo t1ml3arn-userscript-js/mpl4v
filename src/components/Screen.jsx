@@ -1,26 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class Screen extends React.Component {
+export default function Screen(props) {
 
-    render() {
-        const {showScreen, toogleFullscreen, fullscreen} = this.props
-        const { mediaSrc } = this.props
-        const { looped } = this.props
-        const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
-        const hidden = showScreen ? '' : 'mpl4v--hidden'
+    // TODO set defaultMuted (which is an attribute)
+    // when component mounts ?
+    const {showScreen, toogleFullscreen, fullscreen} = props
+    const { mediaSrc } = props
+    const { looped } = props
+    const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
+    const hidden = showScreen ? '' : 'mpl4v--hidden'
 
-        return (
-        <video 
-            ref={ this.props.mediaRef }
-            className={`mpl4v-screen ${dragIniter} ${hidden}`}
-            data-fullscreen={ fullscreen }
-            onDoubleClick={ toogleFullscreen }
-            src={ mediaSrc }
-            loop={ looped }
-        ></video>
-        )
-    }
+    return (
+    <video 
+        ref={ props.mediaRef }
+        className={`mpl4v-screen ${dragIniter} ${hidden}`}
+        data-fullscreen={ fullscreen }
+        onDoubleClick={ toogleFullscreen }
+        src={ mediaSrc }
+        loop={ looped }
+    ></video>
+    )
 }
 
 Screen.propTypes = {
