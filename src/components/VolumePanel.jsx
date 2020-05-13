@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ProgressBar, { barController } from './ProgressBar'
 import { toogleKey, RefType } from '../utils/utils'
 
-export default class VolumePanel extends React.Component {
+class VolumePanelView extends React.Component {
     constructor(props) {
         super(props)
 
@@ -64,7 +64,7 @@ export default class VolumePanel extends React.Component {
     }
 }
 
-VolumePanel.propTypes = {
+VolumePanelView.propTypes = {
     volume: PropTypes.number.isRequired,
     onVolumeChange: PropTypes.func.isRequired,
     toogleMute: PropTypes.func.isRequired,
@@ -76,7 +76,7 @@ VolumePanel.propTypes = {
 
 function VolumeMod(props) {
     const { isPlus, onChange } = props
-    
+
     return (
     <i 
         className={`zmdi ${ isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-mod`} 
@@ -109,4 +109,5 @@ MuteButton.propTypes = {
     muted: PropTypes.bool.isRequired
 }
 
-export const VolumePanelControlled = barController(VolumePanel)
+const VolumePanel = barController(VolumePanelView)
+export default VolumePanel

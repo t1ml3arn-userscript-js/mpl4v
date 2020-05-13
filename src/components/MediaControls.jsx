@@ -2,7 +2,7 @@ import React from 'react'
 import PlaybackProgressBar from './PlaybackProgress'
 import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
-import VolumePanel, { VolumePanelControlled } from "./VolumePanel";
+import VolumePanel from "./VolumePanel";
 import Button from './Button'
 
 export default function MediaControls(props) {
@@ -29,7 +29,7 @@ export default function MediaControls(props) {
             </div>
             <TimeLabel time={ currentTime } duration={ duration }/>
             <div className="mpl4v-fl-row mpl4-controls--right">
-                <VolumePanelControlled 
+                <VolumePanel
                     volume={ volume } onChange={ onVolumeChange } onVolumeChange={ onVolumeChange }
                     muted={ props.muted } toogleMute={ props.toogleMute }
                 />
