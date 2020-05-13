@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ProgressBar from './ProgressBar'
 import { toogleKey } from '../utils/utils'
 
-export default class Volume extends ProgressBar {
+export default class VolumePanel extends ProgressBar {
     constructor(props) {
         super(props)
 
@@ -58,7 +58,7 @@ export default class Volume extends ProgressBar {
     }
 }
 
-Volume.propTypes = {
+VolumePanel.propTypes = {
     volume: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
 }
