@@ -39,10 +39,9 @@ Button.Play.propTypes = {
 }
 
 export function addSpinner(EclipseTarget) {
-return function Spinner(props) {
-    const { isSeeking, ...passedProps } = props
-    const isActive = isSeeking
-    let classes = isActive ? 'mpl4v-eclipse--spining' : ''
+function Spinner(props) {
+    const { isBuffering, ...passedProps } = props
+    let classes = isBuffering ? 'mpl4v-eclipse--spining' : ''
     
     return (
         <EclipseTarget {...passedProps}>
@@ -50,6 +49,17 @@ return function Spinner(props) {
         </EclipseTarget>
     )
 }
+
+Spinner.propTypes = {
+    isBuffering: PropTypes.bool
+}
+
+Spinner.defaultProps = {
+    isBuffering: false
+}
+
+return Spinner
+
 }
 
 Button.Play = addSpinner(Button.Play);

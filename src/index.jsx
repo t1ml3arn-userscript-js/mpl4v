@@ -21,13 +21,20 @@ class App extends React.Component {
             looped: false,
             duration: 0,
             currentTime: 0,
-            isPlaying: false,
             videowidth: 0,
             videoHeight: 0,
+            isPlaying: false,
+            isBuffering: false,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
         this.mediaRef = React.createRef()
+        
+        // list of events on which you will update spinner
+        this.bufferEvents = [
+            'canplay', 'canplaythrough', 'loadstart', 'stalled', 'suspend',
+            'seeking', 'seeked', 'loadedmetadata', 'playing', 'waiting',
+        ]
     }
 
     componentDidMount() {
@@ -49,6 +56,8 @@ class App extends React.Component {
         // for setting buffered, progress, duration etc to zero values
         video.addEventListener('abort', this.onAbort)
         video.addEventListener('emptied', this.onAbort)
+
+        this.bufferEvents.forEach(e => video.addEventListener(e, this.updateReadyState));
 
         this.listener = new VideoEventListener(video)
     }
@@ -160,6 +169,11 @@ class App extends React.Component {
         })
     }
 
+    updateReadyState = e => {
+        const elt = e.target
+        this.setState({ isBuffering: !elt.ended && elt.readyState != 4 })
+    }
+
     render() {
         
         const { showScreen, fullscreen } = this.state
@@ -201,6 +215,7 @@ class App extends React.Component {
                 toogleLoop={ this.toogleLoop }
                 tooglePlayPause={ this.playpause }
                 isPlaying={ isPlaying }
+                isBuffering={ this.state.isBuffering }
             />
         </div>
         )
