@@ -148,7 +148,7 @@ class App extends React.Component {
 
         */
         const { showScreen, fullscreen } = this.state
-        const { progress, bufferedProgress } = this.state
+        const { bufferedProgress } = this.state
         const { currentTime, duration } = this.state
         const { volume, muted } = this.state
         const { looped, isPlaying } = this.state
