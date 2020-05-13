@@ -106,6 +106,7 @@ ProgressBar.Head.propTypes = {
  * it in a subclass.
  * 
  * Properties:
+ *  enabled:bool - wether or not bar is enabled
  *  onChange:func is required - callback to dispatch progress changing,
  *              the value will be in range [0, 100]
  *  isHorizontal:bool - direction(horizontal or vertical), default is true
