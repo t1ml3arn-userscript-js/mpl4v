@@ -34,6 +34,7 @@ class App extends React.Component {
         this.bufferEvents = [
             'canplay', 'canplaythrough', 'loadstart', 'stalled', 'suspend',
             'seeking', 'seeked', 'loadedmetadata', 'playing', 'waiting',
+            'error',
         ]
     }
 
@@ -177,7 +178,7 @@ class App extends React.Component {
 
     updateReadyState = e => {
         const elt = e.target
-        this.setState({ isBuffering: !elt.ended && elt.readyState != 4 })
+        this.setState({ isBuffering: elt.readyState != 4 && (!elt.ended && !elt.error) })
     }
 
     render() {
