@@ -70,6 +70,7 @@ function VolumeMod(props) {
     <i 
         className={`zmdi ${ isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-mod`} 
         onClick={ clickHandler }
+        data-volume-mod={ isPlus ? '1' : ''}
     ></i>
     )
 }
