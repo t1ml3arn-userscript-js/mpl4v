@@ -38,11 +38,11 @@ class App extends React.Component {
         video.onended = () => this.setState({ isPlaying: false })
         video.onpause = () => this.setState({ isPlaying: false })
         video.onplay = () => this.setState({ isPlaying: true })
-        video.onprogress = this.onLoadingProgress;
         video.addEventListener('durationchange', this.onDurationChange)
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
         video.addEventListener('timeupdate', this.onTimeUpdate)
         video.addEventListener('volumechange', this.onVolumeChange)
+        video.addEventListener('progress', this.onLoadingProgress)
 
         this.listener = new VideoEventListener(video)
     }
