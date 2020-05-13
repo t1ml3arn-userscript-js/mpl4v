@@ -148,8 +148,8 @@ return class BarController extends React.Component {
         this.barEltRef = React.createRef()
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.enabled != prevProps.enabled) {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.enabled != prevState.enabled) {
             const enabled = this.props.enabled
             this.setState({ enabled: enabled })
             if (!enabled) this.stopSeek()
