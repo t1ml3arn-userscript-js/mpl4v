@@ -1,6 +1,7 @@
 import React from 'react'
 import ProgressCalculator from '../utils/ProgressCalculator';
 import PropTypes from 'prop-types'
+import { bound } from '../utils/utils';
 
 /**
  * Basic code to control progress bar.
@@ -71,10 +72,10 @@ return class BarController extends React.Component {
 
         this.calculator.init(event.nativeEvent, this.barEltRef.current, this.props.isHorizontal);
         // calc current progress in percents
-        const progress = this.calculator.getProgress();
+        const progress = bound(this.calculator.getProgress(), 0, 100);
 
         // lift progress value up
-        this.props.onChange(Math.round(progress));
+        this.props.onChange(progress);
 
         // enable control
         document.addEventListener('mouseup', this.stopSeek);
@@ -93,12 +94,8 @@ return class BarController extends React.Component {
     seek = event => {
         this.calculator.update(event);
         // calc current progress in percents
-        let progress = this.calculator.getProgress()
-        
-        // bound it in range [0, 100]
-        progress = Math.min(progress, 100)
-        progress = Math.max(progress, 0)
-        
+        const progress = bound(this.calculator.getProgress(), 0, 100)
+                
         this.props.onChange(Math.round(progress));
     }
 
