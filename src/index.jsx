@@ -151,8 +151,6 @@ class App extends React.Component {
     }
 
     onAbort = e => {
-        const video = e.target
-
         this.setState({
             duration: 0,
             currentTime: 0,
