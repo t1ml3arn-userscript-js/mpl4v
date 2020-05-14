@@ -7,6 +7,7 @@ import MediaControls from './components/MediaControls'
 import { toogleKey, bound } from "./utils/utils";
 import drangAndDropMedia from "./components/MediaDragAndDrop";
 import VideoEventListener from "./utils/VideoEventListener";
+import MouseStopWatcher from './utils/MouseStopWatcher'
 
 class App extends React.Component {
     constructor(props){
@@ -44,6 +45,16 @@ class App extends React.Component {
     componentDidMount() {
         this.dragger = new Dragger(this.appRef.current, ['.mpl4v-drag-initiator']);
         this.dragger.enable()
+
+        this.mouseStopWatcher = new MouseStopWatcher(0.4, () => {
+            const video = this.mediaRef.current
+            this.setState({}, () => {
+                // Passing empty object and callback.
+                // In the callback I do actual update of current time,
+                // since at that moment I can read real state.progress value                
+                video.currentTime = this.state.progress * 0.01 * (video.duration || 0)
+            })
+        })
 
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
         
@@ -106,7 +117,6 @@ class App extends React.Component {
         // This method is called when 
         // user starts seeking with progres bar
 
-        
         // pause video if it was playing
         const video = this.mediaRef.current
 
@@ -116,6 +126,8 @@ class App extends React.Component {
         if (!video.paused) video.pause()
 
         video.currentTime = progress * 0.01 * (video.duration || 0)
+
+        this.mouseStopWatcher.enable()
     }
     
     seekEnd = progress => {
@@ -131,6 +143,7 @@ class App extends React.Component {
         
         // this.setState({ isSeeking: false, wasPlaying: null })
         this.wasPlaying = null
+        this.mouseStopWatcher.disable()
     }
 
     toogleMute = () => {
