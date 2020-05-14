@@ -13,6 +13,7 @@ class App extends React.Component {
         super(props)
 
         this.state = {
+            progress: 0,
             bufferedProgress: 0,
             showScreen: true,
             fullscreen: false,
@@ -96,10 +97,11 @@ class App extends React.Component {
         }
     }
     
-    setProgress = value => {
+    setProgress = value => this.setState({ progress: value })
+    seekTime = progress => {
         const video = this.mediaRef.current
         // || 0 for case if duration is NaN
-        video.currentTime = value * 0.01 * (video.duration || 0)
+        video.currentTime = progress * 0.01 * (video.duration || 0)
     }
     setVolume = value => this.mediaRef.current.volume = value * 0.01
 
@@ -157,7 +159,14 @@ class App extends React.Component {
         this.setState({ duration: video.duration || 0})
     }
 
-    onTimeUpdate = e => this.setState({ currentTime: e.target.currentTime })
+    onTimeUpdate = e => {
+        const time = e.target.currentTime
+        const duration = e.target.duration
+        this.setState({ 
+            currentTime: time,
+            progress:  bound(time*100/duration, 0, 100)
+        })
+    }
 
     onVolumeChange = e => {
         this.setState({ 
@@ -185,7 +194,7 @@ class App extends React.Component {
     render() {
         
         const { showScreen, fullscreen } = this.state
-        const { bufferedProgress } = this.state
+        const { progress, bufferedProgress } = this.state
         const { currentTime, duration } = this.state
         const { volume, muted } = this.state
         const { looped, isPlaying } = this.state
@@ -207,7 +216,8 @@ class App extends React.Component {
                 mediaRef={ this.mediaRef }
             />
             <MediaControls 
-                progress={ this.calcPlaybackProgress() }
+                progress={ progress }
+                onSeekEnd={ this.seekTime }
                 bufferedProgress={ bufferedProgress }
                 duration={ duration }
                 currentTime={ currentTime }

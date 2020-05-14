@@ -34,6 +34,7 @@ return class BarController extends React.Component {
         enabled: PropTypes.bool,
         onChange: PropTypes.func.isRequired,
         isHorizontal: PropTypes.bool,
+        onSeekEnd: PropTypes.func,
     }
 
     static defaultProps = {
@@ -50,6 +51,7 @@ return class BarController extends React.Component {
 
         this.calculator = new ProgressCalculator()
         this.barEltRef = React.createRef()
+        this.progress = 0
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -71,11 +73,10 @@ return class BarController extends React.Component {
         event.stopPropagation(); 
 
         this.calculator.init(event.nativeEvent, this.barEltRef.current, this.props.isHorizontal);
-        // calc current progress in percents
-        const progress = bound(this.calculator.getProgress(), 0, 100);
+        this.calculateProgress()
 
         // lift progress value up
-        this.props.onChange(progress);
+        this.props.onChange(this.progress);
 
         // enable control
         document.addEventListener('mouseup', this.stopSeek);
@@ -89,15 +90,19 @@ return class BarController extends React.Component {
         document.removeEventListener('mousemove', this.seek);
 
         this.setState({ seek: false })
+
+        if (this.props.onSeekEnd)
+            this.props.onSeekEnd(this.progress)
     }
 
     seek = event => {
         this.calculator.update(event);
-        // calc current progress in percents
-        const progress = bound(this.calculator.getProgress(), 0, 100)
-                
-        this.props.onChange(Math.round(progress));
+        this.calculateProgress()
+        // lift progress value up
+        this.props.onChange(this.progress);
     }
+    
+    calculateProgress = () => this.progress = bound(this.calculator.getProgress(), 0, 100)
 
     render() {
         const { onChange, ...passedProps} = this.props
