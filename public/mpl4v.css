@@ -255,6 +255,10 @@
 .mpl4v-bar-seek-color { background-color: var(--playback-bar-seek-color); }
 .mpl4v-bar-progress-color { background-color: var(--playback-bar-progress-color); }
 
+.mpl4v-bar--transition-hor {
+    transition: width 0.2s linear;
+}
+
 .mpl4v-volume-panel-wrap {
     position: relative;
 }

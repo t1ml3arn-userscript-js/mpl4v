@@ -8,6 +8,7 @@ function PlaybackProgressView(props) {
 
     const { progress, bufferedProgress } = props;
     const { barEltRef, startSeek, seek } = props
+    const playbackBarClass = seek ? "" : " mpl4v-bar--transition-hor"
 
     return (
     <div 
@@ -16,9 +17,9 @@ function PlaybackProgressView(props) {
         onMouseDown={ startSeek }
     >
         <div className={ "mpl4v-playback-progressbar__underlay" }/>
-        <Bar classes={ "mpl4v-bar-buff-color"} progress={ bufferedProgress }/>
-        <Bar classes={ "mpl4v-bar-seek-color"} progress={ 60 }/>
-        <Bar classes={ "mpl4v-bar-progress-color"} progress={ progress }/>
+        <Bar classes={ "mpl4v-bar-buff-color mpl4v-bar--transition-hor"} progress={ bufferedProgress }/>
+        <Bar classes={ "mpl4v-bar-seek-color mpl4v-bar--transition-hor"} progress={ 60 }/>
+        <Bar classes={ `mpl4v-bar-progress-color ${playbackBarClass}`} progress={ progress }/>
         <ProgressBar.Head classes={ "mpl4v-playback-progressbar__head" } progress={ progress }/>
     </div>
     )
