@@ -12,6 +12,7 @@
     --playback-bar-progress-color: var(--main-color);
     --controls-bg: #52101a;
     --button-color: #f2f2f2;
+    --button-disabled-color: #b1b1b1ab;
     --text-color: #f2f2f2;
     --eclipse-color: var(--button-color);
 
@@ -313,3 +314,8 @@
 .mpl4v .mpl4v--hidden { display: none; }
 
 .mpl4v .mpl4v--toogled { color: var(--main-color); }
+
+.mpl4v .mpl4v-btn--disabled { 
+    color: var(--button-disabled-color); 
+    cursor: initial;
+}

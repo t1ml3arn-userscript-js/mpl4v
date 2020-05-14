@@ -276,6 +276,9 @@ class App extends React.Component {
                 tooglePlayPause={ this.playpause }
                 isPlaying={ isPlaying }
                 isBuffering={ this.state.isBuffering }
+                downloadURL={ currentMediaSrc }
+                // TODO more nice "saveAs" file name
+                saveAs={ currentMediaSrc }
             />
         </div>
         )

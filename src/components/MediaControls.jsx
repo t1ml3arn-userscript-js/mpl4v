@@ -44,7 +44,7 @@ export default function MediaControls(props) {
                     fullscreen={ props.fullscreen }
                 />
                 {/* <i className="zmdi zmdi-settings"></i> */}
-                <i className="zmdi zmdi-download"></i>
+                <Button.Download downloadURL={ props.downloadURL } saveAs={ props.saveAs }/> 
             </div>
         </div>
     </div>
