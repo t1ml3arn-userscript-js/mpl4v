@@ -48,7 +48,7 @@ class PlaybackProgressView extends React.Component {
             <Bar classes={ "mpl4v-bar-buff-color mpl4v-bar--transition-hor"} progress={ bufferedProgress }/>
             <Bar classes={ "mpl4v-bar-seek-color mpl4v-seekbar"} progress={ seekProgress }/>
             <Bar classes={ `mpl4v-bar-progress-color ${nonSeekTransitionClass}`} progress={ progress }/>
-            <ProgressBar.Head classes={ `mpl4v-playback-progressbar__head ${nonSeekTransitionClass}` } progress={ progress }/>
+            <ProgressBar.Head classes={ `mpl4v-playback-progressbar__head` } progress={ progress }/>
         </div>
         )
     }

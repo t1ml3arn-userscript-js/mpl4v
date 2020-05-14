@@ -237,12 +237,16 @@
     background-color: var(--playback-bar-progress-color);
     border-radius: 50%;
     transition-duration: var(--transition-time);
-    transition-property: transform;
+    transition-property: transform, left;
 }
 
 .mpl4v-playback-progressbar:hover .mpl4v-playback-progressbar__head,
 .mpl4v-playback-progressbar--seek .mpl4v-playback-progressbar__head {
     transform: translate(-50%) scale(1.0);
+}
+
+.mpl4v-playback-progressbar--seek .mpl4v-playback-progressbar__head {
+    transition-property: transform;
 }
 
 .mpl4v-bar--hor {
@@ -256,9 +260,7 @@
 .mpl4v-bar-progress-color { background-color: var(--playback-bar-progress-color); }
 
 .mpl4v-bar--transition-hor {
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
-    transition-property: width, left;
+    transition: width 0.2s linear;
 }
 
 .mpl4v-seekbar {
