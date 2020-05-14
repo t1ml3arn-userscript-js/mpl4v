@@ -33,9 +33,9 @@ class PlaybackProgressView extends React.Component {
         const props = this.props
         const { progress, bufferedProgress } = props;
         const { barEltRef, startSeek, seek } = props
-        const playbackBarClass = seek ? "" : " mpl4v-bar--transition-hor"
+        const nonSeekTransitionClass = seek ? "" : " mpl4v-bar--transition-hor"
         const seekProgress = this.state.seekProgress || 0
-    
+
         return (
         <div 
             className={ `mpl4v-playback-progressbar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
@@ -47,8 +47,8 @@ class PlaybackProgressView extends React.Component {
             <div className={ "mpl4v-playback-progressbar__underlay" }/>
             <Bar classes={ "mpl4v-bar-buff-color mpl4v-bar--transition-hor"} progress={ bufferedProgress }/>
             <Bar classes={ "mpl4v-bar-seek-color mpl4v-seekbar"} progress={ seekProgress }/>
-            <Bar classes={ `mpl4v-bar-progress-color ${playbackBarClass}`} progress={ progress }/>
-            <ProgressBar.Head classes={ "mpl4v-playback-progressbar__head" } progress={ progress }/>
+            <Bar classes={ `mpl4v-bar-progress-color ${nonSeekTransitionClass}`} progress={ progress }/>
+            <ProgressBar.Head classes={ `mpl4v-playback-progressbar__head ${nonSeekTransitionClass}` } progress={ progress }/>
         </div>
         )
     }
