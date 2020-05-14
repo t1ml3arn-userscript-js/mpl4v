@@ -66,11 +66,11 @@ Button.Play = addSpinner(Button.Play);
 
 Button.Download = function Download(props) {
     const { downloadURL: url, saveAs } = props
-    const title = url ? 'Download' : false
+    const title = url ? 'Download' : undefined
 
     return (
     <a 
-        href={ url || false } download={ saveAs || false } 
+        href={ url ? url : undefined } download={ saveAs || false } 
         title={ title }
     >
         <i className={ `zmdi zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }></i>
