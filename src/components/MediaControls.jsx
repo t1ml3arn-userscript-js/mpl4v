@@ -19,6 +19,7 @@ export default function MediaControls(props) {
             onChange={ onProgressChange } 
             bufferedProgress={ bufferedProgress }
             onSeekEnd={ props.onSeekEnd }
+            onSeekStart={ props.onSeekStart }
         />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div className="mpl4v-fl-row mpl4-controls--left ">

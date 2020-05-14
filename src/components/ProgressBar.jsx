@@ -35,6 +35,7 @@ return class BarController extends React.Component {
         onChange: PropTypes.func.isRequired,
         isHorizontal: PropTypes.bool,
         onSeekEnd: PropTypes.func,
+        onSeekStart: PropTypes.func,
     }
 
     static defaultProps = {
@@ -72,17 +73,20 @@ return class BarController extends React.Component {
         // outside this component
         event.stopPropagation(); 
 
+        this.setState({ seek: true })
+
         this.calculator.init(event.nativeEvent, this.barEltRef.current, this.props.isHorizontal);
         this.calculateProgress()
 
         // lift progress value up
         this.props.onChange(this.progress);
 
+        if (this.props.onSeekStart)
+            this.props.onSeekStart(this.progress)
+
         // enable control
         document.addEventListener('mouseup', this.stopSeek);
         document.addEventListener('mousemove', this.seek);
-
-        this.setState({ seek: true })
     }
     
     stopSeek = () => {
@@ -105,7 +109,7 @@ return class BarController extends React.Component {
     calculateProgress = () => this.progress = bound(this.calculator.getProgress(), 0, 100)
 
     render() {
-        const { onChange, ...passedProps} = this.props
+        const { onChange, onSeekStart, onSeekEnd, ...passedProps} = this.props
         const { seek, enabled } = this.state
         
         return (

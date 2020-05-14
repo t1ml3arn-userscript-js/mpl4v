@@ -37,6 +37,8 @@ class App extends React.Component {
             'seeking', 'seeked', 'loadedmetadata', 'playing', 'waiting',
             'error',
         ]
+
+        this.wasPlaying = null
     }
 
     componentDidMount() {
@@ -99,11 +101,36 @@ class App extends React.Component {
     
     setVolume = value => this.mediaRef.current.volume = value * 0.01
     setProgress = value => this.setState({ progress: value })
-    
-    seekTime = progress => {
+
+    seekStart = progress => {
+        // This method is called when 
+        // user starts seeking with progres bar
+
+        
+        // pause video if it was playing
         const video = this.mediaRef.current
+
+        // this.setState({ isSeeking: true, wasPlaying: !video.paused })
+        this.wasPlaying = !video.paused
+        
+        if (!video.paused) video.pause()
+
+        video.currentTime = progress * 0.01 * (video.duration || 0)
+    }
+    
+    seekEnd = progress => {
+        const video = this.mediaRef.current
+
         // || 0 for case if duration is NaN
         video.currentTime = progress * 0.01 * (video.duration || 0)
+
+        // when seek is ended - play video (if it was playing before)
+        if (this.wasPlaying === true) {
+            this.requestPlay()
+        }
+        
+        // this.setState({ isSeeking: false, wasPlaying: null })
+        this.wasPlaying = null
     }
 
     toogleMute = () => {
@@ -218,7 +245,8 @@ class App extends React.Component {
             />
             <MediaControls 
                 progress={ progress }
-                onSeekEnd={ this.seekTime }
+                onSeekStart={ this.seekStart }
+                onSeekEnd={ this.seekEnd }
                 bufferedProgress={ bufferedProgress }
                 duration={ duration }
                 currentTime={ currentTime }
