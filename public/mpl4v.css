@@ -218,10 +218,10 @@
 
 .mpl4v-playback-progressbar__underlay {
     width: 100%;
-    height: 1.6em;
+    height: 1.8em;
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -0.4em;
     background: transparent;
 }
 
