@@ -191,6 +191,7 @@
 
 .mpl4v-playback-progressbar {
     --bar-size: 3px;
+    --transition-time: 0.175s;
 
     display: block;
     width: 100%;
@@ -198,12 +199,13 @@
     position: absolute;
     bottom: 100%;
     background-color: var(--playback-bar-empty-color);
+
+    transition: height var(--transition-time);
 }
 
 .mpl4v-playback-progressbar:hover,
 .mpl4v-playback-progressbar--seek {
     height: calc(var(--bar-size)*2);
-    transition: 'height';
 }
 
 .mpl4v-playback-progressbar__bar {
@@ -224,20 +226,23 @@
 }
 
 .mpl4v-playback-progressbar__head {
-    width: 0;
-    height: 0;
+    --head-size: calc(var(--bar-size) * 4.5);
+    
+    width: var(--head-size);
+    height: var(--head-size);
     position: absolute;
     top: 50%;
-    margin-top: calc(var(--bar-size) * 4.5 * -0.5);
-    transform: translateX(-50%);
+    margin-top: calc(var(--head-size) * -0.5);
+    transform: translate(-50%) scale(0);
     background-color: var(--playback-bar-progress-color);
     border-radius: 50%;
+    transition-duration: var(--transition-time);
+    transition-property: transform;
 }
 
 .mpl4v-playback-progressbar:hover .mpl4v-playback-progressbar__head,
 .mpl4v-playback-progressbar--seek .mpl4v-playback-progressbar__head {
-    width: calc(var(--bar-size) * 4.5);
-    height: calc(var(--bar-size) * 4.5);
+    transform: translate(-50%) scale(1.0);
 }
 
 .mpl4v-bar--hor {
