@@ -97,13 +97,14 @@ class App extends React.Component {
         }
     }
     
+    setVolume = value => this.mediaRef.current.volume = value * 0.01
     setProgress = value => this.setState({ progress: value })
+    
     seekTime = progress => {
         const video = this.mediaRef.current
         // || 0 for case if duration is NaN
         video.currentTime = progress * 0.01 * (video.duration || 0)
     }
-    setVolume = value => this.mediaRef.current.volume = value * 0.01
 
     toogleMute = () => {
         const video = this.mediaRef.current
