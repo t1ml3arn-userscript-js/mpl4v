@@ -19,7 +19,7 @@
     --mpl4v-z: 999;
     --screen-z: calc(var(--mpl4v-z) + 1);
     --controls-z: calc(var(--screen-z) + 1);
-    --playback-progressbar-z: calc(var(--mpl4v-z) + 10)
+    --playback-progressbar-z: calc(var(--mpl4v-z) + 10);
 
     /* everything else */
     all: initial;
