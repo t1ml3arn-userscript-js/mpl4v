@@ -59,6 +59,17 @@
     background-color: var(--screen-bg);
     z-index: var(--screen-z);
     object-fit: contain;
+    
+    transition-timing-function: linear;
+    transition-duration: 0.15s;
+    /* 
+    Required rules for smooth transitions 
+    while centering and scaling the screen
+    */
+    left: 50%;
+    margin-left: -50%;
+    transition-property: width, height, margin-left;
+    /* ------- */
 }
 
 .mpl4v-screen[data-fullscreen=true] {

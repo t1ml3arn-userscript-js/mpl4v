@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import Dragger from "./utils/Dragger";
-import Screen from "./components/Screen"
+import Screen, { NewScreen } from "./components/Screen"
 import fscreen from 'fscreen'
 import MediaControls from './components/MediaControls'
 import { toogleKey, bound } from "./utils/utils";
@@ -248,7 +248,7 @@ class App extends React.Component {
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
         >
-            <Screen 
+            <NewScreen 
                 showScreen={ showScreen } 
                 fullscreen={ fullscreen }
                 toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
