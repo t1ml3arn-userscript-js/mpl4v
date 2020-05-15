@@ -277,7 +277,6 @@ class App extends React.Component {
                 isPlaying={ isPlaying }
                 isBuffering={ this.state.isBuffering }
                 downloadURL={ currentMediaSrc }
-                // TODO more nice "saveAs" file name
                 saveAs={ currentMediaSrc }
             />
         </div>

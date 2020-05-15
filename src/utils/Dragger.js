@@ -44,7 +44,6 @@ export default class Dragger {
             if (match) {
                 // this should disable text selection
                 // sadly, this also disables ability to change cursor icon
-                // TODO find a way to disable text selection only
                 // e.preventDefault()
                 // no one will recieve this event
                 e.stopImmediatePropagation()
