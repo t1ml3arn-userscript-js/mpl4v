@@ -20,6 +20,7 @@
     --screen-z: calc(var(--mpl4v-z) + 1);
     --controls-z: calc(var(--screen-z) + 1);
     --playback-progressbar-z: calc(var(--mpl4v-z) + 10);
+    --topmost-z: calc(var(--mpl4v-z) + 100);
 
     /* everything else */
     all: initial;
@@ -141,6 +142,7 @@
     border-left: 0.065em solid var(--eclipse-color);
     background-color: transparent;
     pointer-events: none;
+    z-index: var(--topmost-z);
     opacity: 0;
     transition: opacity 0.25s linear;
 }
