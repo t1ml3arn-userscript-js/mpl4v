@@ -21,12 +21,12 @@ class PlaybackProgressView extends React.Component {
 
     showSeekBar = e => {
         this.calculator.init(e, this.props.barEltRef.current, true)        
-        this.setState({ seekProgress: this.getSeekProgress() })
+        this.setState({ seekPosition: this.getSeekProgress() })
     }
     
     updateSeekBar = e => {
         this.calculator.update(e)
-        this.setState({ seekProgress: this.getSeekProgress() })
+        this.setState({ seekPosition: this.getSeekProgress() })
     }
 
     render() {
@@ -34,8 +34,8 @@ class PlaybackProgressView extends React.Component {
         const { progress, bufferedProgress } = props;
         const { barEltRef, startSeek, seek } = props
         const transitionClass = seek ? "" : " mpl4v-bar--transition-hor"
-        const seekProgress = this.state.seekProgress || 0
-
+        const seekPosition = seek ? 0 : (this.state.seekPosition || 0)
+        
         return (
         <div 
             className={ `mpl4v-playback-progressbar ${ seek ? "mpl4v-playback-progressbar--seek" : ''}` }
@@ -46,7 +46,7 @@ class PlaybackProgressView extends React.Component {
         >
             <div className={ "mpl4v-playback-progressbar__underlay" }/>
             <Bar classes={ "mpl4v-bar-buff-color mpl4v-bar--transition-hor"} progress={ bufferedProgress }/>
-            <Bar classes={ "mpl4v-bar-seek-color mpl4v-seekbar"} progress={ seekProgress }/>
+            <Bar classes={ "mpl4v-bar-seek-color mpl4v-seekbar"} progress={ seekPosition }/>
             <Bar classes={ `mpl4v-bar-progress-color ${transitionClass}`} progress={ progress }/>
             <ProgressBar.Head classes={ `mpl4v-playback-progressbar__head` } progress={ progress }/>
         </div>
