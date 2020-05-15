@@ -64,7 +64,9 @@
     transition-duration: 0.15s;
     /* 
     Required rules for smooth transitions 
-    while centering and scaling the screen
+    while centering and scaling the screen.
+    Related question: 
+        https://stackoverflow.com/questions/40804134/css-transition-width-and-height-from-center-of-div
     */
     left: 50%;
     margin-left: -50%;
