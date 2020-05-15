@@ -25,7 +25,8 @@
     "rules": {
         "no-unused-vars": "warn",
         "react/prop-types": [2, { "skipUndeclared": true }],
-        "no-empty": "warn"
+        "no-empty": "warn",
+        "no-unreachable": "warn"
     },
     "settings": {
         "react": {
