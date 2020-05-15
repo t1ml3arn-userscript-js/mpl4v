@@ -78,8 +78,8 @@ class App extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        // TODO for playing check also autoplay attribute
         if (this.props.droppedMediaURL != prevProps.droppedMediaURL)
+        if (this.state.autoplay)
             this.requestPlay()
     }
 
