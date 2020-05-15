@@ -80,6 +80,9 @@
     position: fixed;
     left: 0;
     top: 0;
+
+    /* cancel position shift when non-fullscreen */
+    margin: 0;
 }
 
 .mpl4v-controls {
