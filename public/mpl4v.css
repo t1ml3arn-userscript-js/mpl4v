@@ -200,6 +200,7 @@
     position: absolute;
     bottom: 100%;
     z-index: var(--playback-progressbar-z);
+    cursor: pointer;
     background-color: var(--playback-bar-empty-color);
 
     transition: height var(--transition-time);
