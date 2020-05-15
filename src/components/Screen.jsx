@@ -67,49 +67,27 @@ export class NewScreen extends React.Component {
         if (width && height) {
             const ratio = width/height
 
-            this.setState({
-                screenWidth: this.defaultWidth,
-                screenHeight: this.defaultWidth/ratio
-            })
-
-            return;
-            
             if (ratio >= 1) {
-            // video is horizontal or square
-                this.setState({
-                    screenWidth: this.defaultWidth,
-                    screenHeight: this.defaultWidth/ratio
+                // video is horizontal or square
+                this.setState(state => {
+                    const scale = state.scale
+                    const nw = this.defaultWidth*scale
+                    return {
+                        screenWidth: nw,
+                        screenHeight: nw/ratio
+                    }
                 })
             } else {
-            // video is vertical
-                this.setState({
-                    screenWidth: ratio*this.defaultHeight,
-                    screenHeight: this.defaultHeight
+                // video is vertical
+                this.setState(state => {
+                    const scale = state.scale
+                    const nh = this.defaultHeight * scale
+                    return {
+                        screenWidth: ratio * nh,
+                        screenHeight: nh
+                    }
                 })
             }
-
-            // if (ratio >= 1) {
-            //     this.setState(state => {
-            //         const scale = state.scale
-            //         const width = this.defaultWidth*scale
-            //         const height = width/ratio
-            //         return {
-            //             screenWidth:    width,
-            //             screenHeight:   height
-            //         }
-            //     })
-            // } else {
-            //     this.setState(state => {
-            //         const scale = state.scale
-            //         const height = this.defaultHeight*scale
-            //         const width = ratio * height
-                    
-            //         return {
-            //             screenWidth:    width,
-            //             screenHeight:   height,
-            //         }
-            //     })
-            // }
         } else {
             this.setState({ screenWidth: this.defaultWidth, screenHeight: this.defaultHeight })
         }
@@ -145,14 +123,14 @@ export class NewScreen extends React.Component {
         const { looped } = props
         const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
         const hidden = showScreen ? '' : 'mpl4v--hidden'
-        const { screenWidth, screenHeight, scale } = this.state
+        const { screenWidth, screenHeight } = this.state
 
         let styles;
         if (screenWidth && screenHeight && !fullscreen) {
             styles = {
-                width: `${screenWidth*scale}px`,
-                height: `${screenHeight*scale}px`,
-                marginLeft: `-${screenWidth * scale * 0.5}px`
+                width: `${screenWidth}px`,
+                height: `${screenHeight}px`,
+                marginLeft: `-${screenWidth * 0.5}px`
             }
         } else
             styles = null
