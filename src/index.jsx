@@ -23,7 +23,7 @@ class App extends React.Component {
             looped: false,
             duration: 0,
             currentTime: 0,
-            videowidth: 0,
+            videoWidth: 0,
             videoHeight: 0,
             isPlaying: false,
             isBuffering: false,
@@ -221,7 +221,7 @@ class App extends React.Component {
             duration: 0,
             currentTime: 0,
             bufferedProgress: 0,
-            videowidth: 0,
+            videoWidth: 0,
             videoHeight: 0,
         })
     }
