@@ -27,6 +27,7 @@ class App extends React.Component {
             videoHeight: 0,
             isPlaying: false,
             isBuffering: false,
+            autoplay: true,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
