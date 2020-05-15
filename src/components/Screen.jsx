@@ -46,8 +46,20 @@ export class NewScreen extends React.Component {
         this.state = { 
             scale: 1
         }
+
+        this.preserveSize = true
         // TODO max width = 2 * screen width
         // TODO max height = 2 * screen height
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        // The point:
+    /* 
+        I get new video sizes (width and height) as props.
+        I have to update video elt size (and position and so on)
+        based on new data.
+        (w, h) => ({ w: new_w, h: new_h })
+    */
     }
 
     componentDidMount() {
@@ -58,38 +70,21 @@ export class NewScreen extends React.Component {
         this.defaultHeight = rect.height
     }
 
-    updateResolution = () => {
+    updateResolution = (e) => {
         const video = this.props.mediaRef.current
 
         const width = video.videoWidth
         const height = video.videoHeight
 
         if (width && height) {
-            const ratio = width/height
-
-            if (ratio >= 1) {
-                // video is horizontal or square
-                this.setState(state => {
-                    const scale = state.scale
-                    const nw = this.defaultWidth*scale
-                    return {
-                        screenWidth: nw,
-                        screenHeight: nw/ratio
-                    }
-                })
-            } else {
-                // video is vertical
-                this.setState(state => {
-                    const scale = state.scale
-                    const nh = this.defaultHeight * scale
-                    return {
-                        screenWidth: ratio * nh,
-                        screenHeight: nh
-                    }
-                })
-            }
+            this.setState(state => {
+                if (this.preserveSize)
+                    return this.preserveSizeHandler(width, height, state)
+                else
+                    return this.applyCurrentScale(width, height, state)
+            })
         } else {
-            this.setState({ screenWidth: this.defaultWidth, screenHeight: this.defaultHeight })
+            // this.setState({ screenWidth: this.defaultWidth, screenHeight: this.defaultHeight })
         }
     }
 
@@ -114,6 +109,52 @@ export class NewScreen extends React.Component {
                     screenHeight: h * scale,
                 }
             })
+    }
+
+    preserveSizeHandler = (w, h, state) => {
+        // w, h - current video size
+        const ratio = w/h
+        
+        if (ratio >= 1) {
+            // preserve width for horizontal video
+            const newWidth = (state.screenWidth || this.defaultWidth)
+            return {
+                scale: newWidth / w,
+                screenWidth:    newWidth,
+                screenHeight:   newWidth / ratio
+            }
+        } else {
+            // preserve height for vertical video
+            let new_h = h * state.scale
+            const ah = window.screen.availHeight
+            const new_r = new_h / ah
+
+            // change scale only if new scaled height exceeds screen height
+            new_h = new_r > 1 ? ah : new_h
+            const new_w = new_h * ratio
+
+            return {
+                scale: new_h / h,
+                screenHeight:   new_h,
+                screenWidth:    new_w
+            }
+
+            // return {
+            //     scale: state.screenHeight / h,
+            //     screenHeight:   state.screenHeight,
+            //     screenWidth:    state.screenHeight * ratio
+            // }
+        }
+    }
+
+    applyCurrentScale = (w, h, state) => {
+        const scale = state.scale
+        const ratio = w/h
+        const nw = this.defaultWidth*scale
+        return {
+            screenWidth: nw,
+            screenHeight: nw/ratio
+        }
     }
 
     render() {
@@ -146,6 +187,7 @@ export class NewScreen extends React.Component {
             onWheel={ fullscreen ? undefined : this.changeScale }
             onLoadedMetadata={ this.updateResolution }
             style={ styles }
+            onLoadStart={ this.updateResolution }
         ></video>
         )
     }
