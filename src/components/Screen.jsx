@@ -2,38 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { bound } from '../utils/utils'
 
-export default function Screen(props) {
+export default class Screen extends React.Component {
 
-    // TODO set defaultMuted (which is an attribute)
-    // when component mounts ?
-    const {showScreen, toogleFullscreen, fullscreen} = props
-    const { mediaSrc } = props
-    const { looped } = props
-    const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
-    const hidden = showScreen ? '' : 'mpl4v--hidden'
-
-    return (
-    <video 
-        ref={ props.mediaRef }
-        className={`mpl4v-screen ${dragIniter} ${hidden}`}
-        data-fullscreen={ fullscreen }
-        onDoubleClick={ toogleFullscreen }
-        src={ mediaSrc }
-        loop={ looped }
-    ></video>
-    )
-}
-
-Screen.propTypes = {
-    showScreen: PropTypes.bool.isRequired,
-    fullscreen: PropTypes.bool.isRequired,
-    toogleFullscreen: PropTypes.func.isRequired,
-    mediaSrc: PropTypes.string,
-    looped: PropTypes.bool.isRequired,
-    mediaRef: PropTypes.object
-}
-
-export class NewScreen extends React.Component {
+    static propTypes = {
+        showScreen: PropTypes.bool.isRequired,
+        fullscreen: PropTypes.bool.isRequired,
+        toogleFullscreen: PropTypes.func.isRequired,
+        mediaSrc: PropTypes.string,
+        looped: PropTypes.bool.isRequired,
+        mediaRef: PropTypes.object
+    }
 
     scaleStep = 0.1
 
@@ -59,17 +37,6 @@ export class NewScreen extends React.Component {
         // TODO(?) max height = 2 * screen height
     }
 
-    static getDerivedStateFromProps(props, state) {
-        // The point:
-    /* 
-        I get new video sizes (width and height) as props.
-        I have to update video elt size (and position and so on)
-        based on new data.
-        (w, h) => ({ w: new_w, h: new_h })
-    */
-        return null
-    }
-
     componentDidMount() {
         const video = this.props.mediaRef.current
         const rect = video.getBoundingClientRect()
@@ -78,7 +45,7 @@ export class NewScreen extends React.Component {
         this.defaultHeight = rect.height
     }
 
-    updateResolution = (e) => {
+    updateResolution = () => {
         const video = this.props.mediaRef.current
 
         const width = video.videoWidth

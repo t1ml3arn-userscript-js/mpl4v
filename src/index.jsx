@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import Dragger from "./utils/Dragger";
-import Screen, { NewScreen } from "./components/Screen"
+import Screen from "./components/Screen"
 import fscreen from 'fscreen'
 import MediaControls from './components/MediaControls'
 import { toogleKey, bound } from "./utils/utils";
