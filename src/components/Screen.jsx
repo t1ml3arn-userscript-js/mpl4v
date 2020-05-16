@@ -44,10 +44,15 @@ export class NewScreen extends React.Component {
         super(props)
 
         this.state = { 
-            scale: 1
+            scale: 1,
+            scaleWidth: null,
+            scaleHeight: null,
+            screenWidth: 0,
+            screenHeight: 0,
         }
 
         this.preserveSize = true
+
         // TODO max width = 2 * screen width
         // TODO max height = 2 * screen height
     }
@@ -60,6 +65,7 @@ export class NewScreen extends React.Component {
         based on new data.
         (w, h) => ({ w: new_w, h: new_h })
     */
+        return null
     }
 
     componentDidMount() {
@@ -79,12 +85,12 @@ export class NewScreen extends React.Component {
         if (width && height) {
             this.setState(state => {
                 if (this.preserveSize)
-                    return this.preserveSizeHandler(width, height, state)
+                    return this.preserveSizeHandler_v2(width, height, state)
                 else
                     return this.applyCurrentScale(width, height, state)
             })
         } else {
-            // this.setState({ screenWidth: this.defaultWidth, screenHeight: this.defaultHeight })
+            this.setState({ screenWidth: this.defaultWidth, screenHeight: this.defaultHeight })
         }
     }
 
@@ -100,15 +106,70 @@ export class NewScreen extends React.Component {
         // scale only when we have video dimension 
         if (w && h) 
             this.setState(state => {
-                let scale = state.scale + this.scaleStep * mod
-                scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
-
-                return {
-                    scale: scale,
-                    screenWidth:  w * scale,
-                    screenHeight: h * scale,
-                }
+                // return this.getSharedScale(w,h,mod,state)
+                return this.getIndieScale(w, h, mod, state)
             })
+    }
+
+    getSharedScale = (w, h, mod, state) => {
+        let scale = state.scale + this.scaleStep * mod
+        scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
+        
+        return {
+            scale: scale,
+            screenWidth:  w * scale,
+            screenHeight: h * scale,
+        }
+    }
+    
+    getIndieScale = (w, h, mod, state) => {
+        const ratio = w / h
+        let scale = ratio >= 1 ? state.scaleWidth : state.scaleHeight
+        scale += mod * this.scaleStep
+        scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
+        console.log(scale)
+        const result = 
+         { 
+            [ratio >= 1 ? 'scaleWidth' : 'scaleHeight']: scale,
+            screenWidth: w * scale, 
+            screenHeight: h * scale,
+        }
+
+        return result
+    }
+
+    preserveSizeHandler_v2 = (w, h, state) => {
+        // TODO just store 2 scale factors for each aspect ratio =\
+
+        const ratio = w / h
+
+        if (ratio >= 1) {
+            const scale = state.scaleWidth
+            const screenWidth = scale === null ? this.defaultWidth : state.screenWidth
+            const screenHeight = screenWidth / ratio
+
+            return { 
+                scaleWidth: screenWidth / w,
+                screenHeight, 
+                screenWidth, 
+            }
+        } else {
+            let { scaleHeight, screenHeight } = state
+            // if no scale, then set width to default and scale height with ratio
+            // if scale, then scale height with its value, then scale width with ratio
+            let screenWidth
+            if (scaleHeight == null) {
+                screenWidth = this.defaultWidth
+                screenHeight = this.defaultWidth / ratio
+            } else {
+                screenWidth = screenHeight * ratio
+            }
+
+            return {
+                screenWidth, screenHeight,
+                scaleHeight: screenHeight / h,
+            }
+        }
     }
 
     preserveSizeHandler = (w, h, state) => {
