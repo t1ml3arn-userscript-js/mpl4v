@@ -49,6 +49,8 @@ export class NewScreen extends React.Component {
             zoomVert: null,
             screenWidth: 0,
             screenHeight: 0,
+            previousWidth: 0, 
+            previousHeight: 0,
         }
 
         this.restoresSize = true
@@ -123,14 +125,20 @@ export class NewScreen extends React.Component {
     }
     
     getIndieScale = (w, h, mod, state) => {
-        const ratio = w / h
-        let scale = ratio >= 1 ? state.zoomHor : state.zoomVert
+        const r = w / h
+
+        let scale = r >= 1 ? state.zoomHor : state.zoomVert
         scale += mod * this.scaleStep
         scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
-        console.log(scale)
+        
+        const zoomKey = r >= 1 ? 'zoomHor' : 'zoomVert'
+        const prevSizeKey = r >= 1 ? 'previousWidth' : 'previousHeight'
+        const prevSizeValue = r >= 1 ? w * scale : h * scale
+
         const result = 
          { 
-            [ratio >= 1 ? 'zoomHor' : 'zoomVert']: scale,
+            [zoomKey]: scale,
+            [prevSizeKey]: prevSizeValue,
             screenWidth: w * scale, 
             screenHeight: h * scale,
         }
@@ -143,29 +151,36 @@ export class NewScreen extends React.Component {
 
         if (ratio >= 1) {
             const scale = state.zoomHor
-            const screenWidth = scale === null ? this.defaultWidth : state.screenWidth
+            let screenWidth = scale === null ? this.defaultWidth : state.previousWidth
             const screenHeight = screenWidth / ratio
 
             return { 
                 zoomHor: screenWidth / w,
                 screenHeight, 
-                screenWidth, 
+                screenWidth,
+                // prev WIDTH must be stored separately from prev HEIGHT
+                // point is the same as with separate zoom factor
+                previousWidth: screenWidth,
             }
         } else {
-            let { zoomVert, screenHeight } = state
+            let { zoomVert, previousHeight } = state
             // if no scale, then set width to default and scale height with ratio
             // if scale, then scale height with its value, then scale width with ratio
-            let screenWidth
+            let screenWidth, screenHeight
             if (zoomVert == null) {
                 screenWidth = this.defaultWidth
                 screenHeight = this.defaultWidth / ratio
             } else {
-                screenWidth = screenHeight * ratio
+                screenHeight = previousHeight
+                screenWidth = previousHeight * ratio
             }
 
             return {
                 screenWidth, screenHeight,
                 zoomVert: screenHeight / h,
+                // prev HEIGHT must be stored separately from prev WIDTH
+                // point is the same as with separate zoom factor
+                previousHeight: screenHeight,
             }
         }
     }
