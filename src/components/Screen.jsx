@@ -45,8 +45,8 @@ export class NewScreen extends React.Component {
 
         this.state = { 
             scale: 1,
-            scaleWidth: null,
-            scaleHeight: null,
+            zoomHor: null,
+            zoomVert: null,
             screenWidth: 0,
             screenHeight: 0,
         }
@@ -124,13 +124,13 @@ export class NewScreen extends React.Component {
     
     getIndieScale = (w, h, mod, state) => {
         const ratio = w / h
-        let scale = ratio >= 1 ? state.scaleWidth : state.scaleHeight
+        let scale = ratio >= 1 ? state.zoomHor : state.zoomVert
         scale += mod * this.scaleStep
         scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
         console.log(scale)
         const result = 
          { 
-            [ratio >= 1 ? 'scaleWidth' : 'scaleHeight']: scale,
+            [ratio >= 1 ? 'zoomHor' : 'zoomVert']: scale,
             screenWidth: w * scale, 
             screenHeight: h * scale,
         }
@@ -144,21 +144,21 @@ export class NewScreen extends React.Component {
         const ratio = w / h
 
         if (ratio >= 1) {
-            const scale = state.scaleWidth
+            const scale = state.zoomHor
             const screenWidth = scale === null ? this.defaultWidth : state.screenWidth
             const screenHeight = screenWidth / ratio
 
             return { 
-                scaleWidth: screenWidth / w,
+                zoomHor: screenWidth / w,
                 screenHeight, 
                 screenWidth, 
             }
         } else {
-            let { scaleHeight, screenHeight } = state
+            let { zoomVert, screenHeight } = state
             // if no scale, then set width to default and scale height with ratio
             // if scale, then scale height with its value, then scale width with ratio
             let screenWidth
-            if (scaleHeight == null) {
+            if (zoomVert == null) {
                 screenWidth = this.defaultWidth
                 screenHeight = this.defaultWidth / ratio
             } else {
@@ -167,7 +167,7 @@ export class NewScreen extends React.Component {
 
             return {
                 screenWidth, screenHeight,
-                scaleHeight: screenHeight / h,
+                zoomVert: screenHeight / h,
             }
         }
     }
