@@ -139,8 +139,6 @@ export class NewScreen extends React.Component {
     }
 
     preserveSizeHandler_v2 = (w, h, state) => {
-        // TODO just store 2 scale factors for each aspect ratio =\
-
         const ratio = w / h
 
         if (ratio >= 1) {
@@ -173,7 +171,6 @@ export class NewScreen extends React.Component {
     }
 
     preserveSizeHandler = (w, h, state) => {
-        // w, h - current video size
         const ratio = w/h
         
         if (ratio >= 1) {
@@ -199,12 +196,6 @@ export class NewScreen extends React.Component {
                 screenHeight:   new_h,
                 screenWidth:    new_w
             }
-
-            // return {
-            //     scale: state.screenHeight / h,
-            //     screenHeight:   state.screenHeight,
-            //     screenWidth:    state.screenHeight * ratio
-            // }
         }
     }
 
