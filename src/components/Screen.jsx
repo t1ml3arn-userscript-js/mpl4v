@@ -55,8 +55,8 @@ export class NewScreen extends React.Component {
 
         this.restoresSize = true
 
-        // TODO max width = 2 * screen width
-        // TODO max height = 2 * screen height
+        // TODO(?) max width = 2 * screen width
+        // TODO(?) max height = 2 * screen height
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -87,7 +87,7 @@ export class NewScreen extends React.Component {
         if (width && height) {
             this.setState(state => {
                 if (this.restoresSize)
-                    return this.restoreSizeHandler_v2(width, height, state)
+                    return this.restoreSizeHandler(width, height, state)
                 else
                     return this.applyCurrentScale(width, height, state)
             })
@@ -146,7 +146,7 @@ export class NewScreen extends React.Component {
         return result
     }
 
-    restoreSizeHandler_v2 = (w, h, state) => {
+    restoreSizeHandler = (w, h, state) => {
         const ratio = w / h
 
         if (ratio >= 1) {
@@ -181,35 +181,6 @@ export class NewScreen extends React.Component {
                 // prev HEIGHT must be stored separately from prev WIDTH
                 // point is the same as with separate zoom factor
                 previousHeight: screenHeight,
-            }
-        }
-    }
-
-    restoreSizeHandler = (w, h, state) => {
-        const ratio = w/h
-        
-        if (ratio >= 1) {
-            // preserve width for horizontal video
-            const newWidth = (state.screenWidth || this.defaultWidth)
-            return {
-                scale: newWidth / w,
-                screenWidth:    newWidth,
-                screenHeight:   newWidth / ratio
-            }
-        } else {
-            // preserve height for vertical video
-            let new_h = h * state.scale
-            const ah = window.screen.availHeight
-            const new_r = new_h / ah
-
-            // change scale only if new scaled height exceeds screen height
-            new_h = new_r > 1 ? ah : new_h
-            const new_w = new_h * ratio
-
-            return {
-                scale: new_h / h,
-                screenHeight:   new_h,
-                screenWidth:    new_w
             }
         }
     }
