@@ -51,7 +51,7 @@ export class NewScreen extends React.Component {
             screenHeight: 0,
         }
 
-        this.preserveSize = true
+        this.restoresSize = true
 
         // TODO max width = 2 * screen width
         // TODO max height = 2 * screen height
@@ -84,8 +84,8 @@ export class NewScreen extends React.Component {
 
         if (width && height) {
             this.setState(state => {
-                if (this.preserveSize)
-                    return this.preserveSizeHandler_v2(width, height, state)
+                if (this.restoresSize)
+                    return this.restoreSizeHandler_v2(width, height, state)
                 else
                     return this.applyCurrentScale(width, height, state)
             })
@@ -138,7 +138,7 @@ export class NewScreen extends React.Component {
         return result
     }
 
-    preserveSizeHandler_v2 = (w, h, state) => {
+    restoreSizeHandler_v2 = (w, h, state) => {
         const ratio = w / h
 
         if (ratio >= 1) {
@@ -170,7 +170,7 @@ export class NewScreen extends React.Component {
         }
     }
 
-    preserveSizeHandler = (w, h, state) => {
+    restoreSizeHandler = (w, h, state) => {
         const ratio = w/h
         
         if (ratio >= 1) {
