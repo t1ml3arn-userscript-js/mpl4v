@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { bound } from '../utils/utils'
+import { bound, magnetValue } from '../utils/utils'
 
 export default class Screen extends React.Component {
 
@@ -98,12 +98,21 @@ export default class Screen extends React.Component {
         scale += mod * this.scaleStep
         scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
         
+        // I want to magnet screen width to control width (this.defaultWidth).
+        // With this, whatever the width value might become through zooming, 
+        // it will never skip desired width (this.defaultWidth)
+        // So, here we go:
+        // 1. magnet target value
+        const newWidth = magnetValue(state.screenWidth, w * scale, this.defaultWidth)
+        // 2. recalc scale value
+        scale = newWidth / w
+
         const zoomKey = r >= 1 ? 'zoomHor' : 'zoomVert'
         const prevSizeKey = r >= 1 ? 'previousWidth' : 'previousHeight'
         const prevSizeValue = r >= 1 ? w * scale : h * scale
 
-        const result = 
-         { 
+        magnetValue()
+        const result = { 
             [zoomKey]: scale,
             [prevSizeKey]: prevSizeValue,
             screenWidth: w * scale, 

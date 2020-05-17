@@ -45,6 +45,23 @@ export function bound(value, min, max) {
     return Math.min(Math.max(value, min), max)
 }
 
+/**
+ * Returns `next` if `target` does not belong
+ * [current, next] range, otherwise returns `target` value.
+ * @param {number} current Current value
+ * @param {number} next Next value
+ * @param {number} target Value to which to magnet
+ */
+export function magnetValue(current, next, target) {
+    if (
+        target > current && next > target
+        || target < current && next < target
+    ) {
+        return target
+    } else
+        return next
+}
+
 export const RefType = PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.any })
