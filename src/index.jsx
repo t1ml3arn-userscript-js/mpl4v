@@ -250,7 +250,7 @@ class App extends React.Component {
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
         >
-            <NewScreen 
+            <Screen
                 showScreen={ showScreen } 
                 fullscreen={ fullscreen }
                 toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
