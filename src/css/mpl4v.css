@@ -5,6 +5,7 @@
 
     /* colors */
     --main-color: #ed0566;
+    --main-color-dark: #a90449;
     --screen-bg: hsl(335, 91%, 8%);
     --playback-bar-empty-color: #222;
     --playback-bar-buff-color: #b74877;
@@ -152,6 +153,17 @@
     text-align: center;
     color: var(--button-color);
     cursor: pointer;
+    transition-property: text-shadow, color;
+    transition-duration: 0.066s;
+    transition-timing-function: linear;
+}
+
+.mpl4v .zmdi:hover {
+    color: var(--main-color);
+}
+
+.mpl4v .zmdi:active {
+    color: var(--main-color-dark);
 }
 
 .mpl4v-control-btns .zmdi-skip-previous,
@@ -376,9 +388,17 @@
 
 .mpl4v .mpl4v--hidden { display: none; }
 
-.mpl4v .mpl4v--toogled { color: var(--main-color); }
+.mpl4v .mpl4v--toogled { 
+    color: var(--main-color); 
+    text-shadow: 
+        0 0 0.2em var(--main-color)
+        ,-1px -2px 0.2em var(--main-color)
+        ,1px 2px 0.2em var(--main-color)
+    ;
+}
 
 .mpl4v .mpl4v-btn--disabled { 
     color: var(--button-disabled-color); 
     cursor: initial;
+    pointer-events: none;
 }
