@@ -6,6 +6,13 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css$/i,
+                include: [
+                    path.resolve(__dirname, "src/")
+                ],
+                use: ['css-loader'],
+            },
+            {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: ['babel-loader', 'eslint-loader']
