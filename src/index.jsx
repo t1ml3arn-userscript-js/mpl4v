@@ -265,6 +265,7 @@ class App extends React.Component {
                 onSeekEnd={ this.seekEnd }
                 seekByUser={ seekByUser }
                 bufferedProgress={ bufferedProgress }
+                canChangeTime={ Boolean(duration) }
                 duration={ duration }
                 currentTime={ currentTime }
                 fullscreen={ fullscreen }

@@ -20,6 +20,7 @@ export default function MediaControls(props) {
             bufferedProgress={ bufferedProgress }
             onSeekEnd={ props.onSeekEnd }
             onSeekStart={ props.onSeekStart }
+            enabled={ props.canChangeTime }
         />
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div className="mpl4v-fl-row mpl4-controls--left ">

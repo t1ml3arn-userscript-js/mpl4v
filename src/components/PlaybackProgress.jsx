@@ -57,7 +57,7 @@ class PlaybackProgressView extends React.Component {
 PlaybackProgressView.propTypes = {
     progress: PropTypes.number.isRequired,
     bufferedProgress: PropTypes.number.isRequired,
-    startSeek: PropTypes.func.isRequired,
+    startSeek: PropTypes.func,
     seek: PropTypes.bool.isRequired,
     barEltRef: RefType.isRequired,
 }

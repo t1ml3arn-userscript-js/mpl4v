@@ -39,6 +39,7 @@ return class BarController extends React.Component {
     }
 
     static defaultProps = {
+        enabled: true,
         isHorizontal: true,
     }
 
@@ -47,7 +48,6 @@ return class BarController extends React.Component {
 
         this.state = {
             seek: false,
-            enabled: true || props.enabled,
         }
 
         this.calculator = new ProgressCalculator()
@@ -56,10 +56,10 @@ return class BarController extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.enabled != prevState.enabled) {
+        if (this.props.enabled != prevProps.enabled) {
             const enabled = this.props.enabled
-            this.setState({ enabled: enabled })
-            if (!enabled) this.stopSeek()
+            if (!enabled) 
+                this.stopSeek()
         }
     }
 
@@ -109,14 +109,14 @@ return class BarController extends React.Component {
     calculateProgress = () => this.progress = bound(this.calculator.getProgress(), 0, 100)
 
     render() {
-        const { onChange, onSeekStart, onSeekEnd, ...passedProps} = this.props
-        const { seek, enabled } = this.state
+        const { onChange, onSeekStart, onSeekEnd, enabled, ...passedProps} = this.props
+        const { seek } = this.state
         
         return (
         <RealBar 
             seek={ seek }
             enabled={ enabled }
-            startSeek={ this.startSeek }
+            startSeek={ enabled ? this.startSeek : undefined }
             barEltRef={ this.barEltRef }
             {...passedProps}
         />
