@@ -2,7 +2,7 @@ import React from 'react'
 import Bar from './Bar'
 import PropTypes from 'prop-types'
 import ProgressBar, { barController } from './ProgressBar'
-import { toogleKey, RefType } from '../utils/utils'
+import { RefType } from '../utils/utils'
 
 class VolumePanelView extends React.Component {
     constructor(props) {
@@ -23,14 +23,13 @@ class VolumePanelView extends React.Component {
         onVolumeChange(volume)
     }
 
-    tooglePanel = () => {
-        this.setState(toogleKey('showPanel'))
-    }
+    hidePanel = () => this.setState({ showPanel: false })
+    showPanel = () => this.setState({ showPanel: true })
 
     render() {
         // props from HOC
         const { barEltRef, startSeek, seek } = this.props
-        const { toogleMute, muted } = this.props
+        const { toogleMute, muted, canBeShown } = this.props
         const { showPanel } = this.state
         // volume slider sets to zero if media is muted
         const volume = muted ? 0 : this.props.volume
@@ -39,7 +38,7 @@ class VolumePanelView extends React.Component {
         <div className="mpl4v-volume-panel-wrap">
             <div 
                 className={ `mpl4v-volume-panel ${ (showPanel || seek) ? "" : "mpl4v--hidden"}` }
-                onMouseLeave={ this.tooglePanel }
+                onMouseLeave={ canBeShown ? this.hidePanel : undefined }
             >
                 <VolumeMod isPlus={ false } onChange={ this.incrementVolume }/>
                 <div 
@@ -55,7 +54,8 @@ class VolumePanelView extends React.Component {
                 <MuteButton toogleMute={ toogleMute } muted={ muted }/>
             </div>
             <MuteButton 
-                onMouseOver={ this.tooglePanel } 
+                onMouseOver={ canBeShown ? this.showPanel : undefined }
+                onMouseMove={ (canBeShown && !(seek || showPanel)) ? this.showPanel : undefined }
                 toogleMute={ toogleMute } 
                 muted={ muted }
             />
@@ -72,6 +72,7 @@ VolumePanelView.propTypes = {
     startSeek: PropTypes.func.isRequired,
     seek: PropTypes.bool,
     barEltRef: RefType.isRequired,
+    canBeShown: PropTypes.bool.isRequired,
 }
 
 function VolumeMod(props) {
@@ -92,12 +93,13 @@ VolumeMod.propTypes = {
 }
 
 const MuteButton = props => {
-    const { onMouseOver, toogleMute, muted } = props
+    const { onMouseOver, toogleMute, muted, onMouseMove } = props
     const iconClass = muted ? 'zmdi-volume-mute' : 'zmdi-volume-up'
     return (
     <i 
         className={ `zmdi ${iconClass} mpl4v-vol-ctrl` }
         onMouseOver={ onMouseOver }
+        onMouseMove={ onMouseMove }
         onClick={ toogleMute }     
     ></i>
     )
@@ -105,6 +107,7 @@ const MuteButton = props => {
 
 MuteButton.propTypes = {
     onMouseOver: PropTypes.func,
+    onMouseMove: PropTypes.func,
     toogleMute: PropTypes.func.isRequired,
     muted: PropTypes.bool.isRequired
 }

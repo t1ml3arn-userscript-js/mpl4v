@@ -28,7 +28,7 @@ class App extends React.Component {
             videoHeight: 0,
             isPlaying: false,
             isBuffering: false,
-            autoplay: true,
+            seekByUser: false,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -122,7 +122,7 @@ class App extends React.Component {
         // pause video if it was playing
         const video = this.mediaRef.current
 
-        // this.setState({ isSeeking: true, wasPlaying: !video.paused })
+        this.setState({ seekByUser: true })
         this.wasPlaying = !video.paused
         
         if (!video.paused) video.pause()
@@ -143,7 +143,7 @@ class App extends React.Component {
             this.requestPlay()
         }
         
-        // this.setState({ isSeeking: false, wasPlaying: null })
+        this.setState({ seekByUser: false })
         this.wasPlaying = null
         this.mouseStopWatcher.disable()
     }
@@ -241,7 +241,7 @@ class App extends React.Component {
         const { progress, bufferedProgress } = this.state
         const { currentTime, duration } = this.state
         const { volume, muted } = this.state
-        const { looped, isPlaying } = this.state
+        const { looped, isPlaying, seekByUser } = this.state
 
         // drag and drop HOC props
         const { isMediaDrag, isMediaOverDrop } = this.props
@@ -263,6 +263,7 @@ class App extends React.Component {
                 progress={ progress }
                 onSeekStart={ this.seekStart }
                 onSeekEnd={ this.seekEnd }
+                seekByUser={ seekByUser }
                 bufferedProgress={ bufferedProgress }
                 duration={ duration }
                 currentTime={ currentTime }
