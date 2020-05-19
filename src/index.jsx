@@ -298,5 +298,10 @@ fontStyle.rel = "stylesheet"
 fontStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
 document.head.append(fontStyle)
 
+// player will be added to its special container
+// since React.render() wipes render target children
+const container = document.body.appendChild(document.createElement('div'))
+container.classList.add('mpl4v-container')
+
 const MediaDropTarget = drangAndDropMedia(App)
-ReactDOM.render(<MediaDropTarget />, document.body.appendChild(document.createElement('div')))
+ReactDOM.render(<MediaDropTarget />, container)
