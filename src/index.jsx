@@ -222,6 +222,7 @@ class App extends React.Component {
         this.setState({
             duration: 0,
             currentTime: 0,
+            progress: 0,
             bufferedProgress: 0,
             videoWidth: 0,
             videoHeight: 0,
