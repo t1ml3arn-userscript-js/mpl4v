@@ -1,3 +1,4 @@
+import css from "./css/mpl4v.css"
 import React from "react"
 import ReactDOM from "react-dom"
 import Dragger from "./utils/Dragger";
@@ -285,6 +286,17 @@ class App extends React.Component {
     }
 }
 
-const MediaDropTarget = drangAndDropMedia(App)
+// append player's css
+const style = document.createElement('style');
+style.textContent = css;
+document.head.append(style);
 
-ReactDOM.render(<MediaDropTarget />, document.getElementById("root"))
+// append material design iconic font
+// NOTE it must be added AFTER player's css
+const fontStyle = document.createElement('link')
+fontStyle.rel = "stylesheet"
+fontStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+document.head.append(fontStyle)
+
+const MediaDropTarget = drangAndDropMedia(App)
+ReactDOM.render(<MediaDropTarget />, document.body.appendChild(document.createElement('div')))
