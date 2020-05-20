@@ -226,6 +226,7 @@ class App extends React.Component {
             bufferedProgress: 0,
             videoWidth: 0,
             videoHeight: 0,
+            isPlaying: false,
         })
     }
 
