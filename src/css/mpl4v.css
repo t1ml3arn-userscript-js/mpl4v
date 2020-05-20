@@ -82,7 +82,7 @@
     box-shadow: 0 5px 32px rgba(0,0,0,0.30), 0 5px 12px rgba(0,0,0,0.22);
 
     transition-timing-function: linear;
-    transition-duration: 0.15s;
+    transition-duration: 0.2s;
     /* 
     Required rules for smooth transitions 
     while centering and scaling the screen.
@@ -91,7 +91,7 @@
     */
     left: 50%;
     margin-left: -50%;
-    transition-property: width, height, margin-left;
+    transition-property: width, height, margin-left, left;
     /* ------- */
 }
 
@@ -104,6 +104,7 @@
 
     /* cancel position shift when non-fullscreen */
     margin: 0;
+    transition: none;
 }
 
 .mpl4v-controls {
