@@ -85,13 +85,6 @@ class App extends React.Component {
             this.requestPlay()
     }
 
-    calcPlaybackProgress = () => {
-        const { duration, currentTime } = this.state
-        if (!duration) return 0
-        
-        return bound(currentTime*100/duration, 0, 100)
-    }
-
     handleFullscreenChange = () => {
         // if it is fullscreen and it is OUR fulslcreen
         if (fscreen.fullscreenElement) {
