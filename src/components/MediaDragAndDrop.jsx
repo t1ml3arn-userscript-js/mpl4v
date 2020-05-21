@@ -1,4 +1,7 @@
 import React from 'react'
+import { supportedFormats } from '../utils/utils';
+
+const formatsReg = RegExp(`.(${supportedFormats.join('|')})$`, 'i')
 
 export default function drangAndDropMedia(DropTarget) {
 
@@ -42,10 +45,9 @@ return class MediaDragAndDrop extends React.Component {
     onDragStart = e => {
         // URL is a special type to get the first valid url
         const url = e.dataTransfer.getData('URL')
-        if (!url)   return
         
-        const reg = /\.(3gp|flac|mp3|mp4|webm|ogg|mov)$/i
-        if (!url.match(reg)) return
+        if (!url)                   return
+        if (!formatsReg.test(url))  return
         
         this.setState({ isMediaDrag: true, isMediaOverDrop:false })
         
