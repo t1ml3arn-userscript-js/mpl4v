@@ -176,7 +176,7 @@ class App extends React.Component {
         const video = e.target
 
         if (!video.duration) {
-            this.setState({ buffered: 0 })
+            this.setState({ bufferedProgress: 0 })
         } else {
             const buff = video.buffered
             const buffEnd = buff.end(buff.length - 1)
