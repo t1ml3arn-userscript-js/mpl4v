@@ -48,7 +48,7 @@ export default class VideoEventListener {
             height: elt.height,
             played: this.formatRange(elt.played),
         }
-        console.log(data)
+        console.debug(data)
     }
 
     copy(from) {
