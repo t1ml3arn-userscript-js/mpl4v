@@ -9,6 +9,8 @@ import { toogleKey, bound } from "./utils/utils";
 import drangAndDropMedia from "./components/MediaDragAndDrop";
 import VideoEventListener from "./utils/VideoEventListener";
 import MouseStopWatcher from './utils/MouseStopWatcher'
+import { PageParser } from "./PageParser";
+import { Track } from "./media/Track";
 
 class App extends React.Component {
     constructor(props){
@@ -29,6 +31,7 @@ class App extends React.Component {
             isPlaying: false,
             isBuffering: false,
             seekByUser: false,
+            track: {},
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -42,6 +45,8 @@ class App extends React.Component {
         ]
 
         this.wasPlaying = null
+        this.pageParser = new PageParser()
+        this.playlist = this.pageParser.buildPlaylist()
     }
 
     componentDidMount() {
@@ -77,6 +82,9 @@ class App extends React.Component {
         this.bufferEvents.forEach(e => video.addEventListener(e, this.updateReadyState));
 
         this.listener = new VideoEventListener(video)
+
+        // next track or empty object if there is no next track
+        this.setState({ track: this.playlist.getNextTrack(null) || {} })
     }
 
     componentDidUpdate(prevProps) {
@@ -239,7 +247,7 @@ class App extends React.Component {
 
         // drag and drop HOC props
         const { isMediaDrag, isMediaOverDrop } = this.props
-        const currentMediaSrc = this.props.droppedMediaURL
+        const { track } = this.state
 
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
@@ -249,7 +257,7 @@ class App extends React.Component {
                 showScreen={ showScreen } 
                 fullscreen={ fullscreen }
                 toogleFullscreen={ fullscreen ? fscreen.exitFullscreen : this.requestFullscreen }
-                mediaSrc={ currentMediaSrc }
+                mediaSrc={ track.src }
                 looped={ looped }
                 mediaRef={ this.mediaRef }
             />
@@ -275,8 +283,8 @@ class App extends React.Component {
                 tooglePlayPause={ this.playpause }
                 isPlaying={ isPlaying }
                 isBuffering={ this.state.isBuffering }
-                downloadURL={ currentMediaSrc }
-                saveAs={ currentMediaSrc }
+                downloadURL={ track.src }
+                saveAs={ track.title }
             />
         </div>
         )
