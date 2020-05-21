@@ -66,3 +66,22 @@ export const RefType = PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.any })
 ])
+
+export const supportedFormats = [
+    '3gp',
+    'flac',
+    'mp3',
+    'mp4',
+    'webm',
+    'ogg',
+    'mov'
+]
+
+export function reverseString(str) {
+    let result = ''
+    for(let i = 0; i < str.length; i++) {
+        result = str.charAt(i) + result
+    }
+
+    return result
+}
