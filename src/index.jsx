@@ -178,9 +178,9 @@ class App extends React.Component {
         if (!video.duration) {
             this.setState({ buffered: 0 })
         } else {
-            const buff = video.seekable
-            const seekableEnd = buff.end(buff.length - 1)
-            const buffered = (seekableEnd / video.duration) * 100
+            const buff = video.buffered
+            const buffEnd = buff.end(buff.length - 1)
+            const buffered = (buffEnd / video.duration) * 100
             this.setState({ bufferedProgress: buffered})
         }
     }
