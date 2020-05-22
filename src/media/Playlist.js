@@ -11,6 +11,12 @@ export default class Playlist {
     first = () => this.list[0]
     last = () => this.list[this.length - 1]
 
+    /**
+     * Returns track object by given index.
+     * Returns `undefined` if the index is our of range
+     * @param {number} ind track index in this playlist
+     * @returns {Track}
+     */
     getTrack(ind) {
         return this.list[ind]
     }
