@@ -91,7 +91,12 @@ class App extends React.Component {
 
     componentDidUpdate(prevProps) {
         const {droppedMediaURL} = this.props
-        if (droppedMediaURL != prevProps.droppedMediaURL) {
+        if (droppedMediaURL && (droppedMediaURL != prevProps.droppedMediaURL)) {
+
+            const track = this.state.track
+            if (track.src === droppedMediaURL)
+                return
+
             const requestPlay = (this.state.isPlaying || this.state.autoplay) ? this.requestPlay : undefined
             const index = this.playlist.findTrackIndex(droppedMediaURL)
             
