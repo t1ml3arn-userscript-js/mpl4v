@@ -32,6 +32,7 @@ class App extends React.Component {
             isBuffering: false,
             seekByUser: false,
             track: {},
+            trackIndex: 0,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -84,7 +85,7 @@ class App extends React.Component {
         this.listener = new VideoEventListener(video)
 
         // next track or empty object if there is no next track
-        this.setState({ track: this.playlist.getNextTrack(null) || {} })
+        this.setState({ track: this.playlist.getTrack(0) || {} })
     }
 
     componentDidUpdate(prevProps) {
