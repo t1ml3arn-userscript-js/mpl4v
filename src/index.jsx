@@ -238,6 +238,25 @@ class App extends React.Component {
         this.setState({ isBuffering: (net == 2 || net == 0) && elt.readyState != 4 })
     }
 
+    playNext = () => {
+        const isPlaying = this.state.isPlaying
+        let index = this.state.trackIndex + 1            
+        index = index % this.playlist.length
+        
+        this.setState(this.getNewTrackState(index), isPlaying ? this.requestPlay : undefined)
+    }
+    
+    playPrevent = () => {
+        const isPlaying = this.state.isPlaying
+        let index = this.state.trackIndex - 1
+        const len = this.playlist.length
+        index = (len + index) % len
+
+        this.setState(this.getNewTrackState(index), isPlaying ? this.requestPlay : undefined)
+    }
+
+    getNewTrackState = index => ({ track: this.playlist.getTrack(index) || {}, trackIndex: index })
+
     render() {
         
         const { showScreen, fullscreen } = this.state
@@ -286,6 +305,8 @@ class App extends React.Component {
                 isBuffering={ this.state.isBuffering }
                 downloadURL={ track.src }
                 saveAs={ track.title }
+                playNext={ this.playNext }
+                playPrevent={ this.playPrevent }
             />
         </div>
         )

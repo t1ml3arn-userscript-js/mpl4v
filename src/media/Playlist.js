@@ -11,6 +11,10 @@ export default class Playlist {
     first = () => this.list[0]
     last = () => this.list[this.length - 1]
 
+    getTrack(ind) {
+        return this.list[ind]
+    }
+
     getNextTrack(currentSrc = null) {
         let nextInd = 0
 
