@@ -33,6 +33,7 @@ class App extends React.Component {
             seekByUser: false,
             track: {},
             trackIndex: 0,
+            autoplay: false,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -89,9 +90,18 @@ class App extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.droppedMediaURL != prevProps.droppedMediaURL)
-        if (this.state.autoplay)
-            this.requestPlay()
+        const {droppedMediaURL} = this.props
+        if (droppedMediaURL != prevProps.droppedMediaURL) {
+            const requestPlay = (this.state.isPlaying || this.state.autoplay) ? this.requestPlay : undefined
+            const index = this.playlist.findTrackIndex(droppedMediaURL)
+            
+            if (index != -1)
+                this.setState(this.getNewTrackState(index), requestPlay)
+            else
+                // NOTE if dropped source not in playlist -
+                // update track but not index
+                this.setState({ track: new Track(droppedMediaURL) }, requestPlay)            
+        }
     }
 
     handleFullscreenChange = () => {

@@ -45,8 +45,6 @@ export default class Playlist {
         return this.list[prevInd]
     }
 
-    findTrack(src) {
-        return this.list.find(x => x.src == src) || new Track(src)
-    }
+    findTrackIndex(src) { return this.list.findIndex(x => x.src == src) }
 }
 
