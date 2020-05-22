@@ -68,9 +68,9 @@ class App extends React.Component {
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
         
         const video = this.mediaRef.current
-        video.onended = () => this.setState({ isPlaying: false })
         video.onpause = () => this.setState({ isPlaying: false })
         video.onplay = () => this.setState({ isPlaying: true })
+        video.addEventListener('ended', this.onPlayEnded)
         video.addEventListener('durationchange', this.onDurationChange)
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
         video.addEventListener('timeupdate', this.onTimeUpdate)
@@ -246,6 +246,18 @@ class App extends React.Component {
         const elt = e.target
         const net = elt.networkState
         this.setState({ isBuffering: (net == 2 || net == 0) && elt.readyState != 4 })
+    }
+
+    onPlayEnded = e => {
+        this.setState({ isPlaying: false })
+
+        const nextTrack = this.state.trackIndex + 1
+        const isLast = nextTrack == this.playlist.length
+        // if this track is the last - do nothing
+        // otherwise get next one and play it
+        if (!isLast) {
+            this.setState(this.getNewTrackState(nextTrack), this.requestPlay)
+        }
     }
 
     playNext = () => {
