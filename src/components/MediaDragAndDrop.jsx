@@ -61,7 +61,7 @@ return class MediaDragAndDrop extends React.Component {
     
     onDragEnd = () => {
         this.removeDraggingListeners()
-        this.setState({ isMediaDrag: false, isMediaOverDrop:false })
+        this.setState({ isMediaDrag: false, isMediaOverDrop:false, droppedMediaURL: null })
     }
     
     onDragEnter = e => {        
