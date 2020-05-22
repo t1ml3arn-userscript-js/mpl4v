@@ -25,12 +25,13 @@ export default function MediaControls(props) {
         <div className={`mpl4v-control-btns ${ dragInitier }`}>
             <div className="mpl4v-fl-row mpl4-controls--left ">
                 <Button.Loop looped={ props.looped } toogleLoop={ props.toogleLoop }/>
-                <i className="zmdi zmdi-skip-previous"></i>
+                <Button.Skip isNext={ false } onClick={ props.playPrevent }/>
                 <Button.Play 
                     tooglePlayPause={ props.tooglePlayPause } 
                     isPlaying={ props.isPlaying }
-                    isBuffering={ props.isBuffering }/>
-                <i className="zmdi zmdi-skip-next"></i>
+                    isBuffering={ props.isBuffering }
+                />
+                <Button.Skip isNext={ true } onClick={ props.playNext }/>
                 {/* <i className="zmdi zmdi-shuffle"></i> */}
             </div>
             <TimeLabel time={ currentTime } duration={ duration }/>

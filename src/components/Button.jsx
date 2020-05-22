@@ -82,3 +82,19 @@ Button.Download.propTypes = {
     downloadURL: PropTypes.string,
     saveAs: PropTypes.string,
 }
+
+function Skip(props) {
+    const { isNext, onClick } = props
+    const skipClass = isNext ? 'zmdi-skip-next' : 'zmdi-skip-previous'
+
+    return (
+        <i className={ `zmdi ${skipClass}` } onClick={ onClick } ></i>
+    )
+}
+
+Skip.propTypes = {
+    isNext: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+}
+
+Button.Skip = React.memo(Skip);
