@@ -85,7 +85,7 @@ class App extends React.Component {
         this.listener = new VideoEventListener(video)
 
         // next track or empty object if there is no next track
-        this.setState({ track: this.playlist.getTrack(0) || {} })
+        this.setState(this.getNewTrackState(0))
     }
 
     componentDidUpdate(prevProps) {
