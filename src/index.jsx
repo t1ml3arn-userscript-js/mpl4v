@@ -80,6 +80,8 @@ class App extends React.Component {
         // for setting buffered, progress, duration etc to zero values
         video.addEventListener('abort', this.onAbort)
         video.addEventListener('emptied', this.onAbort)
+        // do "side-effect": derrive real volume from initial state 
+        video.volume = this.state.volume * 0.01
 
         this.bufferEvents.forEach(e => video.addEventListener(e, this.updateReadyState));
 
