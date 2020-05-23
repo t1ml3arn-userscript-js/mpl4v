@@ -11,7 +11,7 @@ Button.Loop = function Loop(props) {
         <i 
             className={ `zmdi zmdi-repeat ${toogledClass}` } 
             onClick={ toogleLoop }
-            title={ looped ? "don't repeat" : "repeat"}
+            title={ looped ? "Don't repeat" : "Repeat"}
         ></i>
     )
 }
@@ -26,7 +26,10 @@ Button.Play = function Play(props) {
     const iconClass = isPlaying ? 'zmdi-pause' : 'zmdi-play'
 
     return (
-        <i className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }>
+        <i 
+            className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }
+            title={ isPlaying ? 'Pause' : 'Play' }
+        >
             {props.children}
         </i>
     )
@@ -86,9 +89,13 @@ Button.Download.propTypes = {
 function Skip(props) {
     const { isNext, onClick } = props
     const skipClass = isNext ? 'zmdi-skip-next' : 'zmdi-skip-previous'
+    const title = isNext ? "Play Next" : "Play Prevent"
 
     return (
-        <i className={ `zmdi ${skipClass}` } onClick={ onClick } ></i>
+        <i 
+            className={ `zmdi ${skipClass}` } onClick={ onClick } 
+            title={ title }
+        ></i>
     )
 }
 

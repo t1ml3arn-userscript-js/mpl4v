@@ -77,12 +77,14 @@ VolumePanelView.propTypes = {
 
 function VolumeMod(props) {
     const { isPlus, onChange } = props
+    const title = isPlus ? "Increase Volume" : "Decrease Volume"
 
     return (
     <i 
         className={`zmdi ${ isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-mod`} 
         onClick={ onChange }
         data-volume-mod={ isPlus ? '1' : '-1'}
+        title={ title }
     ></i>
     )
 }
@@ -94,13 +96,14 @@ VolumeMod.propTypes = {
 
 const MuteButton = props => {
     const { onMouseOver, toogleMute, muted, onMouseMove } = props
-    const iconClass = muted ? 'zmdi-volume-mute' : 'zmdi-volume-up'
+    const iconClass = muted ? 'zmdi-volume-off' : 'zmdi-volume-up'
     return (
     <i 
         className={ `zmdi ${iconClass} mpl4v-vol-ctrl` }
         onMouseOver={ onMouseOver }
         onMouseMove={ onMouseMove }
-        onClick={ toogleMute }     
+        onClick={ toogleMute }
+        title={ muted ? "Unmute" : "Mute" }
     ></i>
     )
 }
