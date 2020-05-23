@@ -68,14 +68,16 @@ class App extends React.Component {
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
         
         const video = this.mediaRef.current
-        video.onpause = () => this.setState({ isPlaying: false })
-        video.onplay = () => this.setState({ isPlaying: true })
+        video.addEventListener('pause', this.setPause)
+        video.addEventListener('pause', this.updateBufferedProgress)
+        video.addEventListener('play', this.setPlay)
+        video.addEventListener('play', this.updateBufferedProgress)
         video.addEventListener('ended', this.onPlayEnded)
         video.addEventListener('durationchange', this.onDurationChange)
         video.addEventListener('loadedmetadata', this.onLoadedMeta)
         video.addEventListener('timeupdate', this.onTimeUpdate)
         video.addEventListener('volumechange', this.onVolumeChange)
-        video.addEventListener('progress', this.onLoadingProgress)
+        video.addEventListener('progress', this.updateBufferedProgress)
         // abort and emptied events are good candidates 
         // for setting buffered, progress, duration etc to zero values
         video.addEventListener('abort', this.onAbort)
@@ -110,6 +112,9 @@ class App extends React.Component {
                 this.setState({ track: new Track(droppedMediaURL) }, requestPlay)            
         }
     }
+
+    setPlay = () => this.setState({ isPlaying: true })
+    setPause = () => this.setState({ isPlaying: false })
 
     handleFullscreenChange = () => {
         // if it is fullscreen and it is OUR fulslcreen
@@ -198,7 +203,7 @@ class App extends React.Component {
 
     onDurationChange = e => this.setState({duration: e.target.duration})
 
-    onLoadingProgress = e => {
+    updateBufferedProgress = e => {
         const video = e.target
 
         if (!video.duration) {
