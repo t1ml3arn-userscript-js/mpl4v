@@ -112,6 +112,13 @@ class App extends React.Component {
                 // update track but not index
                 this.setState({ track: new Track(droppedMediaURL) }, requestPlay)            
         }
+
+        // Unmute if new volume value is different
+        const prevVolume = prevState.volume
+        const { volume } = this.state
+        if (volume != prevVolume)
+            this.mediaRef.current.muted = false
+        // -------------------------------------
     }
 
     setPlay = () => this.setState({ isPlaying: true })
