@@ -39,7 +39,7 @@ export default function MediaControls(props) {
                 <VolumePanel
                     volume={ volume } onChange={ onVolumeChange } onVolumeChange={ onVolumeChange }
                     muted={ props.muted } toogleMute={ props.toogleMute }
-                    canBeShown={ !props.seekByUser }
+                    seekByUser={ props.seekByUser } hasAudio={ props.hasAudio }
                 />
                 <ScreenButton
                     showScreen={ props.showScreen }

@@ -34,6 +34,7 @@ class App extends React.Component {
             track: {},
             trackIndex: 0,
             autoplay: false,
+            hasAudio: true,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -296,7 +297,7 @@ class App extends React.Component {
         const { showScreen, fullscreen } = this.state
         const { progress, bufferedProgress } = this.state
         const { currentTime, duration } = this.state
-        const { volume, muted } = this.state
+        const { volume, muted, hasAudio } = this.state
         const { looped, isPlaying, seekByUser } = this.state
 
         // drag and drop HOC props
@@ -342,6 +343,7 @@ class App extends React.Component {
                 saveAs={ track.title }
                 playNext={ this.playNext }
                 playPrevent={ this.playPrevent }
+                hasAudio={ hasAudio }
             />
         </div>
         )

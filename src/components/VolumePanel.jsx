@@ -4,6 +4,10 @@ import PropTypes from 'prop-types'
 import ProgressBar, { barController } from './ProgressBar'
 import { RefType } from '../utils/utils'
 
+const NOSOUND = 0
+const MUTED = 1
+const UNMUTED = 2
+
 class VolumePanelView extends React.Component {
     constructor(props) {
         super(props)
@@ -29,16 +33,25 @@ class VolumePanelView extends React.Component {
     render() {
         // props from HOC
         const { barEltRef, startSeek, seek } = this.props
-        const { toogleMute, muted, canBeShown } = this.props
+
+        const { toogleMute, muted, hasAudio, seekByUser } = this.props
         const { showPanel } = this.state
         // volume slider sets to zero if media is muted
         const volume = muted ? 0 : this.props.volume
+
+        const soundState = !hasAudio ? NOSOUND
+            : muted ?       MUTED
+            : volume == 0 ? MUTED
+            :               UNMUTED
+
+        const panelCanBeShown = !seekByUser && hasAudio
 
         return (
         <div className="mpl4v-volume-panel-wrap">
             <div 
                 className={ `mpl4v-volume-panel ${ (showPanel || seek) ? "" : "mpl4v--hidden"}` }
-                onMouseLeave={ canBeShown ? this.hidePanel : undefined }
+                onMouseLeave={ this.hidePanel }
+                onMouseOver={ this.showPanel }
             >
                 <VolumeMod isPlus={ false } onChange={ this.incrementVolume }/>
                 <div 
@@ -51,13 +64,13 @@ class VolumePanelView extends React.Component {
                     <ProgressBar.Head classes={ "mpl4v-volume-bar__head" } progress={ volume }/>
                 </div>
                 <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
-                <MuteButton toogleMute={ toogleMute } muted={ muted }/>
+                <MuteButton toogleMute={ toogleMute } soundState={ soundState }/>
             </div>
             <MuteButton 
-                onMouseOver={ canBeShown ? this.showPanel : undefined }
-                onMouseMove={ (canBeShown && !(seek || showPanel)) ? this.showPanel : undefined }
+                onMouseOver={ panelCanBeShown ? this.showPanel : undefined }
+                onMouseMove={ (panelCanBeShown && !(seek || showPanel)) ? this.showPanel : undefined }
                 toogleMute={ toogleMute } 
-                muted={ muted }
+                soundState={ soundState }
             />
         </div>
         )
@@ -72,7 +85,8 @@ VolumePanelView.propTypes = {
     startSeek: PropTypes.func.isRequired,
     seek: PropTypes.bool,
     barEltRef: RefType.isRequired,
-    canBeShown: PropTypes.bool.isRequired,
+    seekByUser: PropTypes.bool.isRequired,
+    hasAudio: PropTypes.bool.isRequired,
 }
 
 function VolumeMod(props) {
@@ -95,15 +109,29 @@ VolumeMod.propTypes = {
 }
 
 const MuteButton = props => {
-    const { onMouseOver, toogleMute, muted, onMouseMove } = props
-    const iconClass = muted ? 'zmdi-volume-off' : 'zmdi-volume-up'
+    const { onMouseOver, toogleMute, soundState, onMouseMove } = props
+
+    let iconClass, title
+    if (soundState == NOSOUND) {
+        iconClass = "zmdi-volume-mute"
+        title = "No Sound"
+    } else if (soundState == MUTED) {
+        iconClass = 'zmdi-volume-off'
+        title = "Unmute"
+    } else {
+        iconClass = "zmdi-volume-up"
+        title = "Mute"
+    }
+
+    const disabled = soundState == NOSOUND ? "mpl4v-btn--disabled" : ""
+
     return (
     <i 
-        className={ `zmdi ${iconClass} mpl4v-vol-ctrl` }
+        className={ `zmdi ${iconClass} mpl4v-vol-ctrl ${disabled}` }
         onMouseOver={ onMouseOver }
         onMouseMove={ onMouseMove }
         onClick={ toogleMute }
-        title={ muted ? "Unmute" : "Mute" }
+        title={ title }
     ></i>
     )
 }
@@ -112,7 +140,7 @@ MuteButton.propTypes = {
     onMouseOver: PropTypes.func,
     onMouseMove: PropTypes.func,
     toogleMute: PropTypes.func.isRequired,
-    muted: PropTypes.bool.isRequired
+    soundState: PropTypes.oneOf([MUTED, NOSOUND, UNMUTED]).isRequired,
 }
 
 const VolumePanel = barController(VolumePanelView)
