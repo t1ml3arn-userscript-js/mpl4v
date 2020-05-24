@@ -467,8 +467,9 @@
     ;
 }
 
-.mpl4v .mpl4v-btn--disabled { 
+.mpl4v .mpl4v-btn--disabled,
+.mpl4v .mpl4v-btn--disabled:hover,
+.mpl4v .mpl4v-btn--disabled:active { 
     color: var(--button-disabled-color); 
     cursor: initial;
-    pointer-events: none;
 }
