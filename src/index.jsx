@@ -94,7 +94,7 @@ class App extends React.Component {
         this.setState(this.getNewTrackState(0))
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         const {droppedMediaURL} = this.props
         if (droppedMediaURL && (droppedMediaURL != prevProps.droppedMediaURL)) {
 
