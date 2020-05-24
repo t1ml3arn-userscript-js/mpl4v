@@ -314,6 +314,7 @@ class App extends React.Component {
                 mediaSrc={ track.src }
                 looped={ looped }
                 mediaRef={ this.mediaRef }
+                title={ track.title }
             />
             <MediaControls 
                 progress={ progress }

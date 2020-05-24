@@ -7,6 +7,7 @@
     --main-color: #ed0566;
     --main-color-dark: #a90449;
     --screen-bg: hsl(335, 91%, 8%);
+    --screen-bg-fs: #111;
     --playback-bar-empty-color: #222;
     --playback-bar-buff-color: #b74877;
     --playback-bar-seek-color: #ffdaf580;
@@ -76,9 +77,8 @@
     margin-bottom: 1em;
     position: absolute;
     bottom: 100%;
-    background-color: var(--screen-bg);
+    background: transparent;
     z-index: var(--screen-z);
-    object-fit: contain;
     box-shadow: 0 5px 32px rgba(0,0,0,0.30), 0 5px 12px rgba(0,0,0,0.22);
 
     transition-timing-function: linear;
@@ -105,6 +105,75 @@
     /* cancel position shift when non-fullscreen */
     margin: 0;
     transition: none;
+}
+
+.mpl4v-screen > video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: var(--screen-bg);
+}
+
+.mpl4v-screen > video[data-fullscreen=true] {
+    background-color: var(--screen-bg-fs);
+}
+
+.mpl4v-screen-title {
+    --size: 90%;
+    --half-size: calc(var(--size) * 0.5);
+    --margin: calc(50% - var(--size) * 0.5);
+    --lh: 1.2em;
+    --padding-vert: 0.125em;    /* padding-top[bottom] 2px / 16px = 0.125em */
+    --max-lines: 4;
+    
+    display: block;
+    
+    /* size definition */
+    width: auto;
+    max-width: var(--half-size);
+    height: auto;
+    max-height: 1.4em;
+    padding: var(--padding-vert) 0.5em; 
+    font-size: 1.6em;
+    line-height: var(--lh);
+    /* --------------- */
+
+    position: absolute;
+    left: var(--margin);
+    top: var(--margin);
+    color: var(--text-color);
+    background-color: var(--screen-bg);
+    opacity: 0.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* anim rules */
+    --slide-time: 0.2s;
+    --half-st: calc(var(--slide-time) * 0.5);
+
+    transition-duration: var(--half-st);
+    transition-timing-function: linear;
+    transition-property: max-width, width, max-height, height;
+    transition-delay: var(--half-st), var(--half-st), 0s, 0s;
+}
+
+.mpl4v-screen-title:hover {
+    /* max height is based on lines count, line-height and vertical paddings */
+    --max-height: calc(var(--lh) * var(--max-lines) + var(--padding-vert)*2);
+
+    max-width: var(--size);
+    height: auto;
+    max-height: var(--max-height);
+    opacity: 1;
+
+    transition-delay: 0s, 0s, var(--half-st), var(--half-st);
+}
+
+.mpl4v-screen-title[data-fullscreen=true] {
+    --size: 98%;
+    --max-lines: 6;
+
+    font-size: 2.8em;
 }
 
 .mpl4v-controls {

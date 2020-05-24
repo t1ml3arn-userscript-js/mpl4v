@@ -191,18 +191,44 @@ export default class Screen extends React.Component {
             styles = null
 
         return (
-        <video 
-            ref={ props.mediaRef }
-            className={`mpl4v-screen ${dragIniter} ${hidden}`}
+        <div 
+            className={`mpl4v-screen ${dragIniter} ${hidden}`} 
             data-fullscreen={ fullscreen }
-            src={ mediaSrc }
-            loop={ looped }
-            onDoubleClick={ toogleFullscreen }
-            onWheel={ fullscreen ? undefined : this.changeScale }
-            onLoadedMetadata={ this.updateResolution }
             style={ styles }
-            onLoadStart={ this.updateResolution }
-        ></video>
+        >
+            <video 
+                ref={ props.mediaRef }
+                data-fullscreen={ fullscreen }
+                className={ `${dragIniter}` }
+                src={ mediaSrc }
+                loop={ looped }
+                onDoubleClick={ toogleFullscreen }
+                onWheel={ fullscreen ? undefined : this.changeScale }
+                onLoadedMetadata={ this.updateResolution }
+                onLoadStart={ this.updateResolution }
+            ></video>
+            <Title title={ this.props.title } fullscreen={ fullscreen } />
+        </div>
         )
     }
 }
+
+const _title = function Title(props) {
+    const { title, fullscreen } = props
+
+    return (
+    <span 
+        className={ `mpl4v-screen-title` } 
+        data-fullscreen={ fullscreen } 
+    >
+        { title }
+    </span>
+    )
+}
+
+_title.propTypes = {
+    title: PropTypes.string,
+    fullscreen: PropTypes.bool.isRequired,
+}
+
+const Title = React.memo(_title)
