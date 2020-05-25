@@ -176,6 +176,53 @@
     font-size: 2.8em;
 }
 
+.mpl4v-error {
+    --font-size: 1em;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 5%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    background: rgba(64,64,64,0.66);
+}
+
+.mpl4v-error[data-fullscreen=true] {
+    --font-size: 1.8em;
+    padding: 0 10%;
+}
+
+.mpl4v-error > span {
+    display: block;
+    width: 100%;
+    font-size: var(--font-size);
+    color: var(--text-color);
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: auto;
+}
+
+.mpl4v-error .mpl4v-error__label {
+    font-size: calc(var(--font-size) * 2.2);
+}
+
+.mpl4v-error .mpl4v-error__code {
+    font-size: var(--font-size);
+}
+
+.mpl4v-error .mpl4v-error__message {
+    margin-top: 0.5em;
+    font-size: 1.8em;
+    font-size: calc(var(--font-size) * 1.8);
+}
+
 .mpl4v-controls {
     display: inline-block;
     width: var(--controls-width);
