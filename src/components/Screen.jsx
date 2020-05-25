@@ -207,6 +207,10 @@ export default class Screen extends React.Component {
                 onLoadedMetadata={ this.updateResolution }
                 onLoadStart={ this.updateResolution }
             ></video>
+            <Error 
+                errorCode={ "NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006)" }
+                message={ "Source is not suitable" }
+            />
             <Title title={ this.props.title } fullscreen={ fullscreen } />
         </div>
         )
@@ -232,3 +236,24 @@ _title.propTypes = {
 }
 
 const Title = React.memo(_title)
+
+const Error = React.memo(function Error(props) {
+    const { errorCode, message } = props
+    return (
+    <div className="mpl4v-error">
+        <span className="mpl4v-error__smile">x_x</span>
+        <span className="mpl4v-error__label">Error:</span>
+        <span className="mpl4v-error__code">{ errorCode }</span>
+        <span className="mpl4v-error__message">{ message }</span>
+    </div>
+    )
+})
+
+Error.propTypes = {
+    errorCode: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired
+}
+
+Error.defaultProps = {
+    errorCode: "unknown"
+}
