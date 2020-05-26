@@ -125,7 +125,8 @@
     --lh: 1.2em;
     --padding-vert: 0.125em;    /* padding-top[bottom] 2px / 16px = 0.125em */
     --max-lines: 4;
-    
+    --opacity: 0.8;
+
     display: block;
     
     /* size definition */
@@ -143,7 +144,7 @@
     top: var(--margin);
     color: var(--text-color);
     background-color: var(--screen-bg);
-    opacity: 0.8;
+    opacity: 0;
     overflow: hidden;
     text-overflow: ellipsis;
 
@@ -151,13 +152,21 @@
     --slide-time: 0.2s;
     --half-st: calc(var(--slide-time) * 0.5);
 
-    transition-duration: var(--half-st);
-    transition-timing-function: linear;
-    transition-property: max-width, width, max-height, height;
-    transition-delay: var(--half-st), var(--half-st), 0s, 0s;
+    transition: 
+        max-width var(--half-st) var(--half-st)
+        , width var(--half-st) var(--half-st)
+        , max-height var(--half-st) 0s
+        , height var(--half-st) 0s
+        , opacity var(--half-st) 0s
+        ;
+    /* --------------- */
 }
 
-.mpl4v-screen-title:hover {
+.mpl4v-screen:hover .mpl4v-screen-title {
+    opacity: var(--opacity);
+}
+
+.mpl4v-screen-title:hover:hover {
     /* max height is based on lines count, line-height and vertical paddings */
     --max-height: calc(var(--lh) * var(--max-lines) + var(--padding-vert)*2);
 
