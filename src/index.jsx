@@ -94,6 +94,7 @@ class App extends React.Component {
         video.addEventListener('error', this.onPlayError)
         video.addEventListener('canplay', this.resetError)
         video.addEventListener('canplay', this.checkHasAudio)
+        video.addEventListener('play', this.webkitCheckHasAudio)
         // do "side-effect": derrive real volume from initial state 
         video.volume = this.state.volume * 0.01
 
@@ -330,6 +331,14 @@ class App extends React.Component {
             this.setState({ hasAudio: video.mozHasAudio })
         else
             this.setState({ hasAudio: true })
+    }
+
+    webkitCheckHasAudio = e => {
+        const video = e.target
+        
+        if (video.webkitAudioDecodedByteCount !== undefined) {
+            this.setState({ hasAudio: video.webkitAudioDecodedByteCount > 0 })
+        }
     }
 
     render() {
