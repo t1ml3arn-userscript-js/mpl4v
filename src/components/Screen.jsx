@@ -10,7 +10,8 @@ export default class Screen extends React.Component {
         toogleFullscreen: PropTypes.func.isRequired,
         mediaSrc: PropTypes.string,
         looped: PropTypes.bool.isRequired,
-        mediaRef: PropTypes.object
+        mediaRef: PropTypes.object,
+        title: PropTypes.string,
     }
 
     scaleStep = 0.1
@@ -174,7 +175,7 @@ export default class Screen extends React.Component {
     render() {
         const props = this.props
         const {showScreen, toogleFullscreen, fullscreen} = props
-        const { mediaSrc } = props
+        const { mediaSrc, title } = props
         const { looped } = props
         const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
         const hidden = showScreen ? '' : 'mpl4v--hidden'
@@ -212,7 +213,7 @@ export default class Screen extends React.Component {
                 message={ "Source is not suitable" }
                 fullscreen={ fullscreen }
             />
-            <Title title={ this.props.title } fullscreen={ fullscreen } />
+            <Title title={ title } fullscreen={ fullscreen } />
         </div>
         )
     }
@@ -220,10 +221,11 @@ export default class Screen extends React.Component {
 
 const _title = function Title(props) {
     const { title, fullscreen } = props
+    const hidden = title ? "" : "mpl4v--hidden"
 
     return (
     <span 
-        className={ `mpl4v-screen-title` } 
+        className={ `mpl4v-screen-title ${hidden}` } 
         data-fullscreen={ fullscreen } 
     >
         { title }
