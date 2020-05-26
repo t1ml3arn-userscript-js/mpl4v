@@ -12,6 +12,7 @@ export default class Screen extends React.Component {
         looped: PropTypes.bool.isRequired,
         mediaRef: PropTypes.object,
         title: PropTypes.string,
+        error: PropTypes.object,
     }
 
     scaleStep = 0.1
@@ -180,6 +181,7 @@ export default class Screen extends React.Component {
         const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
         const hidden = showScreen ? '' : 'mpl4v--hidden'
         const { screenWidth, screenHeight } = this.state
+        const { error } = props
 
         let styles;
         if (screenWidth && screenHeight && !fullscreen) {
@@ -208,10 +210,7 @@ export default class Screen extends React.Component {
                 onLoadedMetadata={ this.updateResolution }
                 onLoadStart={ this.updateResolution }
             ></video>
-            <Error 
-                errorCode={ "NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006)" }
-                message={ "Source is not suitable" }
-                fullscreen={ fullscreen }
+            <Error { ...error } fullscreen={ fullscreen }
             />
             <Title title={ title } fullscreen={ fullscreen } />
         </div>
@@ -241,23 +240,20 @@ _title.propTypes = {
 const Title = React.memo(_title)
 
 const Error = React.memo(function Error(props) {
-    const { errorCode, message, fullscreen } = props
+    const { code, message, fullscreen } = props
+    const hidden = !code && !message ? "mpl4v--hidden" : ""
 
     return (
-    <div className="mpl4v-error" data-fullscreen={ fullscreen } >
+    <div className={ `mpl4v-error ${hidden}` } data-fullscreen={ fullscreen } >
         <span className="mpl4v-error__label">Error :(</span>
-        <span className="mpl4v-error__code">{ errorCode }</span>
+        <span className="mpl4v-error__code">{ code }</span>
         <span className="mpl4v-error__message">{ message }</span>
     </div>
     )
 })
 
 Error.propTypes = {
-    errorCode: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
     fullscreen: PropTypes.bool.isRequired,
-}
-
-Error.defaultProps = {
-    errorCode: "???"
 }
