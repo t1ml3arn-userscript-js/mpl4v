@@ -220,7 +220,7 @@ class App extends React.Component {
         this.setState({ error: {code: message, message: userMessage } })
 
         // Wait 3 sec and play next media 
-        this.errorDelayID = setTimeout(this.playNext, this.errorDelayID);
+        this.errorDelayID = setTimeout(this.playNext, this.errorDelay);
     }
 
     onDurationChange = e => this.setState({duration: e.target.duration})
