@@ -218,7 +218,7 @@ export default class Screen extends React.Component {
     }
 }
 
-const _title = function Title(props) {
+const Title = React.memo(function Title(props) {
     const { title, fullscreen } = props
     const hidden = title ? "" : "mpl4v--hidden"
 
@@ -230,14 +230,12 @@ const _title = function Title(props) {
         { title }
     </span>
     )
-}
+})
 
-_title.propTypes = {
+Title.propTypes = {
     title: PropTypes.string,
     fullscreen: PropTypes.bool.isRequired,
 }
-
-const Title = React.memo(_title)
 
 const Error = React.memo(function Error(props) {
     const { code, message, fullscreen } = props
