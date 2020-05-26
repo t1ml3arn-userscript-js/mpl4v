@@ -11,6 +11,7 @@ import VideoEventListener from "./utils/VideoEventListener";
 import MouseStopWatcher from './utils/MouseStopWatcher'
 import { PageParser } from "./PageParser";
 import { Track } from "./media/Track";
+import MediaError from "./media/MediaError";
 
 class App extends React.Component {
     constructor(props){
@@ -35,6 +36,7 @@ class App extends React.Component {
             trackIndex: 0,
             autoplay: false,
             hasAudio: true,
+            error: null,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -50,6 +52,12 @@ class App extends React.Component {
         this.wasPlaying = null
         this.pageParser = new PageParser()
         this.playlist = this.pageParser.buildPlaylist()
+
+        // delay between error and playing next track, in ms
+        this.errorDelay = 3000
+        // error delay id to clear the timer if a user requests 
+        // next track before the timer finishes
+        this.errorDelayID = undefined
     }
 
     componentDidMount() {
@@ -83,6 +91,8 @@ class App extends React.Component {
         // for setting buffered, progress, duration etc to zero values
         video.addEventListener('abort', this.onAbort)
         video.addEventListener('emptied', this.onAbort)
+        video.addEventListener('error', this.onPlayError)
+        video.addEventListener('canplay', this.resetError)
         // do "side-effect": derrive real volume from initial state 
         video.volume = this.state.volume * 0.01
 
@@ -200,13 +210,17 @@ class App extends React.Component {
             video.pause()
     }
 
-    requestPlay = () => {
-        this.mediaRef.current.play()
-            .catch(this.onPlayError)
-    }
+    requestPlay = () => this.mediaRef.current.play()
 
     onPlayError = e => {
-        console.log('error when tried to play', e)
+        const { code, message } = e.target.error
+        const userMessage = MediaError.getMessage(e.target.error)
+        console.error(`Media error ${code}: ${message}. ${userMessage}`)
+
+        this.setState({ error: {code: message, message: userMessage } })
+
+        // Wait 3 sec and play next media 
+        this.errorDelayID = setTimeout(this.playNext, this.errorDelayID);
     }
 
     onDurationChange = e => this.setState({duration: e.target.duration})
@@ -281,14 +295,18 @@ class App extends React.Component {
     }
 
     playNext = () => {
+        clearTimeout(this.errorDelayID)
+
         const isPlaying = this.state.isPlaying
         let index = this.state.trackIndex + 1            
         index = index % this.playlist.length
-        
+
         this.setState(this.getNewTrackState(index), isPlaying ? this.requestPlay : undefined)
     }
     
     playPrevent = () => {
+        clearTimeout(this.errorDelayID)
+
         const isPlaying = this.state.isPlaying
         let index = this.state.trackIndex - 1
         const len = this.playlist.length
@@ -298,6 +316,8 @@ class App extends React.Component {
     }
 
     getNewTrackState = index => ({ track: this.playlist.getTrack(index) || {}, trackIndex: index })
+
+    resetError = () => this.setState({ error: null })
 
     render() {
         
@@ -323,6 +343,7 @@ class App extends React.Component {
                 looped={ looped }
                 mediaRef={ this.mediaRef }
                 title={ track.title }
+                error={ this.state.error }
             />
             <MediaControls 
                 progress={ progress }
