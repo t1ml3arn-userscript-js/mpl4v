@@ -93,6 +93,7 @@ class App extends React.Component {
         video.addEventListener('emptied', this.onAbort)
         video.addEventListener('error', this.onPlayError)
         video.addEventListener('canplay', this.resetError)
+        video.addEventListener('canplay', this.checkHasAudio)
         // do "side-effect": derrive real volume from initial state 
         video.volume = this.state.volume * 0.01
 
@@ -318,6 +319,18 @@ class App extends React.Component {
     getNewTrackState = index => ({ track: this.playlist.getTrack(index) || {}, trackIndex: index })
 
     resetError = () => this.setState({ error: null })
+
+    checkHasAudio = e => {
+        const video = e.target
+        // The way to know if a video has an audio
+        // See more https://stackoverflow.com/questions/30604696/use-javascript-to-detect-if-an-mp4-video-has-a-sound-track
+        if (video.webkitAudioDecodedByteCount !== undefined)
+            this.setState({ hasAudio:  video.webkitAudioDecodedByteCount > 0 })
+        else if (video.mozHasAudio !== undefined)
+            this.setState({ hasAudio: video.mozHasAudio })
+        else
+            this.setState({ hasAudio: true })
+    }
 
     render() {
         
