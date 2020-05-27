@@ -5,11 +5,11 @@ export default class MouseStopWatcher {
         this.delay = delay
     }
 
-    enable() {
+    enable = () => {
         document.addEventListener('mousemove', this.onMove)
     }
     
-    disable() {
+    disable = () => {
         document.removeEventListener('mousemove', this.onMove)
     }
 
