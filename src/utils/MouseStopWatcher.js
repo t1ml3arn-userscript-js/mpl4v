@@ -11,6 +11,7 @@ export default class MouseStopWatcher {
     
     disable = () => {
         document.removeEventListener('mousemove', this.onMove)
+        clearTimeout(this.timerId)
     }
 
     onMove = () => {
