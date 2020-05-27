@@ -63,16 +63,11 @@ class App extends React.Component {
     componentDidMount() {
         this.dragger = new Dragger(this.appRef.current, ['.mpl4v-drag-initiator']);
         this.dragger.enable()
-
-        this.mouseStopWatcher = new MouseStopWatcher(0.4, () => {
-            const video = this.mediaRef.current
-            this.setState({}, () => {
-                // Passing empty object and callback.
-                // In the callback I do actual update of current time,
-                // since at that moment I can read real state.progress value                
-                video.currentTime = this.state.progress * 0.01 * (video.duration || 0)
-            })
-        })
+        
+        // Passing to setState() empty object and callback.
+        // In the callback I do actual update of current time,
+        // since at that moment I can read real state.progress value                
+        this.seekStopWatcher = new MouseStopWatcher(0.4, () => this.setState({}, this.setCurrentTime))
 
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
         
@@ -104,6 +99,11 @@ class App extends React.Component {
 
         // next track or empty object if there is no next track
         this.setState(this.getNewTrackState(0))
+    }
+
+    setCurrentTime = () => {
+        const video = this.mediaRef.current
+        video.currentTime = this.state.progress * 0.01 * (video.duration || 0)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -173,7 +173,7 @@ class App extends React.Component {
 
         video.currentTime = progress * 0.01 * (video.duration || 0)
 
-        this.mouseStopWatcher.enable()
+        this.seekStopWatcher.enable()
     }
     
     seekEnd = progress => {
@@ -189,7 +189,7 @@ class App extends React.Component {
         
         this.setState({ seekByUser: false })
         this.wasPlaying = null
-        this.mouseStopWatcher.disable()
+        this.seekStopWatcher.disable()
     }
 
     toogleMute = () => {
