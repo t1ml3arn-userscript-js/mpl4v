@@ -146,8 +146,8 @@ class App extends React.Component {
             }
         } else {
             this.setState(state => {
-                // we update our fullscreen state only if 
-                // it was requested from us
+                // we disable fullscreen state only if 
+                // it was previously requested from us
                 if (state.fullscreen) {
                     this.dragger.enable()
                     return { fullscreen: false }
