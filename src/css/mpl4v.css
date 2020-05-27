@@ -162,7 +162,7 @@
     /* --------------- */
 }
 
-.mpl4v-screen:hover .mpl4v-screen-title {
+.mpl4v:hover .mpl4v-screen-title {
     opacity: var(--opacity);
 }
 
