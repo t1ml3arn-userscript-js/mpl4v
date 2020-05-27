@@ -323,13 +323,13 @@
 
 .mpl4v-eclipse--spining {
     opacity: 1;
-    animation-name: eclipse-spining;
+    animation-name: mpl4v-eclipse-spining;
     animation-timing-function: cubic-bezier(.54,.32,.47,.81);
     animation-duration: 2.2s;
     animation-iteration-count: infinite;
 }
 
-@keyframes eclipse-spining {
+@keyframes mpl4v-eclipse-spining {
     from {
         transform: translate(-50%, -50%) rotate(0);
     }
