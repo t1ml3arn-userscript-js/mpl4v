@@ -67,7 +67,7 @@ class App extends React.Component {
         // Passing to setState() empty object and callback.
         // In the callback I do actual update of current time,
         // since at that moment I can read real state.progress value                
-        this.seekStopWatcher = new MouseStopWatcher(0.4, () => this.setState({}, this.setCurrentTime))
+        this.seekStopWatcher = new MouseStopWatcher(200, () => this.setState({}, this.setCurrentTime))
 
         fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange)
         
