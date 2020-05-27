@@ -11,9 +11,17 @@ export default function MediaControls(props) {
     const { progress, bufferedProgress, onProgressChange } = props
     const { currentTime, duration } = props
     const { volume, onVolumeChange } = props
-    
+    const { hideControls } = props
+    const fade = !fullscreen ? ""
+        : hideControls ? "mpl4v-trans--fade-out" : "mpl4v-trans--fade-in"
+
     return (
-    <div className="mpl4v-controls" data-fullscreen={ fullscreen }>
+    <div 
+        className={ `mpl4v-controls ${fade}` } 
+        data-fullscreen={ fullscreen }
+        onMouseOver={ fullscreen ? props.disableFscreenStopWatcher : undefined }
+        onMouseLeave={ fullscreen ? props.enableFscreenStopWatcher : undefined }
+    >
         <PlaybackProgressBar 
             progress={ progress } 
             onChange={ onProgressChange } 

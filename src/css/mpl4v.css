@@ -529,3 +529,23 @@
     color: var(--button-disabled-color); 
     cursor: initial;
 }
+
+.mpl4v-trans--fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: 
+        opacity 0.15s linear 0s
+        , visibility 0s 0s
+        ;
+}
+
+.mpl4v-trans--fade-out {
+    --anim-time: 0.15s;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 
+        opacity var(--anim-time) linear 0s
+        , visibility 0s linear var(--anim-time)
+        ;
+}

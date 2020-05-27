@@ -37,6 +37,7 @@ class App extends React.Component {
             autoplay: false,
             hasAudio: true,
             error: null,
+            hideControls: false,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -58,6 +59,8 @@ class App extends React.Component {
         // error delay id to clear the timer if a user requests 
         // next track before the timer finishes
         this.errorDelayID = undefined
+
+        this.fscreenStopWatcher = new MouseStopWatcher(2500, this.setHideControls, this.setShowControls)
     }
 
     componentDidMount() {
@@ -140,17 +143,26 @@ class App extends React.Component {
         // if it is fullscreen and it is OUR fulslcreen
         if (fscreen.fullscreenElement) {
             if (fscreen.fullscreenElement == this.appRef.current) {
-                // dragger must be disabled in fullscreen mode
                 this.dragger.disable()
-                this.setState({ fullscreen: true })
+                this.fscreenStopWatcher.enable()
+
+                this.setState({ 
+                    fullscreen: true,
+                    hideControls: false,
+                })
             }
         } else {
             this.setState(state => {
                 // we disable fullscreen state only if 
                 // it was previously requested from us
                 if (state.fullscreen) {
+                    this.fscreenStopWatcher.disable()
                     this.dragger.enable()
-                    return { fullscreen: false }
+                    
+                    return { 
+                        fullscreen: false,
+                        hideControls: false,
+                    }
                 }
             })
         }
@@ -341,9 +353,18 @@ class App extends React.Component {
         }
     }
 
+    setHideControls = () => this.setState({ hideControls: true })
+    setShowControls = () => this.setState(this.getShowControlsState)
+
+    /** Returns state "show controls" bun only if it was hidden previously */
+    getShowControlsState(state) {
+        if (state.hideControls)
+            return { hideControls: false }
+    }
+
     render() {
         
-        const { showScreen, fullscreen } = this.state
+        const { showScreen, fullscreen, hideControls } = this.state
         const { progress, bufferedProgress } = this.state
         const { currentTime, duration } = this.state
         const { volume, muted, hasAudio } = this.state
@@ -366,6 +387,7 @@ class App extends React.Component {
                 mediaRef={ this.mediaRef }
                 title={ track.title }
                 error={ this.state.error }
+                hideScreenHUD={ hideControls }
             />
             <MediaControls 
                 progress={ progress }
@@ -394,6 +416,9 @@ class App extends React.Component {
                 playNext={ this.playNext }
                 playPrevent={ this.playPrevent }
                 hasAudio={ hasAudio }
+                disableFscreenStopWatcher={ this.fscreenStopWatcher.disable }
+                enableFscreenStopWatcher={ this.fscreenStopWatcher.enable }
+                hideControls={ hideControls }
             />
         </div>
         )

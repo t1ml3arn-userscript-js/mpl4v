@@ -13,6 +13,7 @@ export default class Screen extends React.Component {
         mediaRef: PropTypes.object,
         title: PropTypes.string,
         error: PropTypes.object,
+        hideScreenHUD: PropTypes.bool.isRequired
     }
 
     scaleStep = 0.1
@@ -175,7 +176,8 @@ export default class Screen extends React.Component {
 
     render() {
         const props = this.props
-        const {showScreen, toogleFullscreen, fullscreen} = props
+        const {showScreen, fullscreen, hideScreenHUD} = props
+        const { toogleFullscreen } = props
         const { mediaSrc, title } = props
         const { looped } = props
         const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
@@ -212,19 +214,21 @@ export default class Screen extends React.Component {
             ></video>
             <Error { ...error } fullscreen={ fullscreen }
             />
-            <Title title={ title } fullscreen={ fullscreen } />
+            <Title title={ title } fullscreen={ fullscreen } fadeout={ hideScreenHUD }/>
         </div>
         )
     }
 }
 
 const Title = React.memo(function Title(props) {
-    const { title, fullscreen } = props
+    const { title, fullscreen, fadeout } = props
     const hidden = title ? "" : "mpl4v--hidden"
+    const fade = !fullscreen ? "" 
+        : fadeout ? "mpl4v-trans--fade-out" : "mpl4v-trans--fade-in"
 
     return (
     <span 
-        className={ `mpl4v-screen-title ${hidden}` } 
+        className={ `mpl4v-screen-title ${hidden} ${fade}` } 
         data-fullscreen={ fullscreen } 
     >
         { title }
@@ -235,6 +239,7 @@ const Title = React.memo(function Title(props) {
 Title.propTypes = {
     title: PropTypes.string,
     fullscreen: PropTypes.bool.isRequired,
+    fadeout: PropTypes.bool,
 }
 
 const Error = React.memo(function Error(props) {
