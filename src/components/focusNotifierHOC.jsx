@@ -8,7 +8,7 @@ export function focusNotifier(Target) {
 
         return (
         <div 
-            className="mpl4v-wrap" 
+            className="mpl4v--wrap" 
             onMouseOut={focusOut} 
             onMouseOver={focusIn}
             // TODO more events to handle real focus ?

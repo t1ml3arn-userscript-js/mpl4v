@@ -34,8 +34,7 @@
     font-size: 10px;
     z-index: var(--mpl4v-z);
     
-    background-color: var(--controls-bg);
-    box-shadow: var(--shadow-5);
+    background: transparent;
 }
 
 .mpl4v * {
@@ -57,12 +56,13 @@
     outline: 0;
 }
 
-.mpl4v-wrap {
+.mpl4v--wrap {
     display: block;
     margin: 0;
     padding: 0;
     width: auto;
     height: auto;
+    background: transparent;
 }
 
 /* class to be a marker of object that can start drag */
@@ -244,6 +244,7 @@
     display: inline-block;
     width: var(--controls-width);
     background-color: var(--controls-bg);
+    box-shadow: var(--shadow-5);
 }
 
 .mpl4v-controls[data-fullscreen=true] {
