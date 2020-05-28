@@ -195,6 +195,7 @@ export default class Screen extends React.Component {
         } else
             styles = null
 
+        // TODO extract scale code into separate HOC ?
         return (
         <div 
             className={`mpl4v-screen ${dragIniter} ${hidden}`} 
