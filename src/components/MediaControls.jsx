@@ -13,8 +13,7 @@ let MediaControls = props => {
     const { currentTime, duration } = props
     const { volume, onVolumeChange } = props
     const { hideControls } = props
-    const fade = !fullscreen ? ""
-        : hideControls ? "mpl4v-trans--fade-out" : "mpl4v-trans--fade-in"
+    const fade = hideControls ? "mpl4v-trans--fade-out" : "mpl4v-trans--fade-in"
 
     return (
     <div 
