@@ -95,5 +95,23 @@ export default class Dragger {
         document.removeEventListener('mousemove', this.onDrag)
         document.removeEventListener('mouseup', this.stopDrag)
         this.inDrag = false
+
+        this.convertCoordToPercents()
+    }
+
+    /** Converts target position props into percents */
+    convertCoordToPercents() {
+        const cstyle = window.getComputedStyle(this.target)
+        let { left, top } = cstyle
+        left = parseInt(left.substring(0, left.length-2))
+        top = parseInt(top.substring(0, top.length-2))
+
+        left = left * 100 / window.innerWidth
+        top = top * 100 / window.innerHeight
+
+        this.target.style.left = `${left}%`
+        this.target.style.top = `${top}%`
+        this.target.style.right = null
+        this.target.style.bottom = null
     }
 }
