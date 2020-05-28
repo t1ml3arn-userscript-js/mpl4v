@@ -12,6 +12,7 @@ import MouseStopWatcher from './utils/MouseStopWatcher'
 import { PageParser } from "./PageParser";
 import { Track } from "./media/Track";
 import MediaError from "./media/MediaError";
+import HUDHideBlocker from "./utils/HUDHideBlocker";
 
 class App extends React.Component {
     constructor(props){
@@ -60,7 +61,7 @@ class App extends React.Component {
         // next track before the timer finishes
         this.errorDelayID = undefined
 
-        this.fscreenStopWatcher = new MouseStopWatcher(2500, this.setHideControls, this.setShowControls)
+        this.hudHideBlocker = new HUDHideBlocker(2500, this.setHideControls, this.setShowControls, ["mpl4v-screen-title", "mpl4v-controls"])
     }
 
     componentDidMount() {
@@ -144,7 +145,7 @@ class App extends React.Component {
         if (fscreen.fullscreenElement) {
             if (fscreen.fullscreenElement == this.appRef.current) {
                 this.dragger.disable()
-                this.fscreenStopWatcher.enable()
+                this.hudHideBlocker.enable()
 
                 this.setState({ 
                     fullscreen: true,
@@ -156,8 +157,8 @@ class App extends React.Component {
                 // we disable fullscreen state only if 
                 // it was previously requested from us
                 if (state.fullscreen) {
-                    this.fscreenStopWatcher.disable()
                     this.dragger.enable()
+                    this.hudHideBlocker.disable()
                     
                     return { 
                         fullscreen: false,
@@ -416,8 +417,8 @@ class App extends React.Component {
                 playNext={ this.playNext }
                 playPrevent={ this.playPrevent }
                 hasAudio={ hasAudio }
-                disableFscreenStopWatcher={ this.fscreenStopWatcher.disable }
-                enableFscreenStopWatcher={ this.fscreenStopWatcher.enable }
+                // disableFscreenStopWatcher={ this.fscreenStopWatcher.disable }
+                // enableFscreenStopWatcher={ this.fscreenStopWatcher.enable }
                 hideControls={ hideControls }
             />
         </div>
