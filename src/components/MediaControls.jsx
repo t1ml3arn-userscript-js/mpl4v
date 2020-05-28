@@ -4,8 +4,9 @@ import TimeLabel from './TimeLabel'
 import ScreenButton from './ScreenButton'
 import VolumePanel from "./VolumePanel";
 import Button from './Button'
+import { focusNotifier } from "./focusNotifierHOC";
 
-export default function MediaControls(props) {
+let MediaControls = props => {
     const { fullscreen } = props
     const dragInitier = fullscreen ? '' : "mpl4v-drag-initiator"
     const { progress, bufferedProgress, onProgressChange } = props
@@ -19,8 +20,6 @@ export default function MediaControls(props) {
     <div 
         className={ `mpl4v-controls ${fade}` } 
         data-fullscreen={ fullscreen }
-        // onMouseOver={ fullscreen ? props.disableFscreenStopWatcher : undefined }
-        // onMouseLeave={ fullscreen ? props.enableFscreenStopWatcher : undefined }
     >
         <PlaybackProgressBar 
             progress={ progress } 
@@ -61,3 +60,7 @@ export default function MediaControls(props) {
     </div>
     )
 }
+
+MediaControls = React.memo(focusNotifier(MediaControls))
+
+export default MediaControls;

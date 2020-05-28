@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { bound, magnetValue } from '../utils/utils'
+import { focusNotifier } from "./focusNotifierHOC"
 
 export default class Screen extends React.Component {
 
@@ -13,7 +14,9 @@ export default class Screen extends React.Component {
         mediaRef: PropTypes.object,
         title: PropTypes.string,
         error: PropTypes.object,
-        hideScreenHUD: PropTypes.bool.isRequired
+        hideScreenHUD: PropTypes.bool.isRequired,
+        hudFocusIn: PropTypes.func,
+        hudFocusOut: PropTypes.func,
     }
 
     scaleStep = 0.1
@@ -215,13 +218,16 @@ export default class Screen extends React.Component {
             ></video>
             <Error { ...error } fullscreen={ fullscreen }
             />
-            <Title title={ title } fullscreen={ fullscreen } fadeout={ hideScreenHUD }/>
+            <Title  
+                focusIn={ props.hudFocusIn } focusOut={ props.hudFocusOut }
+                title={ title } fullscreen={ fullscreen } fadeout={ hideScreenHUD }
+            />
         </div>
         )
     }
 }
 
-const Title = React.memo(function Title(props) {
+let Title = props => {
     const { title, fullscreen, fadeout } = props
     const hidden = title ? "" : "mpl4v--hidden"
     const fade = !fullscreen ? "" 
@@ -235,13 +241,15 @@ const Title = React.memo(function Title(props) {
         { title }
     </span>
     )
-})
+}
 
 Title.propTypes = {
     title: PropTypes.string,
     fullscreen: PropTypes.bool.isRequired,
     fadeout: PropTypes.bool,
 }
+
+Title = React.memo(focusNotifier(Title))
 
 const Error = React.memo(function Error(props) {
     const { code, message, fullscreen } = props

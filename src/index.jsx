@@ -12,7 +12,6 @@ import MouseStopWatcher from './utils/MouseStopWatcher'
 import { PageParser } from "./PageParser";
 import { Track } from "./media/Track";
 import MediaError from "./media/MediaError";
-import HUDHideBlocker from "./utils/HUDHideBlocker";
 
 class App extends React.Component {
     constructor(props){
@@ -61,7 +60,7 @@ class App extends React.Component {
         // next track before the timer finishes
         this.errorDelayID = undefined
 
-        this.hudHideBlocker = new HUDHideBlocker(2500, this.setHideControls, this.setShowControls, ["mpl4v-screen-title", "mpl4v-controls"])
+        this.fscreenStop = new MouseStopWatcher(2500, this.setHideControls, this.setShowControls)
     }
 
     componentDidMount() {
@@ -145,7 +144,7 @@ class App extends React.Component {
         if (fscreen.fullscreenElement) {
             if (fscreen.fullscreenElement == this.appRef.current) {
                 this.dragger.disable()
-                this.hudHideBlocker.enable()
+                this.fscreenStop.enable()
 
                 this.setState({ 
                     fullscreen: true,
@@ -158,8 +157,8 @@ class App extends React.Component {
                 // it was previously requested from us
                 if (state.fullscreen) {
                     this.dragger.enable()
-                    this.hudHideBlocker.disable()
-                    
+                    this.fscreenStop.disable()
+
                     return { 
                         fullscreen: false,
                         hideControls: false,
@@ -389,6 +388,8 @@ class App extends React.Component {
                 title={ track.title }
                 error={ this.state.error }
                 hideScreenHUD={ hideControls }
+                hudFocusIn={ this.fscreenStop.disable }
+                hudFocusOut={ this.fscreenStop.enable }
             />
             <MediaControls 
                 progress={ progress }
@@ -417,9 +418,9 @@ class App extends React.Component {
                 playNext={ this.playNext }
                 playPrevent={ this.playPrevent }
                 hasAudio={ hasAudio }
-                // disableFscreenStopWatcher={ this.fscreenStopWatcher.disable }
-                // enableFscreenStopWatcher={ this.fscreenStopWatcher.enable }
                 hideControls={ hideControls }
+                focusIn={ this.fscreenStop.disable }
+                focusOut={ this.fscreenStop.enable }
             />
         </div>
         )
