@@ -117,7 +117,6 @@ export default class Screen extends React.PureComponent {
         const prevSizeKey = r >= 1 ? 'previousWidth' : 'previousHeight'
         const prevSizeValue = r >= 1 ? w * scale : h * scale
 
-        magnetValue()
         const result = { 
             [zoomKey]: scale,
             [prevSizeKey]: prevSizeValue,
