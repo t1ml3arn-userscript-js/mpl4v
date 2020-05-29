@@ -385,6 +385,7 @@ class App extends React.Component {
                 mediaSrc={ track.src }
                 looped={ looped }
                 mediaRef={ this.mediaRef }
+                videoEltRef={ this.mediaRef }
                 title={ track.title }
                 error={ this.state.error }
                 hideScreenHUD={ hideControls }

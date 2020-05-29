@@ -4,6 +4,7 @@ import { bound, magnetValue, RefType } from '../utils/utils'
 const MIN_WIDTH = 50
 const MIN_HEIGHT = 50
 const MAX_SCALE = 4
+const MIN_SCALE = 0.15
 const SCALE_STEP = 0.1
 
 export default function scaler(Target) {
@@ -28,6 +29,9 @@ return class Scaler extends PureComponent {
         }
 
         this.restoresSize = true
+
+        // TODO(?) max width = 2 * screen width
+        // TODO(?) max height = 2 * screen height
     }
 
     componentDidMount() {
@@ -56,7 +60,8 @@ return class Scaler extends PureComponent {
         }
     }
 
-    changeScale = e => {
+    // DONE
+    changeZoom = e => {
         e.preventDefault()
 
         // scroll down - decrease scale, deltaY > 0
@@ -65,7 +70,7 @@ return class Scaler extends PureComponent {
 
         const video = this.props.videoEltRef.current
         const w = video.videoWidth, h = video.videoHeight
-        // scale only when we have video dimension 
+        // scale only when we have video dimensions
         if (w && h) 
             this.setState(state => {
                 // return this.getSharedScale(w,h,mod,state)
@@ -74,8 +79,8 @@ return class Scaler extends PureComponent {
     }
 
     getSharedScale = (w, h, mod, state) => {
-        let scale = state.scale + this.scaleStep * mod
-        scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
+        let scale = state.scale + SCALE_STEP * mod
+        scale = bound(scale, MIN_SCALE, MAX_SCALE)
         
         return {
             scale: scale,
@@ -88,15 +93,16 @@ return class Scaler extends PureComponent {
         const r = w / h
 
         let scale = r >= 1 ? state.zoomHor : state.zoomVert
-        scale += mod * this.scaleStep
-        scale = bound(scale, this.SCALE_MIN, this.SCALE_MAX)
+        scale += mod * SCALE_STEP
+        scale = bound(scale, 0, Infinity)
         
+        let newWidth = bound(w*scale, MIN_WIDTH, Infinity)
         // I want to magnet screen width to control width (this.defaultWidth).
         // With this, whatever the width value might become through zooming, 
         // it will never skip desired width (this.defaultWidth)
         // So, here we go:
         // 1. magnet target value
-        const newWidth = magnetValue(state.screenWidth, w * scale, this.defaultWidth)
+        newWidth = magnetValue(state.screenWidth, newWidth, this.defaultWidth)
         // 2. recalc scale value
         scale = newWidth / w
 
@@ -104,12 +110,12 @@ return class Scaler extends PureComponent {
         const prevSizeKey = r >= 1 ? 'previousWidth' : 'previousHeight'
         const prevSizeValue = r >= 1 ? w * scale : h * scale
 
-        magnetValue()
         const result = { 
             [zoomKey]: scale,
             [prevSizeKey]: prevSizeValue,
             screenWidth: w * scale, 
             screenHeight: h * scale,
+            scale,
         }
 
         return result
@@ -125,6 +131,7 @@ return class Scaler extends PureComponent {
 
             return { 
                 zoomHor: screenWidth / w,
+                scale: screenWidth / w,
                 screenHeight, 
                 screenWidth,
                 // prev WIDTH must be stored separately from prev HEIGHT
@@ -147,6 +154,7 @@ return class Scaler extends PureComponent {
             return {
                 screenWidth, screenHeight,
                 zoomVert: screenHeight / h,
+                scale: screenHeight / h,
                 // prev HEIGHT must be stored separately from prev WIDTH
                 // point is the same as with separate zoom factor
                 previousHeight: screenHeight,
@@ -166,15 +174,15 @@ return class Scaler extends PureComponent {
 
     render() {
         const { videoEltRef, ...passedProps } = this.props
-        const { scale } = this.state
+        const { scale, screenWidth, screenHeight } = this.state
 
         return (
         <Target
-            scaledWidth={0} 
-            scaledHeight={0}
-            scaleFactor={ scale }
+            zoomedWidth={ screenWidth } 
+            zoomedHeight={ screenHeight }
+            zoom={ scale }
             updateResolution={ this.updateResolution }
-            changeScaleHandler={ this.changeScale }
+            changeZoom={ this.changeZoom }
             {...passedProps}
         />
         )
