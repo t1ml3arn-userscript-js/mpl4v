@@ -8,7 +8,7 @@ const NOSOUND = 0
 const MUTED = 1
 const UNMUTED = 2
 
-class VolumePanelView extends React.Component {
+class VolumePanelView extends React.PureComponent {
     constructor(props) {
         super(props)
 
@@ -89,7 +89,7 @@ VolumePanelView.propTypes = {
     hasAudio: PropTypes.bool.isRequired,
 }
 
-function VolumeMod(props) {
+let VolumeMod = (props) => {
     const { isPlus, onChange } = props
     const title = isPlus ? "Increase Volume" : "Decrease Volume"
 
@@ -108,7 +108,9 @@ VolumeMod.propTypes = {
     onChange: PropTypes.func.isRequired
 }
 
-const MuteButton = props => {
+VolumeMod = React.memo(VolumeMod)
+
+let MuteButton = props => {
     const { onMouseOver, toogleMute, soundState, onMouseMove } = props
 
     let iconClass, title
@@ -142,6 +144,8 @@ MuteButton.propTypes = {
     toogleMute: PropTypes.func.isRequired,
     soundState: PropTypes.oneOf([MUTED, NOSOUND, UNMUTED]).isRequired,
 }
+
+MuteButton = React.memo(MuteButton)
 
 const VolumePanel = barController(VolumePanelView)
 export default VolumePanel

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { bound, magnetValue } from '../utils/utils'
 import { focusNotifier } from "./focusNotifierHOC"
 
-export default class Screen extends React.Component {
+export default class Screen extends React.PureComponent {
 
     static propTypes = {
         showScreen: PropTypes.bool.isRequired,

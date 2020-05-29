@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import ProgressCalculator from '../utils/ProgressCalculator';
 import PropTypes from 'prop-types'
 import { bound } from '../utils/utils';
@@ -28,7 +28,7 @@ export function barController(RealBar) {
     Bar can be disabled/inactive (e.g. when there is no video)
 
 */
-return class BarController extends React.Component {
+return class BarController extends PureComponent {
     
     static propTypes = {
         enabled: PropTypes.bool,
@@ -129,7 +129,7 @@ return class BarController extends React.Component {
 const ProgressBar = {}
 export default ProgressBar;
 
-ProgressBar.Head = function Head(props) {
+function Head(props) {
     const { progress, classes } = props
     const headStyle = {
         left: `${ progress }%`
@@ -142,7 +142,9 @@ ProgressBar.Head = function Head(props) {
     )
 }
 
-ProgressBar.Head.propTypes = {
+Head.propTypes = {
     progress: PropTypes.number.isRequired,
     classes: PropTypes.string.isRequired,
 }
+
+ProgressBar.Head = React.memo(Head)

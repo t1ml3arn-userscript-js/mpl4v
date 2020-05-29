@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function ScreenButton(props) {
+let ScreenButton = function ScreenButton(props) {
     const {showScreen, toogleScreen, fullscreen} = props;
     
     let title = ''
@@ -27,3 +27,5 @@ ScreenButton.propTypes = {
     toogleScreen: PropTypes.func.isRequired,
     fullscreen: PropTypes.bool.isRequired,
 }
+
+export default React.memo(ScreenButton)

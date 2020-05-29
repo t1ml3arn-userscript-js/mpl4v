@@ -21,6 +21,8 @@ Button.Loop.propTypes = {
     toogleLoop: PropTypes.func.isRequired
 }
 
+Button.Loop = React.memo(Button.Loop)
+
 Button.Play = function Play(props) {
     const { isPlaying, tooglePlayPause } = props
     const iconClass = isPlaying ? 'zmdi-pause' : 'zmdi-play'
@@ -65,7 +67,7 @@ return Spinner
 
 }
 
-Button.Play = addSpinner(Button.Play);
+Button.Play = React.memo(addSpinner(Button.Play));
 
 Button.Download = function Download(props) {
     const { downloadURL: url, saveAs } = props
@@ -85,6 +87,8 @@ Button.Download.propTypes = {
     downloadURL: PropTypes.string,
     saveAs: PropTypes.string,
 }
+
+Button.Download = React.memo(Button.Download)
 
 function Skip(props) {
     const { isNext, onClick } = props
