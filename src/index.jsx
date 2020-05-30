@@ -123,8 +123,6 @@ class App extends React.Component {
             if (index != -1)
                 this.setState(this.getNewTrackState(index), requestPlay)
             else {
-                // NOTE if dropped source not in playlist -
-                // update track but not index
                 const nextIndex = this.state.trackIndex + 1
                 this.setState({ track: new Track(droppedMediaURL), trackIndex: nextIndex}, requestPlay)
             }
