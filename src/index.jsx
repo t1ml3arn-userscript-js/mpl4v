@@ -224,7 +224,10 @@ class App extends React.Component {
             video.pause()
     }
 
-    requestPlay = () => this.mediaRef.current.play()
+    requestPlay = () => {
+        clearTimeout(this.errorDelayID)
+        this.mediaRef.current.play()
+    }
 
     onPlayError = e => {
         const { code, message } = e.target.error
