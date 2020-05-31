@@ -213,6 +213,7 @@ class App extends React.Component {
     toogleLoop = () => this.setState(toogleKey('looped'))
 
     requestFullscreen = () => {
+        this.dragger.stopDrag()        
         fscreen.requestFullscreen(this.appRef.current)
     }
 
