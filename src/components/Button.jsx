@@ -12,6 +12,7 @@ Button.Loop = function Loop(props) {
             className={ `zmdi zmdi-repeat ${toogledClass}` } 
             onClick={ toogleLoop }
             title={ looped ? "Don't repeat" : "Repeat"}
+            tabIndex="0"
         ></i>
     )
 }
@@ -31,6 +32,7 @@ Button.Play = function Play(props) {
         <i 
             className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }
             title={ isPlaying ? 'Pause' : 'Play' }
+            tabIndex="0"
         >
             {props.children}
         </i>
@@ -77,6 +79,7 @@ Button.Download = function Download(props) {
     <a 
         href={ url ? url : undefined } download={ saveAs || false } 
         title={ title }
+        tabIndex="0"
     >
         <i className={ `zmdi zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }></i>
     </a>
@@ -99,6 +102,7 @@ function Skip(props) {
         <i 
             className={ `zmdi ${skipClass}` } onClick={ onClick } 
             title={ title }
+            tabIndex="0"
         ></i>
     )
 }

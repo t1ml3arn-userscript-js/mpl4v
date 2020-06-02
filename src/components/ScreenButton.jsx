@@ -18,6 +18,7 @@ let ScreenButton = function ScreenButton(props) {
         className={`zmdi mpl4v-fullscreen ${iconClass}`} 
         onClick={toogleScreen}
         title={ title }
+        tabIndex="0"
     ></i>
     )    
 }
