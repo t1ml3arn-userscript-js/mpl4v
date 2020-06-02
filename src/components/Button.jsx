@@ -1,19 +1,50 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class Button {}
+export default function Button() {}
+
+/** 
+ * Triggers click when when single key (Enter os Spacebar)
+ * is pressed
+*/
+function triggerClick(e) {
+    if (e.getModifierState())  return
+    if (e.key == "Enter" || e.key == " " || e.key == "Spacebar")
+        e.currentTarget.click()
+}
+
+function BareBtn(props) {
+    const { classes, onClick, title, children } = props
+    return (
+        <i
+            className={ `zmdi ${classes}`}
+            onClick={ onClick }
+            onKeyDown={ triggerClick }
+            title={ title }
+            tabIndex="0"
+        >
+            { children }
+        </i>
+    )
+}
+
+BareBtn.propTypes = {
+    classes: PropTypes.string,
+    onClick: PropTypes.func,
+    title: PropTypes.string,
+    children: PropTypes.node,
+}
 
 Button.Loop = function Loop(props) {
     const { looped, toogleLoop } = props
     const toogledClass = looped ? 'mpl4v--toogled' : '';
 
     return (
-        <i 
-            className={ `zmdi zmdi-repeat ${toogledClass}` } 
+        <BareBtn 
+            classes={ `zmdi-repeat ${toogledClass}` } 
             onClick={ toogleLoop }
             title={ looped ? "Don't repeat" : "Repeat"}
-            tabIndex="0"
-        ></i>
+        />
     )
 }
 
@@ -29,13 +60,13 @@ Button.Play = function Play(props) {
     const iconClass = isPlaying ? 'zmdi-pause' : 'zmdi-play'
 
     return (
-        <i 
-            className={ `zmdi ${iconClass}`} onClick={ tooglePlayPause }
+        <BareBtn 
+            classes={ iconClass }
+            onClick={ tooglePlayPause }
             title={ isPlaying ? 'Pause' : 'Play' }
-            tabIndex="0"
         >
-            {props.children}
-        </i>
+            { props.children }
+        </BareBtn>
     )
 }
 
@@ -80,8 +111,9 @@ Button.Download = function Download(props) {
         href={ url ? url : undefined } download={ saveAs || false } 
         title={ title }
         tabIndex="0"
+        onKeyDown={ triggerClick }
     >
-        <i className={ `zmdi zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }></i>
+        <BareBtn classes={ `zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }/>
     </a>
     )
 }
@@ -98,13 +130,7 @@ function Skip(props) {
     const skipClass = isNext ? 'zmdi-skip-next' : 'zmdi-skip-previous'
     const title = isNext ? "Play Next" : "Play Prevent"
 
-    return (
-        <i 
-            className={ `zmdi ${skipClass}` } onClick={ onClick } 
-            title={ title }
-            tabIndex="0"
-        ></i>
-    )
+    return <BareBtn classes={ skipClass } onClick={ onclick } title={ title }/>
 }
 
 Skip.propTypes = {
