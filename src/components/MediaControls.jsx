@@ -1,7 +1,6 @@
 import React from 'react'
 import PlaybackProgressBar from './PlaybackProgress'
 import TimeLabel from './TimeLabel'
-import ScreenButton from './ScreenButton'
 import VolumePanel from "./VolumePanel";
 import Button from './Button'
 import { focusNotifier } from "./focusNotifierHOC";
@@ -47,7 +46,7 @@ let MediaControls = props => {
                     muted={ props.muted } toogleMute={ props.toogleMute }
                     seekByUser={ props.seekByUser } hasAudio={ props.hasAudio }
                 />
-                <ScreenButton
+                <Button.Screen
                     showScreen={ props.showScreen }
                     toogleScreen={ props.toogleScreen }
                     fullscreen={ props.fullscreen }

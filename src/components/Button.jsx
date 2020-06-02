@@ -139,3 +139,32 @@ Skip.propTypes = {
 }
 
 Button.Skip = React.memo(Skip);
+
+function Screen(props) {
+    const {showScreen, toogleScreen, fullscreen} = props;
+    
+    let title = ''
+    if (fullscreen)         title = 'Exit Fullscreen Mode'
+    else if (showScreen)    title = 'Fold Screen'
+    else                    title = 'Show Screen'
+
+    const iconClass = fullscreen ? "zmdi-fullscreen-exit" 
+        : showScreen ? "zmdi-unfold-less" 
+        : "zmdi-unfold-more"
+
+    return (
+        <BareBtn 
+            classes={ `mpl4v-fullscreen ${iconClass}` }
+            onClick={ toogleScreen }
+            title={ title }
+        />
+    )
+}
+
+Screen.propTypes = {
+    showScreen: PropTypes.bool.isRequired,
+    toogleScreen: PropTypes.func.isRequired,
+    fullscreen: PropTypes.bool.isRequired,
+}
+
+Button.Screen = React.memo(Screen)
