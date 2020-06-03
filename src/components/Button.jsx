@@ -130,7 +130,7 @@ function Skip(props) {
     const skipClass = isNext ? 'zmdi-skip-next' : 'zmdi-skip-previous'
     const title = isNext ? "Play Next" : "Play Prevent"
 
-    return <BareBtn classes={ skipClass } onClick={ onclick } title={ title }/>
+    return <BareBtn classes={ skipClass } onClick={ onClick } title={ title }/>
 }
 
 Skip.propTypes = {
