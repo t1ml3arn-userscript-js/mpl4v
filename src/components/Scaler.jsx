@@ -60,7 +60,6 @@ return class Scaler extends PureComponent {
         }
     }
 
-    // DONE
     changeZoom = e => {
         e.preventDefault()
 
