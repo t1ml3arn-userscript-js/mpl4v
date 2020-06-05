@@ -113,7 +113,8 @@ export default class Dragger {
 
         // find to which boundary target element is the closest
         const horProp = left >= right ? ["right", right] : ["left", left]
-        const vertProp = top >= bottom ? ["bottom", bottom] : ["top", top] 
+        // const vertProp = top >= bottom ? ["bottom", bottom] : ["top", top] 
+        const vertProp = ["bottom", bottom]
 
         this.target.style.left = null
         this.target.style.top = null
