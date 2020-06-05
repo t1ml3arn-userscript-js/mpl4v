@@ -83,8 +83,7 @@
     width: var(--controls-width);
     height: var(--screen-height-default);
     margin-bottom: 1em;
-    position: absolute;
-    bottom: 100%;
+    position: relative;
     background: transparent;
     z-index: var(--screen-z);
     box-shadow: 0 5px 32px rgba(0,0,0,0.30), 0 5px 12px rgba(0,0,0,0.22);
@@ -242,6 +241,7 @@
 
 .mpl4v-controls {
     display: inline-block;
+    position: relative;
     width: var(--controls-width);
     background-color: var(--controls-bg);
     box-shadow: var(--shadow-5);
@@ -440,7 +440,7 @@
 }
 
 .mpl4v-bar--hor {
-    height: 100%;
+    height: inherit;
     border-radius: inherit;
 }
 
