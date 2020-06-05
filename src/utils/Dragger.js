@@ -3,15 +3,17 @@ export default class Dragger {
     /**
      * 
      * @param {Element} target What to drag
-     * @param {Array} initiators List of elements' classes, who can initiate dragging
+     * @param {Array} initiators List of elements' selectors, who can initiate dragging
+     * @param {EventTarget} listener Element that listens mousedown event (the whole document by default)
      */
-    constructor(target, initiators) {
+    constructor(target, initiators, listener = null) {
         this.target = target
         this.initiators = initiators
         this.enabled = false;
         this.inDrag = false;
+        this.listener = listener ? listener : document
 
-        this.onDocumentMouseDown = this.onDocumentMouseDown.bind(this)
+        this.onMouseDown = this.onMouseDown.bind(this)
         this.onDrag = this.onDrag.bind(this)
         this.stopDrag = this.stopDrag.bind(this)
     }
@@ -19,7 +21,7 @@ export default class Dragger {
     enable() {
         if (this.enabled) return;
 
-        document.addEventListener('mousedown', this.onDocumentMouseDown);
+        this.listener.addEventListener('mousedown', this.onMouseDown);
         
         this.enabled = true;
     }
@@ -30,14 +32,14 @@ export default class Dragger {
         this.stopDrag()
         this.enabled = false
 
-        document.removeEventListener('mousedown', this.onDocumentMouseDown);
+        this.listener.removeEventListener('mousedown', this.onMouseDown);
     }
 
     /**
      * 
      * @param {MouseEvent} e 
      */
-    onDocumentMouseDown(e) {
+    onMouseDown(e) {
         // NOTE event.button = 0 means main button (usually the left button)
         if (e.button == 0 && !this.inDrag){
             const match = this.initiators.find(selector => e.target.matches(selector));
@@ -45,8 +47,9 @@ export default class Dragger {
                 // this should disable text selection
                 // sadly, this also disables ability to change cursor icon
                 // e.preventDefault()
-                // no one will recieve this event
-                e.stopImmediatePropagation()
+
+                // no one up in the document's tree will recieve this event 
+                e.stopPropagation()
                 this.startDrag(e)
             }
         }
@@ -77,7 +80,6 @@ export default class Dragger {
         style.top = top;
 
         // set listeners 
-        // document.removeEventListener('mousedown', this.onDocumentMouseDown);
         document.addEventListener('mousemove', this.onDrag);
         document.addEventListener('mouseup', this.stopDrag);
     }

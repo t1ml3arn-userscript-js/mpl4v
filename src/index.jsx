@@ -64,7 +64,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.dragger = new Dragger(this.appRef.current, ['.mpl4v-drag-initiator']);
+        const playerElt = this.appRef.current
+        this.dragger = new Dragger(playerElt, ['.mpl4v-drag-initiator'], playerElt)
         this.dragger.enable()
         
         // Passing to setState() empty object and callback.
