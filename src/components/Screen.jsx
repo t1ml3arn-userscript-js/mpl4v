@@ -20,7 +20,6 @@ let Screen = function Screen(props) {
         styles = {
             width: `${zoomedWidth}px`,
             height: `${zoomedHeight}px`,
-            marginLeft: `-${zoomedWidth * 0.5}px`
         }
     } else
         styles = null
