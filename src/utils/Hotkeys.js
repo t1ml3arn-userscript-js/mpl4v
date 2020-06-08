@@ -26,8 +26,10 @@ export default class Hotkeys {
             match = (combo.shift !== undefined) && combo.shift === e.shiftKey
             match = combo.key.toLowerCase() === e.key.toLowerCase()
 
-            if (match)  combo.action()
-            if (!combo.preventDefault)  e.preventDefault()
+            if (match) {
+                combo.action()
+                if (!combo.preventDefault)  e.preventDefault()
+            }
         }
 
         e.stopPropagation()
