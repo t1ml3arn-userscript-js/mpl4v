@@ -13,6 +13,7 @@ import { PageParser } from "./PageParser";
 import { Track } from "./media/Track";
 import MediaError from "./media/MediaError";
 import Hotkeys from "./utils/Hotkeys";
+import downloadCrunch from "./utils/download";
 
 class App extends React.Component {
     constructor(props){
@@ -114,6 +115,8 @@ class App extends React.Component {
         this.hotkeys.addCombo({key: "L", action: this.toogleLoop})
         this.hotkeys.addCombo({shift: true, key: "ArrowLeft", action: this.playPrevent, preventDefault: true})
         this.hotkeys.addCombo({shift: true, key: "ArrowRight", action: this.playNext, preventDefault: true})
+        this.hotkeys.addCombo({key: "D", action: this.downloadTrack})
+        this.hotkeys.addCombo({shift: true, key: "ArrowDown", action: this.downloadTrack, preventDefault: true})
         this.hotkeys.enable()
 
         // next track or empty object if there is no next track
@@ -386,6 +389,12 @@ class App extends React.Component {
     decreaseSpeed = () => this.mediaRef.current.playbackRate -= 0.05
 
     onRateChange = e => this.setState({ playbackRate: e.target.playbackRate })
+
+    downloadTrack = () => {
+        const { track } = this.state
+        if (track && track.src)
+            downloadCrunch(track.src, track.title || "")
+    }
 
     render() {
         
