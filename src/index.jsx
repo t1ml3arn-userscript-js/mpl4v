@@ -12,6 +12,7 @@ import MouseStopWatcher from './utils/MouseStopWatcher'
 import { PageParser } from "./PageParser";
 import { Track } from "./media/Track";
 import MediaError from "./media/MediaError";
+import Hotkeys from "./utils/Hotkeys";
 
 class App extends React.Component {
     constructor(props){
@@ -100,6 +101,15 @@ class App extends React.Component {
         this.bufferEvents.forEach(e => video.addEventListener(e, this.updateReadyState));
 
         this.listener = new VideoEventListener(video)
+
+        this.hotkeys = new Hotkeys(this.appRef.current)
+        this.hotkeys.addCombo({key: "P", action: this.playpause})
+        this.hotkeys.addCombo({key: " ", action: this.playpause, preventDefault: true})
+        this.hotkeys.addCombo({key: "M", action: this.toogleMute})
+        this.hotkeys.addCombo({key: "L", action: this.toogleLoop})
+        this.hotkeys.addCombo({shift: true, key: "ArrowLeft", action: this.playPrevent, preventDefault: true})
+        this.hotkeys.addCombo({shift: true, key: "ArrowRight", action: this.playNext, preventDefault: true})
+        this.hotkeys.enable()
 
         // next track or empty object if there is no next track
         this.setState(this.getNewTrackState(0))
