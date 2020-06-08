@@ -39,6 +39,7 @@ class App extends React.Component {
             hasAudio: true,
             error: null,
             hideControls: false,
+            playbackRate: 1,
         }
         // since I wrapped this, I have to use given ref instead the new one
         this.appRef = props.dropTargetRef || React.createRef()
@@ -95,8 +96,10 @@ class App extends React.Component {
         video.addEventListener('canplay', this.resetError)
         video.addEventListener('canplay', this.checkHasAudio)
         video.addEventListener('play', this.webkitCheckHasAudio)
+        video.addEventListener('ratechange', this.onRateChange)
         // do "side-effect": derrive real volume from initial state 
         video.volume = this.state.volume * 0.01
+        video.playbackRate = this.state.playbackRate
 
         this.bufferEvents.forEach(e => video.addEventListener(e, this.updateReadyState));
 
@@ -106,6 +109,8 @@ class App extends React.Component {
         this.hotkeys.addCombo({key: "P", action: this.playpause})
         this.hotkeys.addCombo({key: " ", action: this.playpause, preventDefault: true})
         this.hotkeys.addCombo({key: "M", action: this.toogleMute})
+        this.hotkeys.addCombo({key: ">", action: this.increaseSpeed})
+        this.hotkeys.addCombo({key: "<", action: this.decreaseSpeed})
         this.hotkeys.addCombo({key: "L", action: this.toogleLoop})
         this.hotkeys.addCombo({shift: true, key: "ArrowLeft", action: this.playPrevent, preventDefault: true})
         this.hotkeys.addCombo({shift: true, key: "ArrowRight", action: this.playNext, preventDefault: true})
@@ -376,6 +381,11 @@ class App extends React.Component {
         if (state.hideControls)
             return { hideControls: false }
     }
+
+    increaseSpeed = () => this.mediaRef.current.playbackRate += 0.05
+    decreaseSpeed = () => this.mediaRef.current.playbackRate -= 0.05
+
+    onRateChange = e => this.setState({ playbackRate: e.target.playbackRate })
 
     render() {
         
