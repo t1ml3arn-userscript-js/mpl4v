@@ -15,14 +15,14 @@ function triggerClick(e) {
 }
 
 function BareBtn(props) {
-    const { classes, onClick, title, children } = props
+    const { classes, onClick, title, children, tabIndex } = props
     return (
         <i
             className={ `zmdi ${classes}`}
             onClick={ onClick }
             onKeyPress={ triggerClick }
             title={ title }
-            tabIndex="0"
+            tabIndex={ tabIndex }
         >
             { children }
         </i>
@@ -34,6 +34,11 @@ BareBtn.propTypes = {
     onClick: PropTypes.func,
     title: PropTypes.string,
     children: PropTypes.node,
+    tabIndex: PropTypes.number,
+}
+
+BareBtn.defaultProps = {
+    tabIndex: 0
 }
 
 Button.Loop = function Loop(props) {
@@ -114,7 +119,10 @@ Button.Download = function Download(props) {
         tabIndex="0"
         onKeyDown={ triggerClick }
     >
-        <BareBtn classes={ `zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }/>
+        <BareBtn 
+            classes={ `zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }
+            tabIndex={ null }
+        />
     </a>
     )
 }
