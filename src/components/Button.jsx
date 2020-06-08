@@ -9,6 +9,7 @@ export default function Button() {}
 */
 function triggerClick(e) {
     if (e.getModifierState())  return
+    if (e.repeat)   return
     if (e.key == "Enter" || e.key == " " || e.key == "Spacebar")
         e.currentTarget.click()
 }
@@ -19,7 +20,7 @@ function BareBtn(props) {
         <i
             className={ `zmdi ${classes}`}
             onClick={ onClick }
-            onKeyDown={ triggerClick }
+            onKeyPress={ triggerClick }
             title={ title }
             tabIndex="0"
         >
