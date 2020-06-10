@@ -44,16 +44,14 @@ export default class Dragger {
         if (e.button == 0 && !this.inDrag){
             const match = this.initiators.find(selector => e.target.matches(selector));
             if (match) {
-                // this should disable text selection
-                // sadly, this also disables ability to change cursor icon
-                // e.preventDefault()
-
                 // no one up in the document's tree will recieve this event 
                 e.stopPropagation()
                 this.startDrag(e)
             }
         }
     }
+
+    cancelSelection(e) { e.preventDefault() }
 
     /**
      * 
@@ -82,6 +80,7 @@ export default class Dragger {
         // set listeners 
         document.addEventListener('mousemove', this.onDrag);
         document.addEventListener('mouseup', this.stopDrag);
+        document.addEventListener('selectstart', this.cancelSelection)
     }
 
     onDrag(e) {
@@ -96,6 +95,7 @@ export default class Dragger {
 
         document.removeEventListener('mousemove', this.onDrag)
         document.removeEventListener('mouseup', this.stopDrag)
+        document.removeEventListener('selectstart', this.cancelSelection)
         
         if (this.inDrag)
             this.convertCoordToPercents()
