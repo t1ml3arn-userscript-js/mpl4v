@@ -117,6 +117,7 @@ class App extends React.Component {
         this.hotkeys.addCombo({shift: true, key: "ArrowRight", action: this.playNext, preventDefault: true})
         this.hotkeys.addCombo({key: "D", action: this.downloadTrack})
         this.hotkeys.addCombo({shift: true, key: "ArrowDown", action: this.downloadTrack, preventDefault: true})
+        this.hotkeys.addCombo({key: "F", action: this.toogleFullscreen})
         this.hotkeys.enable()
 
         // next track or empty object if there is no next track
@@ -234,6 +235,15 @@ class App extends React.Component {
     requestFullscreen = () => {
         this.dragger.stopDrag()        
         fscreen.requestFullscreen(this.appRef.current)
+    }
+
+    toogleFullscreen = () => {
+        this.dragger.stopDrag()
+        // const { fullscreen } = this.state
+        if (fscreen.fullscreenElement)
+            fscreen.exitFullscreen()
+        else
+            fscreen.requestFullscreen(this.appRef.current)
     }
 
     playpause = () => {
