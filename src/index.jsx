@@ -332,6 +332,10 @@ class App extends React.Component {
     onPlayEnded = e => {
         this.setState({ isPlaying: false })
 
+        // dont switch track
+        // if user is in seeking right now
+        if (this.state.seekByUser)  return
+
         const nextTrack = this.state.trackIndex + 1
         const isLast = nextTrack == this.playlist.length
         // if this track is the last - do nothing
