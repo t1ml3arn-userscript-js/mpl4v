@@ -126,7 +126,7 @@ class App extends React.Component {
 
     setCurrentTime = () => {
         const video = this.mediaRef.current
-        video.currentTime = this.state.progress * 0.01 * (video.duration || 0)
+        video.currentTime = this.deriveTime(this.state.progress, video.duration)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -203,7 +203,7 @@ class App extends React.Component {
         
         if (!video.paused) video.pause()
 
-        video.currentTime = progress * 0.01 * (video.duration || 0)
+        video.currentTime = this.deriveTime(progress, video.duration)
 
         this.seekStopWatcher.enable()
     }
@@ -211,8 +211,7 @@ class App extends React.Component {
     seekEnd = progress => {
         const video = this.mediaRef.current
 
-        // || 0 for case if duration is NaN
-        video.currentTime = progress * 0.01 * (video.duration || 0)
+        video.currentTime = this.deriveTime(progress, video.duration)
 
         // when seek is ended - play video (if it was playing before)
         if (this.wasPlaying === true) {
@@ -222,6 +221,17 @@ class App extends React.Component {
         this.setState({ seekByUser: false })
         this.wasPlaying = null
         this.seekStopWatcher.disable()
+    }
+
+    deriveTime(progress, duration) {
+        // NOTE 1: `duration || 0` for the case if duration is NaN 
+        // (e.g. this might be in between "load start" and "canplay" events)
+        // NOTE 2: `- 0.001` to avoid current time to be the end time.
+        // This prevents firing "ended" event, intended to be used 
+        // for manual seeking with progress bar.
+        return progress == 100 ? 
+                progress * 0.01 * (duration || 0) - 0.001
+            :   progress * 0.01 * (duration || 0)
     }
 
     toogleMute = () => {
