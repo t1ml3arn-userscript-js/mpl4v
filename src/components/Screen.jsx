@@ -12,7 +12,7 @@ let Screen = function Screen(props) {
     const { mediaSrc, title } = props
     const { looped } = props
     const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
-    const hidden = showScreen ? '' : 'mpl4v--hidden'
+    const hidden = showScreen ? '' : 'mpl4v--opaque'
     const { error } = props
 
     let styles;

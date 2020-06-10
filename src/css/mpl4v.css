@@ -520,6 +520,7 @@
 }
 
 .mpl4v .mpl4v--hidden { display: none; }
+.mpl4v .mpl4v--opaque { opacity: 0; }
 
 .mpl4v .mpl4v--toogled { 
     color: var(--main-color); 
