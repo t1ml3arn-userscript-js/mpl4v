@@ -259,6 +259,11 @@
     justify-content: space-between;
 }
 
+.mpl4-controls--left,
+.mpl4-controls--right {
+    height: 100%;
+}
+
 .mpl4-controls--left {
     margin-left: 0.5em;
 }
