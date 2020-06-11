@@ -257,6 +257,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
+    height: 4em;
 }
 
 .mpl4-controls--left,
@@ -292,10 +293,33 @@
     transition-timing-function: linear;
 }
 
-.mpl4v .zmdi:hover,
-.mpl4v *[tabIndex="0"]:focus,
-.mpl4v *[tabIndex="0"]:focus > .zmdi {
+.mpl4v-btn {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    /* vertical stretch, since it should be 
+    in horizontal flex container */
+    align-self: stretch;
+    position: relative;
+}
+
+.mpl4v-btn:hover .zmdi {
     color: var(--main-color);
+}
+
+.mpl4v-btn::after {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    background-color: var(--main-color);
+    content: " ";
+    transition: height 0.125s linear;
+}
+
+.mpl4v-btn:focus::after {
+    height: 0.4em;
 }
 
 .mpl4v .zmdi:active {
