@@ -106,22 +106,27 @@ class App extends React.Component {
 
         this.listener = new VideoEventListener(video)
 
-        this.hotkeys = new HotkeysController(this.appRef.current)
-        this.hotkeys.addCombo({key: "P", action: this.playpause})
-        this.hotkeys.addCombo({shift: true, key: " ", action: this.playpause, preventDefault: true})
-        this.hotkeys.addCombo({key: "M", action: this.toogleMute})
-        this.hotkeys.addCombo({key: ">", action: this.increaseSpeed})
-        this.hotkeys.addCombo({key: "<", action: this.decreaseSpeed})
-        this.hotkeys.addCombo({key: "L", action: this.toogleLoop})
-        this.hotkeys.addCombo({shift: true, key: "ArrowLeft", action: this.playPrevent, preventDefault: true})
-        this.hotkeys.addCombo({shift: true, key: "ArrowRight", action: this.playNext, preventDefault: true})
-        this.hotkeys.addCombo({key: "D", action: this.downloadTrack})
-        this.hotkeys.addCombo({shift: true, key: "ArrowDown", action: this.downloadTrack, preventDefault: true})
-        this.hotkeys.addCombo({key: "F", action: this.toogleFullscreen})
-        this.hotkeys.enable()
+        this.initHotkeys()
 
         // next track or empty object if there is no next track
         this.setState(this.getNewTrackState(0))
+    }
+
+    initHotkeys() {
+        this.hotkeys = new HotkeysController(this.appRef.current)
+        this.hotkeys.addCombo({key: "P", action: this.playpause})
+        this.hotkeys.addCombo({code: "KeyP", action: this.playpause})
+        this.hotkeys.addCombo({shiftKey: true, key: " ", action: this.playpause, preventDefault: true})
+        this.hotkeys.addCombo({code: "KeyM", action: this.toogleMute})
+        this.hotkeys.addCombo({code: "Period", action: this.increaseSpeed}) // >
+        this.hotkeys.addCombo({code: "Comma", action: this.decreaseSpeed})  // <
+        this.hotkeys.addCombo({code: "KeyL", action: this.toogleLoop})
+        this.hotkeys.addCombo({shiftKey: true, key: "ArrowLeft", action: this.playPrevent, preventDefault: true})
+        this.hotkeys.addCombo({shiftKey: true, key: "ArrowRight", action: this.playNext, preventDefault: true})
+        this.hotkeys.addCombo({code: "KeyD", action: this.downloadTrack})
+        this.hotkeys.addCombo({shiftKey: true, key: "ArrowDown", action: this.downloadTrack, preventDefault: true})
+        this.hotkeys.addCombo({code: "KeyF", action: this.toogleFullscreen})
+        this.hotkeys.enable()
     }
 
     setCurrentTime = () => {
