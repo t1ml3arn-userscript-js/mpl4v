@@ -1,3 +1,8 @@
+const PROPS = new Map()
+PROPS.set('shiftKey', null)
+PROPS.set('code', null)
+PROPS.set('key', (comboVal, eventVal) => comboVal.toLowerCase() === eventVal.toLowerCase())
+
 export default class HotkeysController {
     constructor(target) {
         this.target = target
@@ -21,18 +26,38 @@ export default class HotkeysController {
 
     ondown = e => {
         if (e.repeat)   return
-        for (const combo of this.combos) {
-            let match = true
-            match = combo.shift !== undefined ? combo.shift === e.shiftKey : match && true
-            match = match && (combo.key.toLowerCase() === e.key.toLowerCase())
+        
+        const acc = { event: e }
 
-            if (match) {
+        for (const combo of this.combos) {
+            acc.combo = combo
+            acc.match = true
+            const result = [...PROPS.entries()].reduce(this.reducer, acc)
+            
+            if (result.match) {
                 combo.action()
 
                 // stop propagation for not letting React recieve this event 
                 e.stopPropagation()
                 if (!combo.preventDefault)  e.preventDefault()
+
+                return
             }
         }        
+    }
+
+    reducer(acc, kv) {
+        const e = acc.event
+        const c = acc.combo
+        // property name
+        const prop = kv[0]
+        // comparator function
+        const cmp = kv[1]
+        const match = c[prop] !== undefined ? 
+            // if no comparator is provided then compare values directly
+            (cmp ? cmp(c[prop], e[prop]) : e[prop] === c[prop])
+            : true
+        acc.match = acc.match && match
+        return acc
     }
 }
