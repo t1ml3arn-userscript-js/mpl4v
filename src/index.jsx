@@ -498,6 +498,9 @@ document.head.append(style);
 
 // append material design iconic font
 // NOTE it must be added AFTER player's css
+// NOTE you can fix it by
+// 1. reset with *:not(.zmdi) AND
+// 2. add `.mpl4v` prefix to ALL css rules
 const fontStyle = document.createElement('link')
 fontStyle.rel = "stylesheet"
 fontStyle.href = "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
