@@ -30,8 +30,6 @@ export default class Hotkeys {
                 combo.action()
                 if (!combo.preventDefault)  e.preventDefault()
             }
-        }
-
-        e.stopPropagation()
+        }        
     }
 }
