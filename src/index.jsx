@@ -108,7 +108,7 @@ class App extends React.Component {
 
         this.hotkeys = new Hotkeys(this.appRef.current)
         this.hotkeys.addCombo({key: "P", action: this.playpause})
-        this.hotkeys.addCombo({key: " ", action: this.playpause, preventDefault: true})
+        this.hotkeys.addCombo({shift: true, key: " ", action: this.playpause, preventDefault: true})
         this.hotkeys.addCombo({key: "M", action: this.toogleMute})
         this.hotkeys.addCombo({key: ">", action: this.increaseSpeed})
         this.hotkeys.addCombo({key: "<", action: this.decreaseSpeed})
