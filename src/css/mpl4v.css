@@ -260,12 +260,10 @@
 }
 
 .mpl4-controls--left {
-    margin-left: 2em;
     margin-left: 0.5em;
 }
 
 .mpl4-controls--right {
-    margin-right: 0.75em;
     margin-right: 0;
     margin-left: 0;
 }
