@@ -17,15 +17,17 @@ function triggerClick(e) {
 function BareBtn(props) {
     const { classes, onClick, title, children, tabIndex } = props
     return (
-        <i
-            className={ `zmdi ${classes}`}
+        <div 
+            className="mpl4v-btn"
             onClick={ onClick }
-            onKeyPress={ triggerClick }
+            onKeyDown={ triggerClick }
             title={ title }
             tabIndex={ tabIndex }
         >
-            { children }
-        </i>
+            <i className={ `zmdi ${classes}`} >
+                { children }
+            </i>
+        </div>
     )
 }
 
@@ -118,6 +120,7 @@ Button.Download = function Download(props) {
         title={ title }
         tabIndex="0"
         onKeyDown={ triggerClick }
+        className="mpl4v-btn"
     >
         <BareBtn 
             classes={ `zmdi-download ${url ? "" : "mpl4v-btn--disabled" }` }
