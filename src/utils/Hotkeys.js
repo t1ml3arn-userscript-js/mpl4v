@@ -22,12 +22,15 @@ export default class Hotkeys {
     ondown = e => {
         if (e.repeat)   return
         for (const combo of this.combos) {
-            let match = false
-            match = (combo.shift !== undefined) && combo.shift === e.shiftKey
-            match = combo.key.toLowerCase() === e.key.toLowerCase()
+            let match = true
+            match = match && (combo.shift !== undefined) && (combo.shift === e.shiftKey)
+            match = match && (combo.key.toLowerCase() === e.key.toLowerCase())
 
             if (match) {
                 combo.action()
+
+                // stop propagation for not letting React recieve this event 
+                e.stopPropagation()
                 if (!combo.preventDefault)  e.preventDefault()
             }
         }        
