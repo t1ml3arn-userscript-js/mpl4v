@@ -23,7 +23,7 @@ export default class Hotkeys {
         if (e.repeat)   return
         for (const combo of this.combos) {
             let match = true
-            match = match && (combo.shift !== undefined) && (combo.shift === e.shiftKey)
+            match = combo.shift !== undefined ? combo.shift === e.shiftKey : match && true
             match = match && (combo.key.toLowerCase() === e.key.toLowerCase())
 
             if (match) {
