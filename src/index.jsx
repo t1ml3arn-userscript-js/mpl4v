@@ -12,7 +12,7 @@ import MouseStopWatcher from './utils/MouseStopWatcher'
 import { PageParser } from "./PageParser";
 import { Track } from "./media/Track";
 import MediaError from "./media/MediaError";
-import Hotkeys from "./utils/Hotkeys";
+import HotkeysController from "./utils/HotkeysController";
 import downloadCrunch from "./utils/download";
 
 class App extends React.Component {
@@ -106,7 +106,7 @@ class App extends React.Component {
 
         this.listener = new VideoEventListener(video)
 
-        this.hotkeys = new Hotkeys(this.appRef.current)
+        this.hotkeys = new HotkeysController(this.appRef.current)
         this.hotkeys.addCombo({key: "P", action: this.playpause})
         this.hotkeys.addCombo({shift: true, key: " ", action: this.playpause, preventDefault: true})
         this.hotkeys.addCombo({key: "M", action: this.toogleMute})

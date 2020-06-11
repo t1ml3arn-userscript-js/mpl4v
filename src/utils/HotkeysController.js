@@ -1,4 +1,4 @@
-export default class Hotkeys {
+export default class HotkeysController {
     constructor(target) {
         this.target = target
         this.combos = []
