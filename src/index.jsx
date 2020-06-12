@@ -440,6 +440,7 @@ class App extends React.Component {
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
+            tabIndex="0"
         >
             <Screen
                 showScreen={ showScreen } 
