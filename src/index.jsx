@@ -174,6 +174,7 @@ class App extends React.Component {
                 this.setState({ 
                     fullscreen: true,
                     hideControls: true,
+                    showScreen: true,
                 })
             }
         } else {
