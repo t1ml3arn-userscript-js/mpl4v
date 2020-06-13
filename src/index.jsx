@@ -159,6 +159,8 @@ class App extends React.Component {
         if (volume != prevVolume)
             this.mediaRef.current.muted = false
         // -------------------------------------
+
+        this.mediaRef.current.playbackRate = this.state.playbackRate
     }
 
     setPlay = () => this.setState({ isPlaying: true })
@@ -413,10 +415,13 @@ class App extends React.Component {
             return { hideControls: false }
     }
 
-    increaseSpeed = () => this.mediaRef.current.playbackRate += 0.05
-    decreaseSpeed = () => this.mediaRef.current.playbackRate -= 0.05
+    increaseSpeed = () => this.updatePlaybackRate(0.1)
+    decreaseSpeed = () => this.updatePlaybackRate(-0.1)
 
-    onRateChange = e => this.setState({ playbackRate: e.target.playbackRate })
+    updatePlaybackRate = (mod) => {
+        const rate = bound(this.state.playbackRate + mod, 0.1, 4)
+        this.setState({ playbackRate: Math.round(rate*100) / 100 })
+    }
 
     downloadTrack = () => {
         const { track } = this.state
