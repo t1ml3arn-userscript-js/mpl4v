@@ -241,6 +241,7 @@
     min-width: calc(var(--controls-width)*0.8);
     background-color: var(--controls-bg);
     box-shadow: var(--shadow-5);
+    z-index: var(--controls-z);
 }
 
 .mpl4v-controls[data-fullscreen=true] {
