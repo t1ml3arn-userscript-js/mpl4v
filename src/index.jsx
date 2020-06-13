@@ -97,7 +97,6 @@ class App extends React.Component {
         video.addEventListener('canplay', this.resetError)
         video.addEventListener('canplay', this.checkHasAudio)
         video.addEventListener('play', this.webkitCheckHasAudio)
-        video.addEventListener('ratechange', this.onRateChange)
         // do "side-effect": derrive real volume from initial state 
         video.volume = this.state.volume * 0.01
         video.playbackRate = this.state.playbackRate
