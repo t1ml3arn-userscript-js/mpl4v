@@ -76,6 +76,7 @@ export default class Dragger {
         style.bottom = null;
         style.left = left;
         style.top = top;
+        style.transition = 'none'
 
         // set listeners 
         document.addEventListener('mousemove', this.onDrag);
@@ -97,6 +98,8 @@ export default class Dragger {
         document.removeEventListener('mouseup', this.stopDrag)
         document.removeEventListener('selectstart', this.cancelSelection)
         
+        this.target.style.transition = null
+
         if (this.inDrag)
             this.convertCoordToPercents()
         this.inDrag = false
