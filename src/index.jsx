@@ -439,6 +439,7 @@ class App extends React.Component {
         return (
         <div className={ "mpl4v" } ref={ this.appRef }
             style={{ position: "fixed", right: "50px", bottom: "50px" }}
+            data-fullscreen={ fullscreen }
             tabIndex="0"
         >
             <Screen
