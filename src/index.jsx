@@ -430,7 +430,7 @@ class App extends React.Component {
         const { progress, bufferedProgress } = this.state
         const { currentTime, duration } = this.state
         const { volume, muted, hasAudio } = this.state
-        const { looped, isPlaying, seekByUser } = this.state
+        const { looped, isPlaying, seekByUser, playbackRate } = this.state
 
         // drag and drop HOC props
         const { isMediaDrag, isMediaOverDrop } = this.props
@@ -452,6 +452,7 @@ class App extends React.Component {
                 videoEltRef={ this.mediaRef }
                 title={ track.title }
                 error={ this.state.error }
+                playbackRate={ playbackRate }
                 hideScreenHUD={ hideControls }
                 hudFocusIn={ this.fscreenStop.disable }
                 hudFocusOut={ this.fscreenStop.enable }

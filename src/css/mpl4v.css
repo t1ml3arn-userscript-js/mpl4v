@@ -241,6 +241,60 @@
     font-size: calc(var(--font-size) * 1.8);
 }
 
+.mpl4v-rate {
+    --opacity: 0.75;
+
+    display: block;
+    padding: 0.2em 0.5em;
+    position: absolute;
+    right: 0.25em;
+    bottom: 0.25em;
+    font-size: 1.6em;
+    color: var(--text-color);
+    opacity: var(--opacity);
+    text-align: right;
+    background-color: var(--screen-bg);
+    user-select: none;
+
+    transform-origin: center center;
+}
+
+*[data-fullscreen="true"] .mpl4v-rate {
+    font-size: 2.8em;
+    right: 0.5em;
+    bottom: 0.5em;
+}
+
+.mpl4v-rate--fade {
+    animation-name: rate-fade-anim;
+    animation-timing-function: cubic-bezier(.54,.32,.47,.81);
+    animation-timing-function: cubic-bezier(0,1,1,.01);
+    animation-timing-function: linear;
+    animation-duration: 2.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes rate-fade-anim {
+    0% {
+        visibility: visible;
+        opacity: 0;
+        transform: scale(2.25);
+    }
+    7% {
+        opacity: var(--opacity);
+        transform: scale(1);
+    }
+    93% {
+        opacity: var(--opacity);
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
 .mpl4v-controls {
     display: block;
     position: relative;

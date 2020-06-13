@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { focusNotifier } from "./focusNotifierHOC"
 import scaler from './Scaler'
@@ -10,7 +10,7 @@ let Screen = function Screen(props) {
     const {showScreen, fullscreen, hideScreenHUD} = props
     const { toogleFullscreen } = props
     const { mediaSrc, title } = props
-    const { looped } = props
+    const { looped, playbackRate } = props
     const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
     const hidden = showScreen ? '' : 'mpl4v--opaque'
     const { error } = props
@@ -47,6 +47,7 @@ let Screen = function Screen(props) {
             focusIn={ props.hudFocusIn } focusOut={ props.hudFocusOut }
             title={ title } fullscreen={ fullscreen } fadeout={ hideScreenHUD }
         />
+        <Rate playbackRate={ playbackRate }/>
     </div>
 
     )
@@ -68,6 +69,7 @@ Screen.propTypes = {
     zoom: PropTypes.number.isRequired, 
     updateResolution: PropTypes.func.isRequired, 
     changeZoom: PropTypes.func.isRequired,
+    playbackRate: PropTypes.number.isRequired
 }
 Screen = scaler(Screen)
 export default Screen
@@ -114,3 +116,30 @@ Error.propTypes = {
     message: PropTypes.string.isRequired,
     fullscreen: PropTypes.bool.isRequired,
 }
+
+let Rate = props => {
+    const { playbackRate } = props
+    const rateRef = useRef(null)
+    
+    useEffect(() => {
+        rateRef.current.classList.remove('mpl4v-rate--fade')
+        // triggering offset allows to reset current animation
+        rateRef.current.offsetWidth
+        rateRef.current.classList.add('mpl4v-rate--fade')
+    })
+
+    return (
+    <span 
+        className={ `mpl4v-rate` }
+        ref={rateRef}
+    >
+        { `x${playbackRate}` }
+    </span>
+    )
+}
+
+Rate.propTypes = {
+    playbackRate: PropTypes.number.isRequired
+}
+
+Rate = React.memo(Rate)
