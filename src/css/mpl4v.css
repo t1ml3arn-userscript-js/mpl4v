@@ -267,11 +267,8 @@
 
 .mpl4v-rate--fade {
     animation-name: rate-fade-anim;
-    animation-timing-function: cubic-bezier(.54,.32,.47,.81);
-    animation-timing-function: cubic-bezier(0,1,1,.01);
     animation-timing-function: linear;
     animation-duration: 2.5s;
-    animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
 
