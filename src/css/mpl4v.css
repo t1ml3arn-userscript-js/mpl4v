@@ -239,6 +239,7 @@
     width: auto;
     max-width: 33vw;
     min-width: calc(var(--controls-width)*0.8);
+    height: 4em;
     background-color: var(--controls-bg);
     box-shadow: var(--shadow-5);
     z-index: var(--controls-z);
@@ -258,7 +259,7 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    height: 4em;
+    height: 100%;
 }
 
 .mpl4-controls--left,
