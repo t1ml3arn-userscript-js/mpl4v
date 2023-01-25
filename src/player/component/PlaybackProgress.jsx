@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types'
-import Bar from "./Bar";
-import ProgressBar, { barController } from './ProgressBar'
-import { RefType, bound } from "../utils/utils";
-import ProgressCalculator from "../utils/ProgressCalculator";
+import Progress from "../../components/progress-bar";
+import { barController } from '../../components/progress-bar-controller'
+import { RefType, clamp } from "../../utils/utils";
+import ProgressCalculator from "../../utils/ProgressCalculator";
 
 class PlaybackProgressView extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class PlaybackProgressView extends React.Component {
     }
     
     getSeekProgress() {
-        return bound(this.calculator.getProgress(), 0, 100)
+        return clamp(this.calculator.getProgress(), 0, 100)
     }
 
     showSeekBar = e => {
@@ -45,10 +45,10 @@ class PlaybackProgressView extends React.Component {
             onMouseMove={ this.updateSeekBar }
         >
             <div className={ "mpl4v-playback-progressbar__underlay" }/>
-            <Bar classes={ "mpl4v-bar-buff-color mpl4v-bar--transition-hor"} progress={ bufferedProgress }/>
-            <Bar classes={ "mpl4v-bar-seek-color mpl4v-seekbar"} progress={ seekPosition }/>
-            <Bar classes={ `mpl4v-bar-progress-color ${transitionClass}`} progress={ progress }/>
-            <ProgressBar.Head classes={ `mpl4v-playback-progressbar__head` } progress={ progress }/>
+            <Progress.Bar classes={ "mpl4v-bar-buff-color mpl4v-bar--transition-hor"} progress={ bufferedProgress }/>
+            <Progress.Bar classes={ "mpl4v-bar-seek-color mpl4v-seekbar"} progress={ seekPosition }/>
+            <Progress.Bar classes={ `mpl4v-bar-progress-color ${transitionClass}`} progress={ progress }/>
+            <Progress.Head classes={ `mpl4v-playback-progressbar__head` } progress={ progress }/>
         </div>
         )
     }

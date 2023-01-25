@@ -13,7 +13,7 @@ module.exports = {
                 use: ['css-loader'],
             },
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(ts|tsx|js|jsx)$/,
                 exclude: /node_modules/,
                 use: ['babel-loader', 'eslint-loader']
                 // TODO use options and move presets and plugins here ?
@@ -21,14 +21,14 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx']
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx', ],
     },
     output: {
         path: path.resolve(__dirname, "dist/"),
         publicPath: '/',
         filename: 'bundle.js'
     },
-    devServer : {
+    devServer: {
         contentBase: path.join(__dirname, 'public/'),
         port: 3000,
         watchOptions: { poll: 2000 }

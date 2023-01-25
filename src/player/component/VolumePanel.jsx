@@ -1,8 +1,8 @@
-import React from 'react'
-import Bar from './Bar'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import ProgressBar, { barController } from './ProgressBar'
-import { RefType } from '../utils/utils'
+import { barController } from '../../components/progress-bar-controller'
+import { RefType } from '../../utils/utils'
+import Progress from '../../components/progress-bar'
 
 const NOSOUND = 0
 const MUTED = 1
@@ -34,45 +34,37 @@ class VolumePanelView extends React.PureComponent {
         // props from HOC
         const { barEltRef, startSeek, seek } = this.props
 
-        const { toogleMute, muted, hasAudio, seekByUser } = this.props
+        const { toogleMute, muted, hasAudio, hidden = false } = this.props
         const { showPanel } = this.state
         // volume slider sets to zero if media is muted
         const volume = muted ? 0 : this.props.volume
 
         const soundState = !hasAudio ? NOSOUND
-            : muted ?       MUTED
-            : volume == 0 ? MUTED
-            :               UNMUTED
+            : muted ? MUTED
+                : volume == 0 ? MUTED
+                    : UNMUTED
 
-        const panelCanBeShown = !seekByUser && hasAudio
+        const panelCanBeShown = !hidden
 
         return (
-        <div className="mpl4v-volume-panel-wrap">
-            <div 
-                className={ `mpl4v-volume-panel ${ (showPanel || seek) ? "" : "mpl4v--hidden"}` }
-                onMouseLeave={ this.hidePanel }
-                onMouseOver={ this.showPanel }
-            >
-                <VolumeMod isPlus={ false } onChange={ this.incrementVolume }/>
-                <div 
-                    className={ 'mpl4v-volume-bar' }
-                    ref={ barEltRef }
-                    onMouseDown={ startSeek }
+            <div className="mpl4v-volume-panel-wrap">
+                <div
+                    className={`mpl4v-volume-panel ${(showPanel || seek) ? "" : "mpl4v--hidden"}`}
+                    onMouseLeave={this.hidePanel}
+                    onMouseOver={this.showPanel}
                 >
-                    <div className="mpl4v-volume-bar__underlay"></div>
-                    <Bar classes={ 'mpl4v-bar-progress-color' } progress={ volume }/>
-                    <ProgressBar.Head classes={ "mpl4v-volume-bar__head" } progress={ volume }/>
+                    <VolumeMod isPlus={false} onChange={this.incrementVolume} />
+                    <VolumeBar {...{ barEltRef, onChangeStart: startSeek, volume }} />
+                    <VolumeMod isPlus={true} onChange={this.incrementVolume} />
+                    <MuteButton toogleMute={toogleMute} soundState={soundState} />
                 </div>
-                <VolumeMod isPlus={ true } onChange={ this.incrementVolume }/>
-                <MuteButton toogleMute={ toogleMute } soundState={ soundState }/>
+                <MuteButton
+                    onMouseOver={panelCanBeShown ? this.showPanel : undefined}
+                    onMouseMove={(panelCanBeShown && !(seek || showPanel)) ? this.showPanel : undefined}
+                    toogleMute={toogleMute}
+                    soundState={soundState}
+                />
             </div>
-            <MuteButton 
-                onMouseOver={ panelCanBeShown ? this.showPanel : undefined }
-                onMouseMove={ (panelCanBeShown && !(seek || showPanel)) ? this.showPanel : undefined }
-                toogleMute={ toogleMute } 
-                soundState={ soundState }
-            />
-        </div>
         )
     }
 }
@@ -85,8 +77,8 @@ VolumePanelView.propTypes = {
     startSeek: PropTypes.func.isRequired,
     seek: PropTypes.bool,
     barEltRef: RefType.isRequired,
-    seekByUser: PropTypes.bool.isRequired,
     hasAudio: PropTypes.bool.isRequired,
+    hidden: PropTypes.bool
 }
 
 let VolumeMod = (props) => {
@@ -94,12 +86,12 @@ let VolumeMod = (props) => {
     const title = isPlus ? "Increase Volume" : "Decrease Volume"
 
     return (
-    <i 
-        className={`zmdi ${ isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-mod`} 
-        onClick={ onChange }
-        data-volume-mod={ isPlus ? '1' : '-1'}
-        title={ title }
-    ></i>
+        <i
+            className={`zmdi ${isPlus ? "zmdi-plus" : "zmdi-minus"} mpl4v-volume-mod`}
+            onClick={onChange}
+            data-volume-mod={isPlus ? '1' : '-1'}
+            title={title}
+        ></i>
     )
 }
 
@@ -109,6 +101,29 @@ VolumeMod.propTypes = {
 }
 
 VolumeMod = React.memo(VolumeMod)
+
+let VolumeBar = (props) => {
+    const { barEltRef, onChangeStart, volume } = props 
+    return (
+        <div
+            className={'mpl4v-volume-bar'}
+            ref={barEltRef}
+            onMouseDown={onChangeStart}
+        >
+            <div className="mpl4v-volume-bar__underlay"></div>
+            <Progress.Bar classes={'mpl4v-bar-progress-color'} progress={volume} />
+            <Progress.Head classes={"mpl4v-volume-bar__head"} progress={volume} />
+        </div>
+    )
+}
+
+VolumeBar.propTypes = {
+    barEltRef: RefType.isRequired,
+    onChangeStart: PropTypes.func.isRequired,
+    volume: PropTypes.number.isRequired
+}
+
+VolumeBar = memo(VolumeBar)
 
 let MuteButton = props => {
     const { onMouseOver, toogleMute, soundState, onMouseMove } = props
@@ -128,13 +143,13 @@ let MuteButton = props => {
     const disabled = soundState == NOSOUND ? "mpl4v-btn--disabled" : ""
 
     return (
-    <i 
-        className={ `zmdi ${iconClass} mpl4v-vol-ctrl ${disabled}` }
-        onMouseOver={ onMouseOver }
-        onMouseMove={ onMouseMove }
-        onClick={ toogleMute }
-        title={ title }
-    ></i>
+        <i
+            className={`zmdi ${iconClass} mpl4v-vol-ctrl ${disabled}`}
+            onMouseOver={onMouseOver}
+            onMouseMove={onMouseMove}
+            onClick={toogleMute}
+            title={title}
+        ></i>
     )
 }
 

@@ -369,6 +369,9 @@
     in horizontal flex container */
     align-self: stretch;
     position: relative;
+    /* for some reason pointer cursor doesnt work,
+    probably because of preventDefault() or stopPropagation() */
+    cursor: pointer;
 }
 
 .mpl4v-btn:hover .zmdi {

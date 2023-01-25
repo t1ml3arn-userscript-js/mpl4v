@@ -1,5 +1,5 @@
 import React from "react"
-import {formatTime} from "../utils/utils";
+import {formatTime} from "../../utils/utils";
 
 function TimeLabel({ time, duration }) {
     // time need to be presented in format 00:00:00

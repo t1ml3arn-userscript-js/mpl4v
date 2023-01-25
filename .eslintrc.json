@@ -1,11 +1,13 @@
 {
     "env": {
         "browser": true,
+        "node": true,
         "es6": true
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:mobx/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -20,13 +22,16 @@
     },
     "parser": "babel-eslint",
     "plugins": [
-        "react"
+        "react",
+        "mobx"
     ],
     "rules": {
         "no-unused-vars": "warn",
         "react/prop-types": [2, { "skipUndeclared": true }],
         "no-empty": "warn",
-        "no-unreachable": "warn"
+        "no-unreachable": "warn",
+        "no-empty-function": "warn",
+        "mobx/missing-observer": "off"
     },
     "settings": {
         "react": {

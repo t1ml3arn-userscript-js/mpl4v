@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { bound, magnetValue, RefType } from '../utils/utils'
+import { clamp, magnetValue, RefType } from '../../utils/utils'
 
 const MIN_WIDTH = 50
 const MIN_HEIGHT = 50
@@ -79,7 +79,7 @@ return class Scaler extends PureComponent {
 
     getSharedScale = (w, h, mod, state) => {
         let scale = state.scale + SCALE_STEP * mod
-        scale = bound(scale, MIN_SCALE, MAX_SCALE)
+        scale = clamp(scale, MIN_SCALE, MAX_SCALE)
         
         return {
             scale: scale,
@@ -93,9 +93,9 @@ return class Scaler extends PureComponent {
 
         let scale = r >= 1 ? state.zoomHor : state.zoomVert
         scale += mod * SCALE_STEP
-        scale = bound(scale, 0, Infinity)
+        scale = clamp(scale, 0, Infinity)
         
-        let newWidth = bound(w*scale, MIN_WIDTH, Infinity)
+        let newWidth = clamp(w*scale, MIN_WIDTH, Infinity)
         // I want to magnet screen width to control width (this.defaultWidth).
         // With this, whatever the width value might become through zooming, 
         // it will never skip desired width (this.defaultWidth)

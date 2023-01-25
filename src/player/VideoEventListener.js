@@ -1,4 +1,3 @@
-
 export default class VideoEventListener {
     constructor(video) {
         this.video = video
@@ -47,12 +46,9 @@ export default class VideoEventListener {
             width: elt.width,
             height: elt.height,
             played: this.formatRange(elt.played),
+            rate: elt.playbackRate,
         }
         console.debug(data)
-    }
-
-    copy(from) {
-        return Object.assign({}, from)
     }
 
     formatRange(range) {

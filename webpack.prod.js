@@ -17,7 +17,6 @@ module.exports = merge(config, {
                         ecma: 2016,
                         evaluate: false,
                         keep_fnames: true,
-
                     },
                     output: {
                         beautify: true,
@@ -26,12 +25,13 @@ module.exports = merge(config, {
                 }
             }),
             ]
-
         },
         externals: {
             'react': 'React',
             'react-dom': 'ReactDOM',
-            'react-router': 'ReactRouter'
+            'react-router': 'ReactRouter',
+            'mobx': 'mobx',
+            'mobx-react-lite': 'mobxReactLite'
         },
         output: {
             filename: 'user.js',

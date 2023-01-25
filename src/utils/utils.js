@@ -34,17 +34,16 @@ export const toogleKey = key => state => {
 }
 
 /**
- * Bound given value into a given range.
+ * Clamps given value into a given range.
  * If the value is not in the range,
  * it will return the minimum or the maximum.
  * @param {number} value value to bound
  * @param {number} min minimal value
  * @param {number} max maximal value
  */
-export function bound(value, min, max) {
+export function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max)
 }
-
 /**
  * Returns `next` if `target` does not belong
  * [current, next] range, otherwise returns `target` value.

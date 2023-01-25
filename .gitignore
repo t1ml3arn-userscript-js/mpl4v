@@ -113,3 +113,8 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .pnp.*
+
+# local dev doc
+DEVREADME.md
+
+/src/dev.meta.js

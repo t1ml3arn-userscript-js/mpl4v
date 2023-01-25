@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+		"jsx": "preserve",
+		"allowJs": true,
+		"target": "ES2016",
+		"moduleResolution": "node"
+  },
+	"include": [
+		"src/**/*.js", 
+		"src/**/*.jsx", 
+		"src/**/*.ts", 
+		"src/**/*.tsx", 
+		"src/*.js", 
+		"src/*.jsx", 
+		"src/*.ts", 
+		"src/*.tsx", 
+	],
+}

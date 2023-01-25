@@ -1,6 +1,4 @@
 import { supportedFormats } from "./utils/utils"
-import { Track } from "./media/Track";
-import Playlist from "./media/Playlist";
 
 /**
  * Base page parser that collects all <video>, <audio> and <a>
@@ -8,27 +6,62 @@ import Playlist from "./media/Playlist";
  */
 export class PageParser {
 
-    buildPlaylist() {
-        const formats = supportedFormats.join('|')
-        const formatReg = RegExp(`.(${formats})$`, 'i')
+    /**
+     * @returns {string[]} a list of unique string media URLs
+     */
+    getMediaURLs() {
+        
+        let list = this.findElements()
+                    .map(item => item.currentSrc || item.src || item.href)
+                    // filter out duplicates
+                    .reduce((d, item) => {
+                        d[item] = 1;
+                        return d;
+                    }, {})
 
-        let list = document.body.querySelectorAll('video[src], audio[src], a[href]')
-        list = Array.from(list)
-        list = list.filter(e => {
-            return e.tagName === 'VIDEO' 
-                || e.tagName === 'AUDIO' 
-                || formatReg.test(e.href)
-        })
+        list = Object.keys(list)
 
-        return new Playlist(list.map(elt => new Track(elt.href || elt.src)))
+        return list;
     }
 
     /**
-     * Return track title, parsed from given `track` html element
-     * @param {Element} elt an element that represents media track
+     * @param {Element} target Where to look
+     * @returns {Element[]} array of supported media elements
      */
-    getTrackTitle(elt) {
-        return null
+    findElements(target) {
+        const formats = supportedFormats.join('|')
+        const formatReg = RegExp(`.(${formats})$`, 'i')
+
+        target = target || document.body
+        
+        // TODO exclude the player itself from search!
+        let list = target.querySelectorAll('video, audio, a[href]')
+        list = Array.from(list)
+        list = list.filter(item => {
+            return item.tagName === 'VIDEO' 
+                || item.tagName === 'AUDIO' 
+                || formatReg.test(item.href)
+        });
+
+        return list;
+    }
+
+    /**
+     * 
+     * @returns {{ src: string, elt: HTMLAnchorElement | HTMLMediaElement }[]}
+     */
+    getTracks() {
+        let uniqs = this.findElements()
+                    .map(e => ({
+                        src: e.currentSrc || e.src || e.href,
+                        elt: e,
+                    }))
+                    .reduce((obj, item) => {
+                        obj[item.src] = item
+                        return obj
+                    }, {})
+        
+        return Object.values(uniqs)
     }
 
     watchPageChanges() {

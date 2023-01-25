@@ -109,10 +109,10 @@ export default class Dragger {
     convertCoordToPercents() {
         const cstyle = window.getComputedStyle(this.target)
         let { left, top, right, bottom } = cstyle
-        left = this.toint(left)
-        top = this.toint(top)
-        right = this.toint(right)
-        bottom = this.toint(bottom)
+        left = this.tofloat(left)
+        top = this.tofloat(top)
+        right = this.tofloat(right)
+        bottom = this.tofloat(bottom)
 
         // find to which boundary target element is the closest
         const horProp = left >= right ? ["right", right] : ["left", left]
@@ -124,12 +124,13 @@ export default class Dragger {
         this.target.style.right = null
         this.target.style.bottom = null
 
+        const { clientWidth, clientHeight} = document.documentElement
         // position target relatively to the closest boundary
-        this.target.style[horProp[0]] = `${horProp[1] * 100 / window.innerWidth}%`
-        this.target.style[vertProp[0]] = `${vertProp[1] * 100 / window.innerHeight}%`
+        this.target.style[horProp[0]] = `${horProp[1] * 100 / clientWidth }%`
+        this.target.style[vertProp[0]] = `${vertProp[1] * 100 / clientHeight }%`
     }
 
-    toint(pixels) {
-        return parseInt(pixels.substring(0, pixels.length-2))
+    tofloat(pixels) {
+        return parseFloat(pixels.substring(0, pixels.length-2))
     }
 }

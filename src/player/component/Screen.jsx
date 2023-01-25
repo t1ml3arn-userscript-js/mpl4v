@@ -1,22 +1,28 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { focusNotifier } from "./focusNotifierHOC"
-import scaler from './Scaler'
-import { RefType } from '../utils/utils'
+import { focusNotifier } from "../../components/focus-notifier"
+import scaler from './scaler-hoc'
+import { RefType } from '../../utils/utils'
+import { observer } from 'mobx-react-lite'
+import { ScreenModel } from "../model/ScreenModel"
 
-let Screen = function Screen(props) {
+let Screen = observer(function Screen(props) {
+
+    /** @type {{screenModel: ScreenModel}} */
+    const { screenModel } = props
+
+    /** @type {{playerModel: PlayerModel}} */
+    const { playerModel } = props
+
+    const inFullscreen = screenModel.inFullscreen
+
     const { zoomedWidth, zoomedHeight, zoom, updateResolution, changeZoom } = props
-
-    const {showScreen, fullscreen, hideScreenHUD} = props
     const { toogleFullscreen } = props
-    const { mediaSrc, title } = props
-    const { looped, playbackRate } = props
-    const dragIniter = fullscreen ? "" : "mpl4v-drag-initiator"
-    const hidden = showScreen ? '' : 'mpl4v--opaque'
-    const { error } = props
+    const dragIniter = inFullscreen ? "" : "mpl4v-drag-initiator"
+    const hidden = screenModel.showScreen || inFullscreen ? '' : 'mpl4v--opaque'
 
     let styles;
-    if (zoomedWidth && zoomedHeight && !fullscreen) {
+    if (zoomedWidth && zoomedHeight && !inFullscreen) {
         styles = {
             width: `${zoomedWidth}px`,
             height: `${zoomedHeight}px`,
@@ -24,44 +30,38 @@ let Screen = function Screen(props) {
     } else
         styles = null
 
+
     return (
     <div 
         className={`mpl4v-screen ${dragIniter} ${hidden}`} 
-        data-fullscreen={ fullscreen }
+        data-fullscreen={ inFullscreen }
         style={ styles }
     >
         <video 
             ref={ props.mediaRef }
-            data-fullscreen={ fullscreen }
+            data-fullscreen={ inFullscreen }
             className={ `${dragIniter}` }
-            src={ mediaSrc }
-            loop={ looped }
+            src={ playerModel.mediaSrc }
+            loop={ playerModel.loop }
             onDoubleClick={ toogleFullscreen }
-            onWheel={ fullscreen ? undefined : changeZoom }
+            onWheel={ inFullscreen ? undefined : changeZoom }
             onLoadedMetadata={ updateResolution }
             onLoadStart={ updateResolution }
         ></video>
-        <Error { ...error } fullscreen={ fullscreen }
-        />
+        <Error error={ playerModel.playerError } fullscreen={ inFullscreen }/>
         <Title  
             focusIn={ props.hudFocusIn } focusOut={ props.hudFocusOut }
-            title={ title } fullscreen={ fullscreen } fadeout={ hideScreenHUD }
+            title={ playerModel.track?.title } fullscreen={ inFullscreen } 
+            fadeout={ !screenModel.showControls }
         />
-        <Rate playbackRate={ playbackRate }/>
+        <Rate playbackRate={ playerModel.playbackRate }/>
     </div>
 
     )
-}
+})
 Screen.propTypes = {
-    showScreen: PropTypes.bool.isRequired,
-    fullscreen: PropTypes.bool.isRequired,
     toogleFullscreen: PropTypes.func.isRequired,
-    mediaSrc: PropTypes.string,
-    looped: PropTypes.bool.isRequired,
-    mediaRef: RefType,
-    title: PropTypes.string,
-    error: PropTypes.object,
-    hideScreenHUD: PropTypes.bool.isRequired,
+    mediaRef: RefType.isRequired,
     hudFocusIn: PropTypes.func,
     hudFocusOut: PropTypes.func,
     zoomedWidth: PropTypes.number.isRequired, 
@@ -69,7 +69,8 @@ Screen.propTypes = {
     zoom: PropTypes.number.isRequired, 
     updateResolution: PropTypes.func.isRequired, 
     changeZoom: PropTypes.func.isRequired,
-    playbackRate: PropTypes.number.isRequired
+    playerModel: PropTypes.object.isRequired,
+    screenModel: PropTypes.object.isRequired,
 }
 Screen = scaler(Screen)
 export default Screen
@@ -98,8 +99,9 @@ Title.propTypes = {
 
 Title = React.memo(focusNotifier(Title))
 
-const Error = React.memo(function Error(props) {
-    const { code, message, fullscreen } = props
+const Error = function Error(props) {
+    const { error, fullscreen } = props
+    const { code, message } = error || {}
     const hidden = !code && !message ? "mpl4v--hidden" : ""
 
     return (
@@ -109,11 +111,13 @@ const Error = React.memo(function Error(props) {
         <span className="mpl4v-error__message">{ message }</span>
     </div>
     )
-})
+}
 
 Error.propTypes = {
-    code: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
+    error: PropTypes.shape({
+        code: PropTypes.string,
+        message: PropTypes.string
+    }),
     fullscreen: PropTypes.bool.isRequired,
 }
 

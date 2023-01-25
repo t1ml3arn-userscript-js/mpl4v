@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import ProgressCalculator from '../utils/ProgressCalculator';
 import PropTypes from 'prop-types'
-import { bound } from '../utils/utils';
+import { clamp } from '../utils/utils';
 
 /**
  * Basic code to control progress bar.
@@ -106,7 +106,7 @@ return class BarController extends PureComponent {
         this.props.onChange(this.progress);
     }
     
-    calculateProgress = () => this.progress = bound(this.calculator.getProgress(), 0, 100)
+    calculateProgress = () => this.progress = clamp(this.calculator.getProgress(), 0, 100)
 
     render() {
         const { onChange, onSeekStart, onSeekEnd, enabled, ...passedProps} = this.props
@@ -125,26 +125,3 @@ return class BarController extends PureComponent {
 };
         
 }
-
-const ProgressBar = {}
-export default ProgressBar;
-
-function Head(props) {
-    const { progress, classes } = props
-    const headStyle = {
-        left: `${ progress }%`
-        // Below is a way to contain the head only
-        // inside the bar, but I must know head's size.
-        // marginLeft: `-${Math.round(progress*0.1)}px`
-    }
-    return (
-        <div style={ headStyle } className={ `${classes}` }></div>
-    )
-}
-
-Head.propTypes = {
-    progress: PropTypes.number.isRequired,
-    classes: PropTypes.string.isRequired,
-}
-
-ProgressBar.Head = React.memo(Head)
