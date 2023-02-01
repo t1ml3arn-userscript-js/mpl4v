@@ -1,10 +1,16 @@
 {
-  "compilerOptions": {
-    "noEmit": true,
-		"jsx": "preserve",
-		"allowJs": true,
-		"target": "ES2016",
-		"moduleResolution": "node"
+	"compilerOptions": {
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "module": "ES6",
+    "target": "ES2018",
+		"noEmit": false,
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": false,
+		"moduleResolution": "node16",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
   },
 	"include": [
 		"src/**/*.js", 
@@ -16,4 +22,5 @@
 		"src/*.ts", 
 		"src/*.tsx", 
 	],
+	"exclude": ["node_modules", "dist"]
 }

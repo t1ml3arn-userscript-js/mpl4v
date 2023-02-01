@@ -21,6 +21,7 @@ module.exports = merge(config, {
                     output: {
                         beautify: true,
                         comments: false,
+                        indent_level: 2,
                     }
                 }
             }),

@@ -1,3 +1,4 @@
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -15,8 +16,7 @@ module.exports = {
             {
                 test: /\.(ts|tsx|js|jsx)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader', 'eslint-loader']
-                // TODO use options and move presets and plugins here ?
+                use: ['ts-loader']
             }
         ]
     },
@@ -29,8 +29,17 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: path.join(__dirname, 'public/'),
+        static: {
+            directory: path.join(__dirname, 'public/'),
+            watch: {
+                usePolling: true,
+                interval: 3000
+            }
+        },
         port: 3000,
-        watchOptions: { poll: 2000 }
-    }
+        client: {
+            overlay: false,
+        }
+    },
+    plugins: [new ESLintWebpackPlugin()]
 }
