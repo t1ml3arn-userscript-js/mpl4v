@@ -6,13 +6,11 @@ import { PageParser } from "./PageParser";
 import { Track } from "./player/model/Track";
 import HotkeysController from "./utils/HotkeysController";
 import downloadCrunch from "./utils/download";
-import { PlayerModel } from "./player/model/PlayerModel";
 import { DropMedia } from "./drop-media";
 import { action, reaction } from "mobx";
-import { ScreenModel } from "./player/model/ScreenModel";
 import { Observer } from "mobx-react-lite";
 import Screen from "./player/component/Screen"
-import Playlist from "./player/model/Playlist";
+import RootStore, { StoreContext } from "./root-store";
 
 // eslint-disable-next-line mobx/missing-observer
 export class App extends React.Component {
@@ -26,22 +24,24 @@ export class App extends React.Component {
     constructor(props) {
         super(props);
 
+        /** @type {{store: RootStore}} */
+        const { store } = props
+
+        this.store = store
+
         this.mediaRef = React.createRef();
 
         this.mouseStop = new MouseStopWatcher(this.delayBeforeHideControls);
-        this.mouseStop.onMouseStop = action(() => this.screenModel.showControls = false)
-        this.mouseStop.onMouseStart = action(() => this.screenModel.showControls = true)
+        this.mouseStop.onMouseStop = action(() => this.store.appearance.showControls = false)
+        this.mouseStop.onMouseStart = action(() => this.store.appearance.showControls = true)
 
         let tracks = new PageParser().getTracks().map(({ src, elt}) => new Track(src, elt))
 
-        this.playerModel = new PlayerModel();
-        this.playerModel.playlist.setPlaylist(tracks)
+        this.store.player.playlist.setPlaylist(tracks)
 
-        this.screenModel = new ScreenModel()
+        Screen.toggleFullscreen = () => this.store.appearance.toggleFullscreen(this.appRef.current)
 
-        Screen.toggleFullscreen = () => this.screenModel.toggleFullscreen(this.appRef.current)
-
-        reaction(() => this.screenModel.inFullscreen, (fs) => {
+        reaction(() => this.store.appearance.inFullscreen, (fs) => {
             if (fs) {
                 this.dragger?.disable()
                 this.mouseStop.enable()
@@ -59,35 +59,35 @@ export class App extends React.Component {
     }
 
     onMediaDropped = url => {
-        if (url && this.playerModel.track.mediaURI != url) {
+        if (url && this.store.player.track.mediaURI != url) {
 
             // find track by url
-            let index = this.playerModel.playlist.findTrackIndex(url)
+            let index = this.store.player.playlist.findTrackIndex(url)
             let track;
 
             // for some reason dropped media is not in the playlist
             if (index === -1) {
                 track = new Track(url, this.dropMedia.draggedElt)
 
-                index = this.playerModel.playlist.currentTrackIndex + 1
+                index = this.store.player.playlist.currentTrackIndex + 1
 
                 // NOTE track insertion can be ommited if
-                // the track doesnt wanted in the playlist,
+                // the track is not wanted in the playlist,
                 // but still the track can be set as current.
                 // TODO current track should be PLayerModel property.
-                this.playerModel.playlist.list.splice(index, 0, track)
+                this.store.player.playlist.list.splice(index, 0, track)
             } else {
-                track = this.playerModel.playlist.getTrack(index)
+                track = this.store.player.playlist.getTrack(index)
             }
 
             // set the track as current
-            this.playerModel.playlist.setTrackAsCurrent(track, index)
+            this.store.player.playlist.setTrackAsCurrent(track, index)
 
             // play the track if player was in play state
             // or if autoplay is true
             // TODO need a some user setting for this
             if (this.autoplayDroppedURL) {
-                this.playerModel.play()
+                this.store.player.play()
             }
         }
     }
@@ -96,36 +96,55 @@ export class App extends React.Component {
         const appElt = this.appRef.current;
         this.dragger = new Dragger(appElt, ['.mpl4v-drag-initiator'], appElt);
         this.dragger.enable();
+        this.dragger.endDragSignal.connect(event => {
+            const target = event.dragger.target
+            const { left, top, right, bottom } = target.style
+            const position = { left, top, right, bottom }
+
+            this.store.settings.update({
+                appearance: {
+                    id: 'user',
+                    position
+                }
+            }, true)
+        })
 
         // NOTE not enabling mousestop until controls component
         // enable it allows to show controls as long as user
         // does not move mous over controls.
         // this.mouseStop.enable()
 
-        this.playerModel.setPlayerElt(this.mediaRef.current);
+        this.store.player.setPlayerElt(this.mediaRef.current);
 
+        // restore saved position
+        const { left, top, right, bottom } = this.store.appearance.position
+        appElt.style.left = left
+        appElt.style.top = top
+        appElt.style.right = right
+        appElt.style.bottom = bottom
+        
         this.initHotkeys();
     }
 
     initHotkeys() {
         this.hotkeys = new HotkeysController(this.appRef.current);
-        this.hotkeys.addCombo({ key: "P", action: this.playerModel.togglePause });
-        this.hotkeys.addCombo({ code: "KeyP", action: this.playerModel.togglePause });
-        this.hotkeys.addCombo({ shiftKey: true, key: " ", action: this.playerModel.togglePause, preventDefault: true });
-        this.hotkeys.addCombo({ code: "KeyM", action: this.playerModel.toggleMute });
-        this.hotkeys.addCombo({ code: "Period", action: this.playerModel.increaseSpeed }); // >
-        this.hotkeys.addCombo({ code: "Comma", action: this.playerModel.decreaseSpeed }); // <
-        this.hotkeys.addCombo({ code: "KeyL", action: this.playerModel.toggleLoopState });
-        this.hotkeys.addCombo({ shiftKey: true, key: "ArrowLeft", action: this.playerModel.playPrevent, preventDefault: true });
-        this.hotkeys.addCombo({ shiftKey: true, key: "ArrowRight", action: this.playerModel.playNext, preventDefault: true });
+        this.hotkeys.addCombo({ key: "P", action: this.store.player.togglePause });
+        this.hotkeys.addCombo({ code: "KeyP", action: this.store.player.togglePause });
+        this.hotkeys.addCombo({ shiftKey: true, key: " ", action: this.store.player.togglePause, preventDefault: true });
+        this.hotkeys.addCombo({ code: "KeyM", action: this.store.player.toggleMute });
+        this.hotkeys.addCombo({ code: "Period", action: this.store.player.increaseSpeed }); // >
+        this.hotkeys.addCombo({ code: "Comma", action: this.store.player.decreaseSpeed }); // <
+        this.hotkeys.addCombo({ code: "KeyL", action: this.store.player.toggleLoopState });
+        this.hotkeys.addCombo({ shiftKey: true, key: "ArrowLeft", action: this.store.player.playPrevent, preventDefault: true });
+        this.hotkeys.addCombo({ shiftKey: true, key: "ArrowRight", action: this.store.player.playNext, preventDefault: true });
         this.hotkeys.addCombo({ code: "KeyD", action: this.downloadTrack });
         this.hotkeys.addCombo({ shiftKey: true, key: "ArrowDown", action: this.downloadTrack, preventDefault: true });
-        this.hotkeys.addCombo({ code: "KeyF", action: () => this.screenModel.toggleFullscreen(this.appRef.current) });
+        this.hotkeys.addCombo({ code: "KeyF", action: () => this.store.appearance.toggleFullscreen(this.appRef.current) });
         this.hotkeys.enable();
     }
 
     downloadTrack = () => {
-        const track = this.playerModel.track
+        const track = this.store.player.track
         if (track && track.mediaURI)
             downloadCrunch(track.mediaURI, track.title || "");
     };
@@ -140,8 +159,11 @@ export class App extends React.Component {
         return (
             <div className={"mpl4v"}
                 ref={this.appRef}
-                style={{ position: "fixed", right: "50px", bottom: "50px" }}
-                data-fullscreen={this.screenModel.inFullscreen}
+                style={{ 
+                    position: "fixed", 
+                    ...this.store.appearance.position
+                }}
+                data-fullscreen={this.store.appearance.inFullscreen}
                 tabIndex="0"
             >
                 <Screen
@@ -150,16 +172,13 @@ export class App extends React.Component {
                     videoEltRef={this.mediaRef}
                     hudFocusIn={this.mouseStop.disable}
                     hudFocusOut={this.mouseStop.enable}
-                    playerModel={this.playerModel}
-                    screenModel={this.screenModel}
                 />
                 <MediaControls
-                    hideControls={!this.screenModel.showControls}
                     focusIn={this.mouseStop.disable}
-                    focusOut={this.mouseStop.enable}
-                    playerModel={this.playerModel}
-                    screenModel={this.screenModel} />
+                    focusOut={this.mouseStop.enable} />
             </div>
         );
     }
 }
+
+App.contextType = StoreContext

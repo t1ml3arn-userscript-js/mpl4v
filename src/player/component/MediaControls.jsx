@@ -1,69 +1,71 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import TimeLabel from './TimeLabel'
 import VolumePanel from "./VolumePanel";
 import Button from './buttons'
 import { focusNotifier } from "../../components/focus-notifier";
 import { observer } from 'mobx-react-lite';
-import { PlayerModel } from '../model/PlayerModel';
-import { ScreenModel } from '../model/ScreenModel';
 import PlaybackProgressBar from './PlaybackProgress';
+import RootStore, { StoreContext } from '../../root-store';
 
-let MediaControls = observer(props => {
-    /** @type {{playerModel: PlayerModel, screenModel: ScreenModel }} */
-    const { playerModel, screenModel } = props
+let MediaControls = observer(() => {
 
-    const { hideControls } = props
-    const fade = hideControls ? "mpl4v-trans--fade-out" : "mpl4v-trans--fade-in"
+    /** @type {RootStore} */
+    const store = useContext(StoreContext)
+    const player = store.player
+    const appearance = store.appearance
+
+    const fade = !appearance.showControls ? "mpl4v-trans--fade-out" : "mpl4v-trans--fade-in"
 
     return (
     <div 
         className={ `mpl4v-controls ${fade}` } 
-        data-fullscreen={ screenModel.inFullscreen }
+        data-fullscreen={ appearance.inFullscreen }
     >
         <PlaybackProgressBar
             // TODO use playerElement.seekable to enable/disable ability to seek ?
-            enabled={ Boolean(playerModel.duration) }
-            progress={ playerModel.playbackProgress } 
-            onChange={ playerModel.setPlaybackProgress } 
-            bufferedProgress={ playerModel.bufferedProgress }
-            onSeekStart={ playerModel.startSeek }
-            onSeekEnd={ playerModel.endSeek }
+            enabled={ Boolean(player.duration) }
+            progress={ player.playbackProgress } 
+            onChange={ player.setPlaybackProgress } 
+            bufferedProgress={ player.bufferedProgress }
+            onSeekStart={ player.startSeek }
+            onSeekEnd={ player.endSeek }
         />
-        <div className={`mpl4v-control-btns ${ screenModel.inFullscreen ? '' : 'mpl4v-drag-initiator' }`}>
+        <div className={`mpl4v-control-btns ${ appearance.inFullscreen ? '' : 'mpl4v-drag-initiator' }`}>
             <div className="mpl4v-fl-row mpl4-controls--left ">
-                <Button.Loop looped={ playerModel.loop } toogleLoop={ playerModel.toggleLoopState }/>
-                <Button.Skip isNext={ false } onClick={ playerModel.playPrevent }/>
+                <Button.Loop looped={ player.loop } toogleLoop={ player.toggleLoopState }/>
+                <Button.Skip isNext={ false } onClick={ player.playPrevent }/>
                 <Button.Play 
-                    tooglePlayPause={ playerModel.togglePause } 
-                    isPlaying={ playerModel.isPlaying }
-                    isBuffering={ playerModel.isBuffering } />
-                <Button.Skip isNext={ true } onClick={ playerModel.playNext }/>
+                    tooglePlayPause={ player.togglePause } 
+                    isPlaying={ player.isPlaying }
+                    isBuffering={ player.isBuffering } />
+                <Button.Skip isNext={ true } onClick={ player.playNext }/>
                 {/* <i className="zmdi zmdi-shuffle"></i> */}
             </div>
-            <TimeLabel time={ playerModel.currentTime } duration={ playerModel.duration }/>
+            <TimeLabel time={ player.currentTime } duration={ player.duration }/>
             <div className="mpl4v-fl-row mpl4-controls--right">
                 <VolumePanel
-                    volume={ playerModel.volume } 
-                    muted={ playerModel.muted } toogleMute={ playerModel.toggleMute }
-                    onChange={ playerModel.updateVolume } onVolumeChange={ playerModel.updateVolume }
-                    hasAudio={ playerModel.hasAudio }
-                    hidden={ !playerModel.hasAudio || playerModel.seekByUser }
+                    volume={ player.volume } 
+                    muted={ player.muted } toogleMute={ player.toggleMute }
+                    onChange={ player.updateVolume } onVolumeChange={ player.updateVolume }
+                    hasAudio={ player.hasAudio }
+                    hidden={ !player.hasAudio || player.seekByUser }
                 />
                 <Button.Screen
-                    showScreen={ screenModel.showScreen }
-                    toogleScreen={ screenModel.inFullscreen ? screenModel.exitFullscreen : screenModel.toggleShowScreenState }
-                    fullscreen={ screenModel.inFullscreen }
+                    showScreen={ appearance.showScreen }
+                    toogleScreen={ appearance.inFullscreen ? appearance.exitFullscreen : appearance.toggleShowScreenState }
+                    fullscreen={ appearance.inFullscreen }
                 />
                 {/* <i className="zmdi zmdi-settings"></i> */}
                 <Button.Download 
-                    downloadURL={ playerModel.mediaSrc } 
-                    saveAs={ playerModel.track?.title } /> 
+                    downloadURL={ player.mediaSrc } 
+                    saveAs={ player.track?.title } /> 
             </div>
         </div>
     </div>
     )
 })
 
+// TODO unwrap from memo ?
 MediaControls = React.memo(focusNotifier(MediaControls))
 
 export default MediaControls;

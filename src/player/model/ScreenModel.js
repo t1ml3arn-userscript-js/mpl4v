@@ -1,5 +1,6 @@
 import fscreen from 'fscreen';
-import { action, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
+import RootStore from '../../root-store';
 
 export class ScreenModel {
 
@@ -16,19 +17,28 @@ export class ScreenModel {
 
 	get isFullscreenSupported() { return fscreen.fullscreenEnabled; }
 
-	constructor() {
+	/** @type {RootStore} */
+	rootStore;
+
+	get position() { return this.rootStore.settings.current.appearance.position }
+
+	constructor(rootStore) {
 		makeObservable(this, {
 			// targetRef: true,
 			// targetElement: computed,
 			inFullscreen: observable,
 			showScreen: observable,
 			showControls: observable,
+			position: computed,
 			fullscreenElement: false,
 			handleFullscreenChange: action,
 			toggleShowScreenState: action,
 			isFullscreenSupported: false,
-			requestFullscreen: false
+			requestFullscreen: false,
+			rootStore: false,
 		});
+
+		this.rootStore = rootStore
 
 		if (this.isFullscreenSupported) {
 			fscreen.addEventListener('fullscreenchange', this.handleFullscreenChange);

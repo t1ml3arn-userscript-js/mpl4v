@@ -1,5 +1,6 @@
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 const path = require("path");
+const { DefinePlugin } = require("webpack");
 
 module.exports = {
     entry: './src/index.jsx',
@@ -41,5 +42,10 @@ module.exports = {
             overlay: false,
         }
     },
-    plugins: [new ESLintWebpackPlugin()]
+    plugins: [
+        new ESLintWebpackPlugin(),
+        new DefinePlugin({
+            'process.env.APP_VERSION': JSON.stringify(process.env.npm_package_version ?? 'unknown')
+        })
+    ]
 }

@@ -1,25 +1,25 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { focusNotifier } from "../../components/focus-notifier"
 import scaler from './scaler-hoc'
 import { RefType } from '../../utils/utils'
 import { observer } from 'mobx-react-lite'
-import { ScreenModel } from "../model/ScreenModel"
+import RootStore, { StoreContext } from '../../root-store'
 
 let Screen = observer(function Screen(props) {
 
-    /** @type {{screenModel: ScreenModel}} */
-    const { screenModel } = props
+    /** @type {RootStore} */
+    const store = useContext(StoreContext)
 
-    /** @type {{playerModel: PlayerModel}} */
-    const { playerModel } = props
+    const appearance = store.appearance
+    const player = store.player
 
-    const inFullscreen = screenModel.inFullscreen
+    const inFullscreen = appearance.inFullscreen
 
     const { zoomedWidth, zoomedHeight, zoom, updateResolution, changeZoom } = props
     const { toogleFullscreen } = props
     const dragIniter = inFullscreen ? "" : "mpl4v-drag-initiator"
-    const hidden = screenModel.showScreen || inFullscreen ? '' : 'mpl4v--opaque'
+    const hidden = appearance.showScreen || inFullscreen ? '' : 'mpl4v--opaque'
 
     let styles;
     if (zoomedWidth && zoomedHeight && !inFullscreen) {
@@ -41,20 +41,20 @@ let Screen = observer(function Screen(props) {
             ref={ props.mediaRef }
             data-fullscreen={ inFullscreen }
             className={ `${dragIniter}` }
-            src={ playerModel.mediaSrc }
-            loop={ playerModel.loop }
+            src={ player.mediaSrc }
+            loop={ player.loop }
             onDoubleClick={ toogleFullscreen }
             onWheel={ inFullscreen ? undefined : changeZoom }
             onLoadedMetadata={ updateResolution }
             onLoadStart={ updateResolution }
         ></video>
-        <Error error={ playerModel.playerError } fullscreen={ inFullscreen }/>
+        <Error error={ player.playerError } fullscreen={ inFullscreen }/>
         <Title  
             focusIn={ props.hudFocusIn } focusOut={ props.hudFocusOut }
-            title={ playerModel.track?.title } fullscreen={ inFullscreen } 
-            fadeout={ !screenModel.showControls }
+            title={ player.track?.title } fullscreen={ inFullscreen } 
+            fadeout={ !appearance.showControls }
         />
-        <Rate playbackRate={ playerModel.playbackRate }/>
+        <Rate playbackRate={ player.playbackRate }/>
     </div>
 
     )
@@ -69,8 +69,6 @@ Screen.propTypes = {
     zoom: PropTypes.number.isRequired, 
     updateResolution: PropTypes.func.isRequired, 
     changeZoom: PropTypes.func.isRequired,
-    playerModel: PropTypes.object.isRequired,
-    screenModel: PropTypes.object.isRequired,
 }
 Screen = scaler(Screen)
 export default Screen

@@ -3,6 +3,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { App } from "./App";
 import { configure } from 'mobx';
+import RootStore, { StoreContext } from "./root-store";
 
 if (process.env.NODE_ENV === 'development')
     configure({
@@ -36,5 +37,12 @@ document.head.append(fontStyle)
 const container = document.body.appendChild(document.createElement('div'))
 container.classList.add('mpl4v-container')
 
-ReactDOM.render(<App />, container)
-
+const store = new RootStore()
+store.settings.load().then(() => {
+    ReactDOM.render(
+        <StoreContext.Provider value={store}>
+            <App store={store} />
+        </StoreContext.Provider>
+        , container
+    )
+})
